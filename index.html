@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0A6B58">
+<meta name="theme-color" content="#FFB52E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230A6B58'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
@@ -17,16 +17,16 @@ img{max-width:100%}
 /* Layout: one narrow column built for a phone after a shift. Sticky month bar on top, four tabs at the bottom.
    The pay-slip row (label ......... amount) is the one recurring motif, used for the daily preview and the monthly summary. */
 :root{
-  --bg:#EDF2EF; --surface:#FFFFFF; --surface-2:#E3EBE7; --field:#F5F8F6;
-  --ink:#14211E; --ink-2:#496059; --line:#CCD8D3;
-  --accent:#0A6B58; --accent-ink:#FFFFFF; --accent-soft:#D5EBE3;
-  --holiday:#A64B00; --holiday-soft:#FBE7CD;
-  --neg:#B42318; --neg-soft:#FCE3E0;
+  --bg:#FFF4DC; --surface:#FFFFFF; --surface-2:#FFE9B8; --field:#FFFAEE;
+  --ink:#3D2B1F; --ink-2:#7C5F4A; --line:#EBCF98;
+  --accent:#0E8A4B; --accent-ink:#FFFFFF; --accent-soft:#D9F6E3;
+  --holiday:#C24E00; --holiday-soft:#FFE0B8;
+  --neg:#D01C55; --neg-soft:#FFE1EA;
   --display:'Chakra Petch','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
   --body:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark) and (max-width:0px){
   :root:not([data-theme="light"]){
     --bg:#0D1513; --surface:#16211E; --surface-2:#1E2D29; --field:#101A17;
     --ink:#E6F0ED; --ink-2:#9BB1AA; --line:#2B3C37;
@@ -173,12 +173,17 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 /* period calendar */
 .pcal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .pcal .dh{font-size:11.5px;font-weight:600;color:var(--ink-2);text-align:center;padding-bottom:2px}
-.pcal .dh.sun{color:var(--neg)}
+.pcal .dh.sun{color:#6B34C9}
+.pcal .dh.sat{color:#1F6FB5}
 .pcal .blank{min-height:46px}
 .pcal button{min-height:46px;border:1px solid var(--line);background:var(--field);border-radius:9px;padding:2px 0;display:grid;align-content:center;justify-items:center;line-height:1.15;cursor:pointer;color:var(--ink);font-variant-numeric:tabular-nums;min-width:0}
 .pcal .n{font-weight:600;font-size:14px}
 .pcal .s{font-size:10px;line-height:1.2;min-height:12px;font-family:var(--mono);color:var(--ink-2);max-width:100%;overflow:hidden;white-space:nowrap}
 .pcal .off{background:var(--surface-2);color:var(--ink-2);border-color:transparent}
+.pcal .offsat{background:#D4EBFF;color:#1F4E79}
+.pcal .offsat .s{color:#1F4E79}
+.pcal .offsun{background:#C9A6F5;color:#3A1B6B}
+.pcal .offsun .s{color:#3A1B6B}
 .pcal .ot{background:var(--accent-soft);border-color:var(--accent)}
 .pcal .ot .s{color:var(--accent);font-weight:600}
 .pcal .hol{background:var(--holiday-soft);border-color:var(--holiday)}
@@ -193,6 +198,8 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2);margin-top:10px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-1px;margin-right:5px;border:1px solid var(--line)}
 .legend .i-off{background:var(--surface-2)}
+.legend .i-sat{background:#D4EBFF}
+.legend .i-sun{background:#C9A6F5}
 .legend .i-ot{background:var(--accent-soft);border-color:var(--accent)}
 .legend .i-hol{background:var(--holiday-soft);border-color:var(--holiday)}
 .legend .i-lv{background:var(--neg-soft);border-color:var(--neg)}
@@ -260,6 +267,12 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 #shiftForm{scroll-margin-top:84px}
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 </style>
+<link rel="apple-touch-icon" href="/icon.png">
+<link rel="icon" type="image/png" href="/icon.png">
+<style>
+.card{border-width:2px;border-radius:20px;box-shadow:0 3px 0 var(--line)}
+.brand{color:var(--accent)}
+</style>
 </head>
 <body>
 
@@ -284,7 +297,7 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
         <h2>ปฏิทินรอบนี้</h2>
         <div class="pcal" id="pcal"></div>
         <div class="legend" aria-hidden="true">
-          <span><i class="i-ot"></i>โอทีปกติ</span><span><i class="i-hol"></i>โอทีวันหยุด</span><span><i class="i-lv"></i>ลา</span><span><i class="i-off"></i>วันหยุดบริษัท</span>
+          <span><i class="i-ot"></i>โอทีปกติ</span><span><i class="i-hol"></i>โอทีวันหยุด</span><span><i class="i-lv"></i>ลา</span><span><i class="i-sat"></i>เสาร์</span><span><i class="i-sun"></i>อาทิตย์</span><span><i class="i-off"></i>วันหยุดอื่น</span>
         </div>
         <p class="hint pre" id="pcal-sum" style="margin-top:10px"></p>
         <p class="hint" style="margin-top:6px">วันทำงานตามปฏิทินบริษัทนับให้เองว่าได้ค่าข้าวและค่ารถ ไม่ต้องบันทึกทุกวัน บันทึกเฉพาะวันที่มีโอที ทำงานวันหยุด หรือลา แตะวันที่ในปฏิทินเพื่อบันทึกหรือแก้ไข</p>
@@ -966,14 +979,14 @@ function pickDate(ds){
   $('shiftForm').scrollIntoView({behavior:'auto',block:'start'});
 }
 function renderCal(){
-  const r=periodRange(view.y,view.m),kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':'')},d));
+  const r=periodRange(view.y,view.m),kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
   for(let i=0;i<pdate(r.start).getDay();i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
   eachDay(r.start,r.end,ds=>{
     const x=state.shifts[ds],k=dayKind(ds),d=pdate(ds);
     let cls='',sub='',st='';
     if(x&&x.type==='leave'){cls='lv';sub='ลา';st='ลา '+LEAVE_NAME[x.leave];}
     else if(x&&x.hours>0){cls=x.type==='holiday'?'hol':'ot';sub=hrs(x.hours);st=PILL[x.type]+' '+hrs(x.hours)+' ชม.';}
-    else if(k!=='work')cls='off';
+    else if(k!=='work'){const wd=d.getDay();cls='off'+(wd===0?' offsun':wd===6?' offsat':'');}
     if(ds===todayS)cls+=' today';
     if(ds===form.date)cls+=' sel';
     if(state.dayOv[ds])cls+=' ovr';
