@@ -76,6 +76,7 @@ button{font:inherit;color:inherit}
 .card-h h2{margin:0}
 .badge{font-size:12px;font-weight:600;background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:99px}
 .form{display:grid;gap:14px}
+#ledForm.editing{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .hint{font-size:13px;color:var(--ink-2);line-height:1.45}
 .empty{color:var(--ink-2);font-size:14px;padding:6px 0}
 
@@ -239,7 +240,10 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 .lrow .a{font-family:var(--mono);font-weight:600;white-space:nowrap}
 .lrow .a.inc{color:var(--accent)}
 .lrow .a.exp{color:var(--neg)}
-.lrow .btn{min-height:44px;min-width:56px;padding:0 10px;font-size:13px}
+.lrow .row-actions{display:flex;gap:5px;align-items:center}
+.lrow .btn{min-height:42px;min-width:48px;padding:0 9px;font-size:12.5px}
+.lrow .btn.edit{background:var(--accent-soft);color:var(--accent)}
+@media(max-width:390px){.lrow{grid-template-columns:36px minmax(0,1fr) auto}.lrow .row-actions{grid-column:2/4;justify-content:flex-end}.lrow .a{grid-column:3;grid-row:1}}
 .bars{display:grid;gap:10px;margin-top:6px}
 .bar .bt{display:flex;justify-content:space-between;gap:8px;font-size:14px}
 .bar .bt span:last-child{font-family:var(--mono)}
@@ -472,7 +476,10 @@ body{font-variant-numeric:tabular-nums}
         <div class="field"><span class="lab" id="lab-cat">หมวด</span><div class="chips" id="l-cats" role="radiogroup" aria-labelledby="lab-cat"></div></div>
         <div class="field"><label for="l-date">วันที่</label><input id="l-date" type="date"></div>
         <div class="field"><label for="l-note">หมายเหตุ (ไม่บังคับ)</label><input id="l-note" type="text" maxlength="200"></div>
-        <button type="submit" class="btn primary">เพิ่มรายการ</button>
+        <div class="actions">
+          <button type="submit" class="btn primary" id="l-submit">เพิ่มรายการ</button>
+          <button type="button" class="btn" id="l-cancel" hidden>ยกเลิกการแก้ไข</button>
+        </div>
         <p class="hint">เงินเดือน โอที ค่ารถ ค่าข้าว และรายการหักถูกนับให้อัตโนมัติในแท็บสรุปเดือน ไม่ต้องจดซ้ำที่นี่ จดเฉพาะรายรับอื่นและรายจ่ายของคุณ</p>
       </form>
       <div class="card"><h2>รายการรอบนี้</h2><div id="ledList"></div></div>
@@ -1223,6 +1230,32 @@ function renderSummary(){
 
 /* ---------- ledger ---------- */
 let lform={kind:'expense',cat:EXP_CATS[0],date:todayS};
+let editingLedgerId=null;
+
+function cancelLedgerEdit(){
+  editingLedgerId=null;
+  $('l-submit').textContent='เพิ่มรายการ';
+  $('l-cancel').hidden=true;
+  $('ledForm').classList.remove('editing');
+  syncLedgerForm();
+}
+
+function startLedgerEdit(id){
+  const x=state.ledger.find(row=>row.id===id);
+  if(!x)return;
+  editingLedgerId=id;
+  lform={kind:x.kind,cat:x.cat,date:x.date};
+  document.querySelectorAll('input[name=l-kind]').forEach(r=>{r.checked=r.value===x.kind;});
+  $('l-amount').value=String(x.amount);
+  $('l-date').value=x.date;
+  $('l-note').value=x.note||'';
+  $('l-submit').textContent='บันทึกการแก้ไข';
+  $('l-cancel').hidden=false;
+  $('ledForm').classList.add('editing');
+  buildCats();
+  $('ledForm').scrollIntoView({behavior:'smooth',block:'start'});
+  $('l-amount').focus({preventScroll:true});
+}
 function buildCats(){
   const cats=lform.kind==='income'?INC_CATS:EXP_CATS;
   if(cats.indexOf(lform.cat)<0)lform.cat=cats[0];
@@ -1240,12 +1273,13 @@ function renderLedger(){
   root.replaceChildren(...L.rows.map(x=>{
     const d=pdate(x.date);
     const del=h('button',{type:'button',class:'btn danger','aria-label':'ลบรายการ '+x.cat});
-    arm(del,'ลบ','ยืนยัน',()=>{state.ledger=state.ledger.filter(y=>y.id!==x.id);persist();renderLedger();toast('ลบรายการแล้ว');});
+    arm(del,'ลบ','ยืนยัน',()=>{state.ledger=state.ledger.filter(y=>y.id!==x.id);if(editingLedgerId===x.id)cancelLedgerEdit();persist();renderLedger();toast('ลบรายการแล้ว');});
+    const edit=h('button',{type:'button',class:'btn edit','aria-label':'แก้ไขรายการ '+x.cat,onclick:()=>startLedgerEdit(x.id)},'แก้ไข');
     return h('div',{class:'lrow'},
       h('span',{class:'d'},String(d.getDate()),h('small',null,DOW[d.getDay()])),
       h('span',{class:'c'},x.cat,x.note?h('small',null,x.note):null),
       h('span',{class:'a '+(x.kind==='income'?'inc':'exp')},(x.kind==='income'?'+':'−')+money(x.amount)),
-      del);
+      h('span',{class:'row-actions'},edit,del));
   }));
 }
 
@@ -1403,6 +1437,7 @@ async function saveFile(name,data){
   }catch(e){toast('บันทึกไฟล์ไม่สำเร็จ ลองปุ่มคัดลอกแทน');return false;}
 }
 function resetAfterImport(){
+  editingLedgerId=null;
   form=newForm(todayS);
   lform={kind:'expense',cat:EXP_CATS[0],date:todayS};
   view=periodOf(todayS);
@@ -1452,6 +1487,11 @@ function changeMonth(d){
 function syncLedgerForm(){
   document.querySelectorAll('input[name=l-kind]').forEach(r=>{r.checked=r.value===lform.kind;});
   $('l-date').value=lform.date;$('l-amount').value='';$('l-note').value='';
+  if(!editingLedgerId){
+    $('l-submit').textContent='เพิ่มรายการ';
+    $('l-cancel').hidden=true;
+    $('ledForm').classList.remove('editing');
+  }
   buildCats();
 }
 
@@ -1544,6 +1584,7 @@ function bind(){
     if(!r.checked)return;lform.kind=r.value;buildCats();
   }));
   $('l-date').addEventListener('change',e=>{lform.date=e.target.value;});
+  $('l-cancel').addEventListener('click',cancelLedgerEdit);
   $('ledForm').addEventListener('submit',e=>{
     e.preventDefault();
     const a=parseFloat($('l-amount').value);
@@ -1551,13 +1592,21 @@ function bind(){
     const date=$('l-date').value;
     if(!isDate(date)){toast('เลือกวันที่ก่อน');return;}
     lform.date=date;
-    state.ledger.push({id:uid(),date:date,kind:lform.kind,cat:lform.cat,amount:r2(a),note:$('l-note').value.trim().slice(0,200)});
+    const entry={id:editingLedgerId||uid(),date:date,kind:lform.kind,cat:lform.cat,amount:r2(a),note:$('l-note').value.trim().slice(0,200)};
+    const wasEditing=!!editingLedgerId;
+    if(wasEditing){
+      const index=state.ledger.findIndex(x=>x.id===editingLedgerId);
+      if(index<0){toast('หารายการเดิมไม่พบ กรุณาลองใหม่');cancelLedgerEdit();return;}
+      state.ledger[index]=entry;
+    }else state.ledger.push(entry);
     persist();
+    editingLedgerId=null;
     $('l-amount').value='';$('l-note').value='';
     const p=periodOf(date);
     if(p.y!==view.y||p.m!==view.m){view=p;updateMonthBar();}
+    syncLedgerForm();
     renderLedger();
-    toast((lform.kind==='income'?'เพิ่มรายรับ ':'เพิ่มรายจ่าย ')+money(r2(a))+' บาท');
+    toast((wasEditing?'แก้ไข':'เพิ่ม')+(lform.kind==='income'?'รายรับ ':'รายจ่าย ')+money(r2(a))+' บาท');
   });
 
   $('dl-ot').addEventListener('click',()=>saveFile('otbook-ot.csv',csvOT()));
