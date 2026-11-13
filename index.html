@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#FFB52E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230C7B43'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
 :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0}
@@ -22,9 +22,9 @@ img{max-width:100%}
   --accent:#0C7B43; --accent-ink:#FFFFFF; --accent-soft:#D9F6E3;
   --holiday:#AB4500; --holiday-soft:#FFE0B8;
   --neg:#C81B52; --neg-soft:#FFE1EA;
-  --display:'Mali','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
+  --display:'Chakra Petch','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
   --body:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
-  --mono:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark) and (max-width:0px){
   :root:not([data-theme="light"]){
@@ -76,7 +76,6 @@ button{font:inherit;color:inherit}
 .card-h h2{margin:0}
 .badge{font-size:12px;font-weight:600;background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:99px}
 .form{display:grid;gap:14px}
-#ledForm.editing{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .hint{font-size:13px;color:var(--ink-2);line-height:1.45}
 .empty{color:var(--ink-2);font-size:14px;padding:6px 0}
 
@@ -240,10 +239,7 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 .lrow .a{font-family:var(--mono);font-weight:600;white-space:nowrap}
 .lrow .a.inc{color:var(--accent)}
 .lrow .a.exp{color:var(--neg)}
-.lrow .row-actions{display:flex;gap:5px;align-items:center}
-.lrow .btn{min-height:42px;min-width:48px;padding:0 9px;font-size:12.5px}
-.lrow .btn.edit{background:var(--accent-soft);color:var(--accent)}
-@media(max-width:390px){.lrow{grid-template-columns:36px minmax(0,1fr) auto}.lrow .row-actions{grid-column:2/4;justify-content:flex-end}.lrow .a{grid-column:3;grid-row:1}}
+.lrow .btn{min-height:44px;min-width:56px;padding:0 10px;font-size:13px}
 .bars{display:grid;gap:10px;margin-top:6px}
 .bar .bt{display:flex;justify-content:space-between;gap:8px;font-size:14px}
 .bar .bt span:last-child{font-family:var(--mono)}
@@ -323,17 +319,32 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 .sc-res.ok{color:var(--accent)}
 .sc-res.bad{color:var(--neg);font-weight:600}
 .card.form .btn.danger{justify-self:start}
-</style>
-<style>
-/* v9: ฟอนต์กลมน่ารักให้เข้ากับไอคอน และสีตัวหนังสือโทนน้ำตาลอุ่นทั้งหน้า */
-body{font-variant-numeric:tabular-nums}
-.brand{display:flex;align-items:center;gap:8px;color:var(--accent)}
-.logo{border-radius:10px;border:2px solid var(--line);background:#fff;flex:none}
-.logo{width:32px;height:32px}
-.month .mlabel{min-width:7.5em}
-.card h2,.sgroup h3,.card-h h2{color:var(--ink);letter-spacing:0}
-.hint,.empty,.month .ml2{color:var(--ink-2)}
-::selection{background:var(--surface-2);color:var(--ink)}
+/* v9 */
+.pane-sw{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;background:var(--surface-2);border-radius:12px;padding:3px}
+.pane-sw button{min-height:46px;border:0;border-radius:9px;background:none;font:600 15px var(--body);color:var(--ink-2);cursor:pointer;padding:0 6px}
+.pane-sw button[aria-pressed=true]{background:var(--surface);color:var(--accent);box-shadow:0 1px 2px rgb(0 0 0/.14)}
+.pane-sw button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.whrow{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--line);padding:6px 0}
+.whrow span{min-width:0;font-size:14px}
+.whrow .btn{min-height:44px;padding:0 12px;font-size:13px;flex:none}
+.ce-nav{justify-content:space-between}
+.ce-months{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.ce-m{min-height:52px;border:1px solid var(--line);background:var(--field);border-radius:10px;display:grid;align-content:center;justify-items:center;color:var(--ink);cursor:pointer;padding:2px;font-family:inherit}
+.ce-m b{font-size:14px}
+.ce-m small{font-size:11.5px;color:var(--ink-2)}
+.ce-m[aria-pressed=true]{border:2px solid var(--accent);background:var(--accent-soft)}
+.ce-brush{display:flex;flex-wrap:wrap;gap:6px}
+.ce-brush .btn{min-height:44px;padding:0 12px;font-size:14px}
+.ce-brush .btn[aria-pressed=true]{background:var(--accent);color:var(--accent-ink)}
+.ce-acts{display:flex;flex-wrap:wrap;gap:8px}
+.ce-acts .btn{flex:1 1 150px;min-height:44px;font-size:14px}
+.badge.no{background:var(--surface-2);color:var(--ink-2)}
+.tx-row{display:grid;gap:6px;padding:12px 0;border-top:1px solid var(--line)}
+.tx-row:first-of-type{border-top:0;padding-top:0}
+.tx-row p{margin:0}
+.tx-row .card-h{margin-bottom:0}
+.tx-row .badge{white-space:nowrap;flex:none}
+.tx-row .card-h b{min-width:0}
 </style>
 </head>
 <body>
@@ -341,7 +352,7 @@ body{font-variant-numeric:tabular-nums}
 
 <div class="wrap">
   <header class="top">
-    <h1 class="brand"><img class="logo" src="icon-192.png" alt="" width="36" height="36">สมุดโอที</h1>
+    <h1 class="brand">สมุดโอที</h1>
     <div class="month" id="monthbar">
       <button type="button" id="prevM" aria-label="เดือนก่อนหน้า"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
       <button type="button" id="monthLabel" class="mlabel" aria-label="กลับไปเดือนปัจจุบัน"></button>
@@ -476,10 +487,7 @@ body{font-variant-numeric:tabular-nums}
         <div class="field"><span class="lab" id="lab-cat">หมวด</span><div class="chips" id="l-cats" role="radiogroup" aria-labelledby="lab-cat"></div></div>
         <div class="field"><label for="l-date">วันที่</label><input id="l-date" type="date"></div>
         <div class="field"><label for="l-note">หมายเหตุ (ไม่บังคับ)</label><input id="l-note" type="text" maxlength="200"></div>
-        <div class="actions">
-          <button type="submit" class="btn primary" id="l-submit">เพิ่มรายการ</button>
-          <button type="button" class="btn" id="l-cancel" hidden>ยกเลิกการแก้ไข</button>
-        </div>
+        <button type="submit" class="btn primary">เพิ่มรายการ</button>
         <p class="hint">เงินเดือน โอที ค่ารถ ค่าข้าว และรายการหักถูกนับให้อัตโนมัติในแท็บสรุปเดือน ไม่ต้องจดซ้ำที่นี่ จดเฉพาะรายรับอื่นและรายจ่ายของคุณ</p>
       </form>
       <div class="card"><h2>รายการรอบนี้</h2><div id="ledList"></div></div>
@@ -520,7 +528,7 @@ body{font-variant-numeric:tabular-nums}
   <div class="tabs-in" role="tablist">
     <button type="button" class="tab" role="tab" data-tab="log" aria-selected="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>บันทึก</button>
     <button type="button" class="tab" role="tab" data-tab="sum" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M9 8h6M9 12h6"/></svg>สรุปเดือน</button>
-    <button type="button" class="tab" role="tab" data-tab="year" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>ทั้งปี</button>
+    <button type="button" class="tab" role="tab" data-tab="year" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M21 20H3"/></svg>ภาพรวม</button>
     <button type="button" class="tab" role="tab" data-tab="led" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="15" r="1"/></svg>รับ–จ่าย</button>
     <button type="button" class="tab" role="tab" data-tab="set" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>ตั้งค่า</button>
   </div>
@@ -567,8 +575,9 @@ const DEF={dailyWage:0,hoursPerDay:8,cutoffDay:1,daysPerMonth:30,
   defHoursWeekday:2.5,defHoursHoliday:10.5,
   transport:0,meal:0,defShuttle:0,holidayAllowance:1,
   pfPct:0,ssoPct:5,ssoCap:17500,studentLoan:0,
-  deductAnnual:0,deductSick:0,deductPersonal:0,deductAbsent:1,calCustom:0,satMode:0,goalNet:0};
-const BOOL_KEYS=['defShuttle','holidayAllowance','deductAnnual','deductSick','deductPersonal','deductAbsent','calCustom'];
+  deductAnnual:0,deductSick:0,deductPersonal:0,deductAbsent:1,calCustom:0,satMode:0,goalNet:0,
+  taxMarried:0,taxOther:0,taxBonus:0,taxPaid:0,openBal:0};
+const BOOL_KEYS=['defShuttle','holidayAllowance','deductAnnual','deductSick','deductPersonal','deductAbsent','calCustom','taxMarried'];
 const TIME_RE=/^([01]\d|2[0-3]):[0-5]\d$/;
 const DEF_PAT={
   normal:{s:'17:30',e:'20:00',br:[]},
@@ -577,11 +586,11 @@ const DEF_PAT={
 const OLD_HOLIDAY_PAT=JSON.stringify({s:'08:00',e:'20:00',br:[['10:00','10:10'],['15:00','15:10'],['17:10','17:30']]});
 const SET_GROUPS=[
   {t:'ปฏิทินและรอบเงินเดือนของบริษัท',f:[
-    {k:'calCustom',b:1,l:'ตั้งปฏิทินบริษัทเอง',hint:'ปิด = ใช้ปฏิทินตัวอย่างที่ฝังไว้ในแอป (ปี 2569 ของบริษัทหนึ่ง) เปิด = วันอาทิตย์หยุดทุกสัปดาห์ วันเสาร์ตามที่ตั้งด้านล่าง วันอื่นนับเป็นวันทำงาน แล้วตั้งวันหยุดอื่นเองได้ทีละวัน (แตะวันที่ในปฏิทินหน้าบันทึก แล้วเลือก วันหยุด ที่ปรับประเภทของวันนี้ ใช้กับนักขัตฤกษ์และวันหยุดพิเศษ)'},
+    {k:'calCustom',b:1,l:'ตั้งปฏิทินบริษัทเอง',hint:'ปิด = ใช้ปฏิทินตัวอย่างที่ฝังไว้ในแอป (ปี 2569 ของบริษัทหนึ่ง) เปิด = วันอาทิตย์หยุดทุกสัปดาห์ วันเสาร์ตามที่ตั้งด้านล่าง วันอื่นนับเป็นวันทำงาน แล้วตั้งวันหยุดอื่นเองได้ทีละวัน (ตั้งวันหยุดทั้งปีได้ในหัวข้อ "ปฏิทินบริษัท" ด้านล่าง หรือแตะวันที่ในปฏิทินหน้าบันทึกแล้วปรับทีละวัน)'},
     {k:'cutoffDay',l:'วันที่เริ่มรอบเงินเดือน (ของเดือนก่อน)',u:'วันที่',step:'1',min:1,max:28,hint:'บริษัทตัดรอบวันที่ 20 ให้ใส่ 21 (รอบ 21 ของเดือนก่อน ถึง 20 ของเดือนนี้) ตัดรอบวันที่ 25 ใส่ 26 ถ้าตัดรอบสิ้นเดือนหรือใช้เดือนปฏิทิน ใส่ 1'}]},
   {t:'ค่าแรงและรอบเงินเดือน',ro:'ro-wage',f:[
-    {k:'dailyWage',l:'ค่าแรงรายวัน (ใช้คิดค่าแรงต่อชั่วโมงและเงินเดือน)',u:'บาท',step:'0.5'},
-    {k:'daysPerMonth',l:'จำนวนวันที่คิดเป็นเงินเดือนต่อเดือน',u:'วัน',step:'1',min:1,hint:'เงินเดือน = ค่าแรงรายวัน × จำนวนวันนี้ ให้ได้ตรงกับยอด Salary บนสลิป ถ้าเงินเดือนขึ้น ให้แก้ค่าแรงรายวัน'},
+    {k:'dailyWage',l:'ค่าแรงรายวัน (ใช้คิดค่าแรงต่อชั่วโมงและเงินเดือน)',u:'บาท',step:'0.5',hint:'ถ้าค่าแรงขึ้นทีหลัง อย่าแก้ช่องนี้ ให้เพิ่มในหัวข้อ "ปรับค่าแรง" ด้านล่าง รอบเก่าจะได้ไม่เปลี่ยน'},
+    {k:'daysPerMonth',l:'จำนวนวันที่คิดเป็นเงินเดือนต่อเดือน',u:'วัน',step:'1',min:1,hint:'เงินเดือน = ค่าแรงรายวัน × จำนวนวันนี้ ให้ได้ตรงกับยอด Salary บนสลิป ถ้าเงินเดือนขึ้น ให้เพิ่มการปรับค่าแรงด้านล่าง'},
     {k:'hoursPerDay',l:'ชั่วโมงทำงานปกติต่อวัน',u:'ชม.',step:'0.5',min:1}]},
   {t:'อัตราโอที',ro:'ro-ot',f:[
     {k:'mulWeekday',l:'โอทีปกติ (วันทำงาน): เท่าของค่าแรงต่อชั่วโมง',u:'เท่า',step:'0.25',hint:'ดูตัวคูณจากบรรทัด Overtime บนสลิป (วันทำงานปกติมักเป็น 1.5 เท่า)'},
@@ -739,7 +748,27 @@ function normalize(o){
   if(o&&o.dayOv&&typeof o.dayOv==='object'){
     for(const k in o.dayOv){if(isDate(k)&&(o.dayOv[k]==='work'||o.dayOv[k]==='off'))dayOv[k]=o.dayOv[k];}
   }
-  return {v:4,settings:s,shifts:shifts,ledger:ledger,periods:periods,dayOv:dayOv,setup:o?(o.setup===0?0:1):0};
+  const wageHist=[];
+  if(o&&Array.isArray(o.wageHist)){
+    const seen={};
+    o.wageHist.forEach(x=>{const w=Number(x&&x.wage);if(x&&isDate(x.from)&&w>0&&Number.isFinite(w))seen[x.from]=w;});
+    Object.keys(seen).sort().forEach(k=>wageHist.push({from:k,wage:seen[k]}));
+  }
+  const calUser={};
+  if(o&&o.calUser&&typeof o.calUser==='object'){
+    for(const ym in o.calUser){
+      const m=o.calUser[ym];
+      if(!/^\d{4}-(0[1-9]|1[0-2])$/.test(ym)||!m||typeof m!=='object')continue;
+      const n=new Date(Number(ym.slice(0,4)),Number(ym.slice(5,7)),0).getDate(),q={sat:[],pub:[],co:[],comp:[]},seen={};
+      ['pub','co','comp','sat'].forEach(k=>{
+        if(!Array.isArray(m[k]))return;
+        m[k].forEach(d=>{d=Math.round(Number(d));if(d>=1&&d<=n&&!seen[d]){seen[d]=1;q[k].push(d);}});
+        q[k].sort((a,b)=>a-b);
+      });
+      calUser[ym]=q;
+    }
+  }
+  return {v:4,settings:s,shifts:shifts,ledger:ledger,periods:periods,dayOv:dayOv,wageHist:wageHist,calUser:calUser,setup:o?(o.setup===0?0:1):0};
 }
 let state;
 (function(){
@@ -779,10 +808,16 @@ function satOffOn(ds){
   if(s.satMode===2&&isDate(s.satRef))return (((dayNum(ds)-dayNum(s.satRef))%14)+14)%14===0;
   return false;
 }
-function dayKind(ds){
-  const ov=state.dayOv[ds];
-  if(ov==='work')return 'work';
-  if(ov==='off')return 'xoff';
+/* ปฏิทินที่ผู้ใช้แก้เอง (calUser) ต่อเดือน: ถ้าเดือนนั้นมีอยู่ ใช้ตามนั้นทั้งเดือน */
+function userKind(ds){
+  const m=state.calUser[ds.slice(0,7)];
+  if(!m)return null;
+  const day=Number(ds.slice(8,10));
+  for(const k of ['pub','co','comp','sat'])if(m[k]&&m[k].indexOf(day)>=0)return k;
+  return 'work';
+}
+/* ปฏิทินที่ฝังไว้หรือเสาร์ตามโหมดที่ตั้ง (ไม่รวมที่ผู้ใช้แก้เองและการปรับรายวัน) */
+function autoKind(ds){
   const wd=pdate(ds).getDay();
   if(wd===0)return 'sun';
   if(state.settings.calCustom>=1)return(wd===6&&satOffOn(ds))?'sat':'work';
@@ -792,12 +827,26 @@ function dayKind(ds){
   if((ds<CAL_FIRST||ds>CAL_LAST)&&wd===6&&satOffOn(ds))return 'sat';
   return 'work';
 }
-const calKnown=ds=>state.settings.calCustom>=1||(ds>=CAL_FIRST&&ds<=CAL_LAST);
+function dayKind(ds){
+  const ov=state.dayOv[ds];
+  if(ov==='work')return 'work';
+  if(ov==='off')return 'xoff';
+  if(pdate(ds).getDay()===0)return 'sun';
+  return userKind(ds)||autoKind(ds);
+}
+const calKnown=ds=>state.settings.calCustom>=1||!!state.calUser[ds.slice(0,7)]||(ds>=CAL_FIRST&&ds<=CAL_LAST);
 const isWorkDay=ds=>dayKind(ds)==='work';
 function eachDay(a,b,fn){for(let t=pdate(a);dstr(t)<=b;t.setDate(t.getDate()+1))fn(dstr(t));}
 
 /* ---------- calculations ---------- */
-const hourly=()=>S().dailyWage/S().hoursPerDay;
+/* ค่าแรงรายวัน ณ วันที่ ds: ค่าเริ่มต้นในตั้งค่า แล้วทับด้วยรายการปรับค่าแรงล่าสุดที่เริ่มมีผลแล้ว */
+function wageOn(ds){
+  const a=state.wageHist;let w=state.settings.dailyWage;
+  for(let i=0;i<a.length;i++){if(a[i].from<=ds)w=a[i].wage;else break;}
+  return w;
+}
+const hourlyOn=ds=>wageOn(ds)/S().hoursPerDay;
+const hourly=()=>hourlyOn(todayS);
 function shiftParts(x){
   const s=S();
   if(x.type==='normal')return [{h:x.hours,mul:s.mulWeekday}];
@@ -808,23 +857,23 @@ function shiftParts(x){
 const allowOK=x=>isWorkDay(x.date)||(S().holidayAllowance>=1&&x.hours>0);
 /* one day, shown to the cent while typing */
 function calcShift(x){
-  const s=S(),hr=hourly(),parts=shiftParts(x);
+  const s=S(),hr=hourlyOn(x.date),parts=shiftParts(x);
   const amts=parts.map(p=>r2(p.h*hr*p.mul));
   const ot=r2(amts.reduce((a,b)=>a+b,0));
   const ok=allowOK(x);
-  const tr=ok&&!x.shuttle?s.transport:0,meal=ok?s.meal:0,wage=s.dailyWage;
+  const tr=ok&&!x.shuttle?s.transport:0,meal=ok?s.meal:0,wage=wageOn(x.date);
   return {parts:parts,amts:amts,ot:ot,tr:tr,meal:meal,wage:wage,total:r2(wage+ot+tr+meal),extra:r2(ot+tr+meal),allow:ok};
 }
 /* what n leave days take away from the period */
-function leaveLoss(kind,n){
+function leaveLoss(kind,n,ds){
   const s=S();
   const meal=r2(n*s.meal),tr=s.defShuttle>=1?0:r2(n*s.transport);
-  const dk=LEAVE_DED[kind],ded=dk&&s[dk]>=1?r2(n*s.dailyWage):0;
+  const dk=LEAVE_DED[kind],ded=dk&&s[dk]>=1?r2(n*wageOn(ds||todayS)):0;
   return {meal:meal,tr:tr,ded:ded,total:r2(meal+tr+ded)};
 }
 /* whole pay period, laid out like the company pay slip: hours are added up per rate, then rounded to whole baht */
 function periodCalc(y,m){
-  const r=periodRange(y,m),s=S(),hr=hourly();
+  const r=periodRange(y,m),s=S(),wg=wageOn(r.end);
   const ov=state.periods[r.end.slice(0,7)]||{};
   const o={range:r,sched:0,worked:0,shuttle:0,extra:0,leave:{annual:0,sick:0,personal:0,absent:0,off:0},leaveDays:0,unknownCal:false,
     groups:{normal:{hours:0,days:0,lines:[],amount:0},holiday:{hours:0,days:0,lines:[],amount:0}}};
@@ -840,12 +889,17 @@ function periodCalc(y,m){
     if(worked){o.worked++;if(shut)o.shuttle++;}
     if(x&&x.hours>0){
       const g=o.groups[x.type];g.days++;
-      shiftParts(x).forEach(p=>{if(p.h>0){tiers[x.type][p.mul]=(tiers[x.type][p.mul]||0)+p.h;g.hours+=p.h;}});
+      const hx=hourlyOn(ds);
+      shiftParts(x).forEach(p=>{if(p.h>0){const t=tiers[x.type][p.mul]||(tiers[x.type][p.mul]={});t[hx]=(t[hx]||0)+p.h;g.hours+=p.h;}});
     }
   });
   ['normal','holiday'].forEach(g=>{
     const G=o.groups[g];
-    G.lines=Object.keys(tiers[g]).map(Number).sort((a,b)=>a-b).map(mul=>({mul:mul,hours:tiers[g][mul],amount:Math.round(tiers[g][mul]*hr*mul)}));
+    G.lines=Object.keys(tiers[g]).map(Number).sort((a,b)=>a-b).map(mul=>{
+      const t=tiers[g][mul];let hours=0,amount=0;
+      Object.keys(t).forEach(k=>{hours+=t[k];amount+=Math.round(t[k]*Number(k)*mul);});
+      return {mul:mul,hours:hours,amount:amount};
+    });
     G.amount=G.lines.reduce((a,l)=>a+l.amount,0);
   });
   o.otHours=o.groups.normal.hours+o.groups.holiday.hours;
@@ -853,7 +907,8 @@ function periodCalc(y,m){
   o.ovDays=ov.days!=null;
   o.days=o.ovDays?ov.days:o.worked;
   o.trDays=o.ovDays?Math.max(0,ov.days-o.shuttle):o.worked-o.shuttle;
-  o.auto={salary:r2(s.daysPerMonth*s.dailyWage),tr:r2(o.trDays*s.transport),meal:r2(o.days*s.meal)};
+  o.wage=wg;
+  o.auto={salary:r2(s.daysPerMonth*wg),tr:r2(o.trDays*s.transport),meal:r2(o.days*s.meal)};
   o.ovSalary=ov.salary!=null;o.ovTr=ov.transport!=null;o.ovMeal=ov.meal!=null;o.ovOther=ov.other!=null;
   o.salary=o.ovSalary?ov.salary:o.auto.salary;
   o.tr=o.ovTr?ov.transport:o.auto.tr;
@@ -864,7 +919,7 @@ function periodCalc(y,m){
   o.leaveDed=[];
   ['annual','sick','personal','absent'].forEach(k=>{
     const n=o.leave[k];
-    if(n>0&&s[LEAVE_DED[k]]>=1)o.leaveDed.push({kind:k,days:n,amount:r2(n*s.dailyWage)});
+    if(n>0&&s[LEAVE_DED[k]]>=1)o.leaveDed.push({kind:k,days:n,amount:r2(n*wg)});
   });
   o.leaveDedTotal=r2(o.leaveDed.reduce((a,d)=>a+d.amount,0));
   o.sso=Math.round(Math.min(o.salary,s.ssoCap)*s.ssoPct/100);
@@ -1042,18 +1097,18 @@ function renderLeavePreview(){
     $('preview').replaceChildren(h('p',{class:'hint'},isDate(form.date)?'วันที่เลือกเป็นวันหยุดของบริษัทอยู่แล้ว ไม่ต้องบันทึกการลา':'เลือกวันที่ก่อน'));
     return;
   }
-  const L=leaveLoss(form.leave,n),dk=LEAVE_DED[form.leave];
+  const L=leaveLoss(form.leave,n,form.date),dk=LEAVE_DED[form.leave];
   const kids=[
     prow('ค่าข้าวที่ไม่ได้รับ',L.meal,{neg:true,sub:n+' วัน × '+money0(s.meal)}),
     prow('ค่ารถที่ไม่ได้รับ',L.tr,{neg:true,sub:s.defShuttle>=1?'ปกติขึ้นรถรับส่ง ไม่ได้ค่ารถอยู่แล้ว':n+' วัน × '+money0(s.transport)})];
-  if(dk)kids.push(prow('หักเงินเดือน',L.ded,{neg:true,sub:s[dk]>=1?n+' วัน × '+money0(s.dailyWage):'ประเภทนี้ไม่หักเงินเดือน (เปลี่ยนได้ในตั้งค่า)'}));
+  if(dk)kids.push(prow('หักเงินเดือน',L.ded,{neg:true,sub:s[dk]>=1?n+' วัน × '+money0(wageOn(form.date)):'ประเภทนี้ไม่หักเงินเดือน (เปลี่ยนได้ในตั้งค่า)'}));
   kids.push(h('div',{class:'ps-total'},h('span',{class:'tl'},'หายไปจากรอบนี้'),h('span',{class:'tn neg'},'−฿'+money(L.total))));
   kids.push(h('p',{class:'hint ps-note'},'เงินเดือนรายเดือนไม่ลดเมื่อลา ยกเว้นประเภทที่บริษัทหักเงินเดือนตามตั้งค่า'));
   $('preview').replaceChildren(...kids);
 }
 function renderPreview(){
   if(form.type==='leave'){renderLeavePreview();return;}
-  const c=calcShift(form),hr=money(hourly());
+  const c=calcShift(form),hr=money(hourlyOn(form.date));
   const kids=[prow('ค่าแรงรายวัน',c.wage,{sub:'รวมอยู่ในเงินเดือนรายเดือนอยู่แล้ว'})];
   if(form.type==='normal'){
     kids.push(prow('โอทีปกติ',c.ot,{sub:form.hours>0?hrs(form.hours)+' ชม. × '+hr+' × '+hrs(c.parts[0].mul):'ไม่มีโอที'}));
@@ -1100,7 +1155,7 @@ function renderCal(){
   $('pcal').replaceChildren(...kids);
   const c=periodCalc(view.y,view.m);
   let t='วันทำงานตามปฏิทิน '+c.sched+' วัน'+(c.leaveDays?' · ลา '+c.leaveDays+' วัน':'')+(c.extra?' · ทำงานวันหยุด '+c.extra+' วัน':'')+'\nนับค่าข้าวและค่ารถ '+c.days+' วัน';
-  if(c.unknownCal)t+='\nบางวันในรอบนี้ยังไม่มีปฏิทินบริษัทในแอป จึงนับทุกวันจันทร์–เสาร์เป็นวันทำงาน แก้จำนวนวันได้ในแท็บสรุป';
+  if(c.unknownCal)t+='\nบางวันในรอบนี้ยังไม่มีปฏิทินบริษัทในแอป จึงนับทุกวันจันทร์–เสาร์เป็นวันทำงาน ใส่วันหยุดได้ที่ตั้งค่า > ปฏิทินบริษัท หรือแก้จำนวนวันในแท็บสรุป';
   $('pcal-sum').textContent=t;
 }
 function renderList(){
@@ -1112,7 +1167,7 @@ function renderList(){
     const d=pdate(x.date),k=dayKind(x.date);
     let mm,amt,neg=false,note=x.note;
     if(x.type==='leave'){
-      const L=isWorkDay(x.date)?leaveLoss(x.leave,1):{total:0};
+      const L=isWorkDay(x.date)?leaveLoss(x.leave,1,x.date):{total:0};
       mm=LEAVE_NAME[x.leave]+(L.total>0?' · ไม่ได้ค่าข้าว/ค่ารถ':' · ไม่มีผล (วันหยุดบริษัท)');
       amt=L.total>0?'−'+money(L.total):'0.00';neg=L.total>0;
     }else{
@@ -1156,7 +1211,7 @@ function renderSummary(){
   const slip=h('div',{class:'card'},h('h2',null,'สลิปประมาณการ'),
     h('div',{class:'ps'},
       h('div',{class:'ps-h'},'รายได้'),
-      prow('เงินเดือน (รายเดือน)',c.salary,{sub:c.ovSalary?'ปรับตามสลิป':hrs(s.daysPerMonth)+' วัน × '+money0(s.dailyWage)}),
+      prow('เงินเดือน (รายเดือน)',c.salary,{sub:c.ovSalary?'ปรับตามสลิป':hrs(s.daysPerMonth)+' วัน × '+money0(c.wage)}),
       ...otBlock('โอทีปกติ (วันทำงาน)',a,'','ไม่มีโอทีปกติในรอบนี้'),
       ...otBlock('โอทีวันหยุด',b,'hol','ไม่มีโอทีวันหยุดในรอบนี้'),
       c.other>0?prow('เงินได้อื่น ๆ',c.other,{sub:'ใส่เองตามสลิป'}):null,
@@ -1168,7 +1223,7 @@ function renderSummary(){
       prow('ประกันสังคม',c.sso,{neg:true,sub:hrs(s.ssoPct)+'% ของเงินเดือน'+(c.salary>s.ssoCap?' (สูงสุด '+money0(s.ssoCap)+')':'')}),
       prow('กองทุนสำรองเลี้ยงชีพ',c.pf,{neg:true,sub:hrs(s.pfPct)+'% ของเงินเดือน'}),
       prow('กยศ.',c.loan,{neg:true}),
-      ...c.leaveDed.map(d=>prow('หัก'+LEAVE_NAME[d.kind],d.amount,{neg:true,sub:d.days+' วัน × '+money0(s.dailyWage)})),
+      ...c.leaveDed.map(d=>prow('หัก'+LEAVE_NAME[d.kind],d.amount,{neg:true,sub:d.days+' วัน × '+money0(c.wage)})),
       prow('รวมรายการหัก',c.ded,{neg:true,tot:true}),
       h('div',{class:'ps-total'},h('span',{class:'tl'},'รับสุทธิ'),h('span',{class:'tn'},'฿'+money(c.net)))),
     h('p',{class:'hint ps-note'},'เรียงตามสลิปบริษัท เทียบทีละบรรทัดได้ โอทีรวมชั่วโมงของแต่ละอัตราทั้งรอบแล้วปัดเป็นบาท ประกันสังคมคิดจากเงินเดือนไม่รวมโอที'),
@@ -1180,7 +1235,7 @@ function renderSummary(){
       c.leaveDays?prow('หัก วันลา / บริษัทหยุด',0,{txt:'−'+c.leaveDays+' วัน',sub:leaveBreak}):null,
       c.extra?prow('บวก ทำงานวันหยุด',0,{txt:s.holidayAllowance>=1?'+'+c.extra+' วัน':'ไม่นับ',sub:s.holidayAllowance>=1?null:'ตั้งค่าไว้ว่าวันหยุดไม่ได้ค่าข้าวและค่ารถ'}):null,
       prow('วันที่ได้ค่าข้าวและค่ารถ',0,{txt:c.days+' วัน',tot:true,sub:c.ovDays?'ปรับตามสลิป (ในช่องด้านล่าง)':null})),
-    c.unknownCal?h('p',{class:'hint ps-note'},'บางวันในรอบนี้ยังไม่มีปฏิทินบริษัทในแอป จึงนับทุกวันจันทร์–เสาร์เป็นวันทำงาน ถ้าไม่ตรงให้ใส่จำนวนวันตามสลิปในช่องด้านล่าง'):null);
+    c.unknownCal?h('p',{class:'hint ps-note'},'บางวันในรอบนี้ยังไม่มีปฏิทินบริษัทในแอป จึงนับทุกวันจันทร์–เสาร์เป็นวันทำงาน ใส่วันหยุดได้ที่ตั้งค่า > ปฏิทินบริษัท หรือใส่จำนวนวันตามสลิปในช่องด้านล่าง'):null);
   const key=c.range.end.slice(0,7);
   const ovField=(id,label,f,auto,step)=>h('div',{class:'field'},
     h('label',{for:id},label),
@@ -1230,32 +1285,6 @@ function renderSummary(){
 
 /* ---------- ledger ---------- */
 let lform={kind:'expense',cat:EXP_CATS[0],date:todayS};
-let editingLedgerId=null;
-
-function cancelLedgerEdit(){
-  editingLedgerId=null;
-  $('l-submit').textContent='เพิ่มรายการ';
-  $('l-cancel').hidden=true;
-  $('ledForm').classList.remove('editing');
-  syncLedgerForm();
-}
-
-function startLedgerEdit(id){
-  const x=state.ledger.find(row=>row.id===id);
-  if(!x)return;
-  editingLedgerId=id;
-  lform={kind:x.kind,cat:x.cat,date:x.date};
-  document.querySelectorAll('input[name=l-kind]').forEach(r=>{r.checked=r.value===x.kind;});
-  $('l-amount').value=String(x.amount);
-  $('l-date').value=x.date;
-  $('l-note').value=x.note||'';
-  $('l-submit').textContent='บันทึกการแก้ไข';
-  $('l-cancel').hidden=false;
-  $('ledForm').classList.add('editing');
-  buildCats();
-  $('ledForm').scrollIntoView({behavior:'smooth',block:'start'});
-  $('l-amount').focus({preventScroll:true});
-}
 function buildCats(){
   const cats=lform.kind==='income'?INC_CATS:EXP_CATS;
   if(cats.indexOf(lform.cat)<0)lform.cat=cats[0];
@@ -1273,13 +1302,12 @@ function renderLedger(){
   root.replaceChildren(...L.rows.map(x=>{
     const d=pdate(x.date);
     const del=h('button',{type:'button',class:'btn danger','aria-label':'ลบรายการ '+x.cat});
-    arm(del,'ลบ','ยืนยัน',()=>{state.ledger=state.ledger.filter(y=>y.id!==x.id);if(editingLedgerId===x.id)cancelLedgerEdit();persist();renderLedger();toast('ลบรายการแล้ว');});
-    const edit=h('button',{type:'button',class:'btn edit','aria-label':'แก้ไขรายการ '+x.cat,onclick:()=>startLedgerEdit(x.id)},'แก้ไข');
+    arm(del,'ลบ','ยืนยัน',()=>{state.ledger=state.ledger.filter(y=>y.id!==x.id);persist();renderLedger();toast('ลบรายการแล้ว');});
     return h('div',{class:'lrow'},
       h('span',{class:'d'},String(d.getDate()),h('small',null,DOW[d.getDay()])),
       h('span',{class:'c'},x.cat,x.note?h('small',null,x.note):null),
       h('span',{class:'a '+(x.kind==='income'?'inc':'exp')},(x.kind==='income'?'+':'−')+money(x.amount)),
-      h('span',{class:'row-actions'},edit,del));
+      del);
   }));
 }
 
@@ -1335,8 +1363,9 @@ function buildSettings(){
     });
     if(g.ro)sec.append(h('p',{class:'readout',id:g.ro}));
     root.append(sec);
+    if(g.t==='ค่าแรงและรอบเงินเดือน')buildWageHist(root);
     if(g.t==='อัตราโอที')buildPatternSettings(root);
-    if(g.t==='ปฏิทินและรอบเงินเดือนของบริษัท'){buildSatSettings(root);buildWorkTime(root);}
+    if(g.t==='ปฏิทินและรอบเงินเดือนของบริษัท'){buildSatSettings(root);buildWorkTime(root);buildCalEd(root);}
   });
   root.addEventListener('input',e=>{
     const el=e.target,pt=el.dataset&&el.dataset.p,k=el.dataset&&el.dataset.k,wk=el.dataset&&el.dataset.w;
@@ -1391,11 +1420,12 @@ function syncSettings(){
   });
   document.querySelectorAll('#setFields input[data-k]').forEach(el=>{el.value=S()[el.dataset.k];el.removeAttribute('aria-invalid');});
   syncSat();
+  renderWageHist();renderCalEd();
   updateReadouts();
 }
 function updateReadouts(){
-  const s=S(),hr=hourly(),c=periodCalc(view.y,view.m);
-  $('ro-wage').textContent='ค่าแรงต่อชั่วโมง '+money(hr)+' บาท ('+money0(s.dailyWage)+' ÷ '+hrs(s.hoursPerDay)+')\nเงินเดือนรายเดือน '+money(c.salary)+' บาท · รอบที่เลือกอยู่ '+rangeText(c.range)+' '+(pdate(c.range.end).getFullYear()+543);
+  const s=S(),c=periodCalc(view.y,view.m),hr=hourlyOn(c.range.end);
+  $('ro-wage').textContent='ค่าแรงต่อชั่วโมง '+money(hr)+' บาท ('+money0(c.wage)+' ÷ '+hrs(s.hoursPerDay)+')\nเงินเดือนรายเดือน '+money(c.salary)+' บาท · รอบที่เลือกอยู่ '+rangeText(c.range)+' '+(pdate(c.range.end).getFullYear()+543);
   const fh=calcShift({date:todayS,type:'holiday',hours:s.defHoursHoliday,shuttle:true}).ot;
   $('ro-ot').textContent='โอทีปกติ 1 ชม. = '+money(r2(hr*s.mulWeekday))+' บาท\nโอทีวันหยุดเต็มวัน '+hrs(s.defHoursHoliday)+' ชม. = '+money(fh)+' บาท (ไม่รวมค่าแรงรายวัน ค่ารถ ค่าข้าว) อาทิตย์ เสาร์หยุด และนักขัตฤกษ์คิดเท่ากัน';
   $('ro-ded').textContent='รอบที่เลือก (เงินเดือน '+money(c.salary)+' บาท): ประกันสังคม '+money(c.sso)+' · กองทุนสำรองเลี้ยงชีพ '+money(c.pf)+' บาท';
@@ -1403,7 +1433,7 @@ function updateReadouts(){
 
 /* ---------- backup ---------- */
 let downloads=null;
-function exportJSON(){return JSON.stringify({app:'otbook',v:4,exportedAt:new Date().toISOString(),settings:state.settings,shifts:state.shifts,ledger:state.ledger,periods:state.periods,dayOv:state.dayOv},null,1);}
+function exportJSON(){return JSON.stringify({app:'otbook',v:4,exportedAt:new Date().toISOString(),settings:state.settings,shifts:state.shifts,ledger:state.ledger,periods:state.periods,dayOv:state.dayOv,wageHist:state.wageHist,calUser:state.calUser},null,1);}
 function cell(v,text){
   let s=String(v==null?'':v);
   if(text&&/^[=+@\-]/.test(s))s="'"+s;
@@ -1437,7 +1467,6 @@ async function saveFile(name,data){
   }catch(e){toast('บันทึกไฟล์ไม่สำเร็จ ลองปุ่มคัดลอกแทน');return false;}
 }
 function resetAfterImport(){
-  editingLedgerId=null;
   form=newForm(todayS);
   lform={kind:'expense',cat:EXP_CATS[0],date:todayS};
   view=periodOf(todayS);
@@ -1455,7 +1484,7 @@ function restoreFrom(text){
 function updateMonthBar(){
   const r=periodRange(view.y,view.m);
   $('monthLabel').replaceChildren(h('span',{class:'ml1'},MONTHS[view.m]+' '+(view.y+543)),h('span',{class:'ml2'},rangeText(r)));
-  $('monthbar').hidden=curTab==='set'||curTab==='year';
+  $('monthbar').hidden=curTab==='set'||(curTab==='year'&&ovPane!=='fin');
 }
 function renderTab(){
   if(curTab==='log'){renderWelcome();renderBanner();renderGlance();renderCal();renderList();syncForm();}
@@ -1487,11 +1516,6 @@ function changeMonth(d){
 function syncLedgerForm(){
   document.querySelectorAll('input[name=l-kind]').forEach(r=>{r.checked=r.value===lform.kind;});
   $('l-date').value=lform.date;$('l-amount').value='';$('l-note').value='';
-  if(!editingLedgerId){
-    $('l-submit').textContent='เพิ่มรายการ';
-    $('l-cancel').hidden=true;
-    $('ledForm').classList.remove('editing');
-  }
   buildCats();
 }
 
@@ -1557,7 +1581,7 @@ function bind(){
       if(!days.length){toast('วันที่เลือกเป็นวันหยุดของบริษัทอยู่แล้ว ไม่ต้องบันทึกการลา');return;}
       days.forEach(ds=>{state.shifts[ds]={date:ds,type:'leave',hours:0,shuttle:false,leave:form.leave,note:note};});
       persist();
-      const L=leaveLoss(form.leave,days.length);
+      const L=leaveLoss(form.leave,days.length,form.date);
       renderGlance();renderCal();renderList();refreshForm();
       toast('บันทึก'+LEAVE_NAME[form.leave]+' '+days.length+' วัน · ไม่ได้ค่าข้าว/ค่ารถ '+money(r2(L.meal+L.tr))+' บาท');
       return;
@@ -1584,7 +1608,6 @@ function bind(){
     if(!r.checked)return;lform.kind=r.value;buildCats();
   }));
   $('l-date').addEventListener('change',e=>{lform.date=e.target.value;});
-  $('l-cancel').addEventListener('click',cancelLedgerEdit);
   $('ledForm').addEventListener('submit',e=>{
     e.preventDefault();
     const a=parseFloat($('l-amount').value);
@@ -1592,21 +1615,13 @@ function bind(){
     const date=$('l-date').value;
     if(!isDate(date)){toast('เลือกวันที่ก่อน');return;}
     lform.date=date;
-    const entry={id:editingLedgerId||uid(),date:date,kind:lform.kind,cat:lform.cat,amount:r2(a),note:$('l-note').value.trim().slice(0,200)};
-    const wasEditing=!!editingLedgerId;
-    if(wasEditing){
-      const index=state.ledger.findIndex(x=>x.id===editingLedgerId);
-      if(index<0){toast('หารายการเดิมไม่พบ กรุณาลองใหม่');cancelLedgerEdit();return;}
-      state.ledger[index]=entry;
-    }else state.ledger.push(entry);
+    state.ledger.push({id:uid(),date:date,kind:lform.kind,cat:lform.cat,amount:r2(a),note:$('l-note').value.trim().slice(0,200)});
     persist();
-    editingLedgerId=null;
     $('l-amount').value='';$('l-note').value='';
     const p=periodOf(date);
     if(p.y!==view.y||p.m!==view.m){view=p;updateMonthBar();}
-    syncLedgerForm();
     renderLedger();
-    toast((wasEditing?'แก้ไข':'เพิ่ม')+(lform.kind==='income'?'รายรับ ':'รายจ่าย ')+money(r2(a))+' บาท');
+    toast((lform.kind==='income'?'เพิ่มรายรับ ':'เพิ่มรายจ่าย ')+money(r2(a))+' บาท');
   });
 
   $('dl-ot').addEventListener('click',()=>saveFile('otbook-ot.csv',csvOT()));
@@ -1663,7 +1678,7 @@ const META_KEY='otbook.meta';
 function readMeta(){try{return JSON.parse(localStorage.getItem(META_KEY)||'{}')||{};}catch(e){return {};}}
 function writeMeta(m){try{localStorage.setItem(META_KEY,JSON.stringify(m));}catch(e){}}
 const daysSince=iso=>{const t=Date.parse(iso);return Number.isFinite(t)?Math.max(0,Math.floor((Date.now()-t)/864e5)):null;};
-const recCount=()=>Object.keys(state.shifts).length+state.ledger.length+Object.keys(state.periods).length;
+const recCount=()=>Object.keys(state.shifts).length+state.ledger.length+Object.keys(state.periods).length+state.wageHist.length+Object.keys(state.calUser).length;
 let persisted=null;
 function markBackup(){const m=readMeta();m.last=new Date().toISOString();delete m.snooze;writeMeta(m);renderBackupInfo();renderBanner();}
 function renderBackupInfo(){
@@ -1787,7 +1802,7 @@ function syncSat(){
 function calChanged(){
   persist();
   if(isDate(form.date)&&!state.shifts[form.date]&&form.type!=='leave')form=newForm(form.date,defType(form.date),form.leave);
-  syncSat();updateReadouts();
+  syncSat();renderCalEd();updateReadouts();
 }
 
 /* ---------- goal for the period ---------- */
@@ -1801,7 +1816,7 @@ function goalCard(c){
   const rem=r2(g-c.net),pct=clamp(c.net/g,0,1);
   card.append(h('div',{class:'meter',role:'progressbar','aria-valuemin':'0','aria-valuemax':String(g),'aria-valuenow':String(Math.round(c.net)),'aria-label':'ความคืบหน้าถึงเป้าหมาย'},h('i',{style:'width:'+Math.round(pct*100)+'%'})));
   if(rem<=0){card.append(h('p',{class:'hint',id:'goal-msg'},'ถึงเป้าแล้ว รับสุทธิ ฿'+money(c.net)+' เกินเป้า ฿'+money(-rem)));return card;}
-  const hr=hourly(),perHr=r2(hr*s.mulWeekday);
+  const hr=hourlyOn(c.range.end),perHr=r2(hr*s.mulWeekday);
   if(!(perHr>0)){card.append(h('p',{class:'hint',id:'goal-msg'},'ตั้งค่าแรงรายวันก่อน แล้วระบบจะบอกว่าต้องโอทีอีกกี่ชั่วโมง'));return card;}
   const lines=['ขาดอีก ฿'+money(rem)+' จากเป้า ฿'+moneyR(g)];
   const need=Math.ceil(rem/perHr*4)/4;
@@ -1822,7 +1837,7 @@ function goalCard(c){
 
 /* ---------- check against the real pay slip ---------- */
 function slipCard(c){
-  const s=S(),key=c.range.end.slice(0,7),hr=hourly();
+  const s=S(),key=c.range.end.slice(0,7),hr=hourlyOn(c.range.end);
   const get=()=>{const p=state.periods[key];return p&&p.slip?p.slip:{};};
   const byMul={};
   c.groups.normal.lines.concat(c.groups.holiday.lines).forEach(l=>{byMul[l.mul]=(byMul[l.mul]||0)+l.amount;});
@@ -2016,7 +2031,7 @@ function planCards(){
     const leaves=[];
     for(let i=runs[b.k].b+1;i<runs[b.j].a;i++)if(!days[i].off)leaves.push(days[i].ds);
     if(!leaves.length)return;
-    const L=leaveLoss('annual',leaves.length);
+    const L=leaveLoss('annual',leaves.length,leaves[0]);
     const pk={};leaves.forEach(ds=>{const p=periodOf(ds);pk[p.y+'-'+p.m]=p;});
     const dil=Object.keys(pk).map(k=>{const p=pk[k];return 'รอบ '+MONTHS_S[p.m]+(hasLeaveIn(p.y,p.m)?' มีลาแล้ว ลาเพิ่มไม่เสียเบี้ยขยันเพิ่ม':' ยังไม่เคยลา ลาแล้วเบี้ยขยันจะหาย');});
     const done=leaves.every(ds=>state.shifts[ds]&&state.shifts[ds].type==='leave');
@@ -2026,20 +2041,16 @@ function planCards(){
       L.total>0?h('span',{class:'hint'},'ไม่ได้ค่าข้าว/ค่ารถ ฿'+money(L.total)):null,
       h('span',{class:'hint'},dil.join(' · '))));
   });
-  if(!cards.length)cards.push(h('p',{class:'empty'},'ยังไม่พบช่วงที่ลาไม่เกิน 3 วันแล้วหยุดติดกัน 4 วันขึ้นไป หรือหยุดยาวอยู่แล้ว ในช่วงที่ปฏิทินครอบคลุม ถ้าใช้ปฏิทินที่ตั้งเอง ลองใส่วันหยุดนักขัตฤกษ์ในหน้าบันทึก (ปรับประเภทของวันนี้) แผนจะแม่นขึ้น'));
+  if(!cards.length)cards.push(h('p',{class:'empty'},'ยังไม่พบช่วงที่ลาไม่เกิน 3 วันแล้วหยุดติดกัน 4 วันขึ้นไป หรือหยุดยาวอยู่แล้ว ในช่วงที่ปฏิทินครอบคลุม ถ้าใช้ปฏิทินที่ตั้งเอง ลองใส่วันหยุดทั้งปีที่ตั้งค่า > ปฏิทินบริษัท แผนจะแม่นขึ้น'));
   cards.push(h('p',{class:'hint'},'ดูถึง '+thShort(lastKnown)+' '+(pdate(lastKnown).getFullYear()+543)+(lastKnown<addDays(todayS,120)?' (ปฏิทินบริษัทในแอปมีถึงวันนี้)':'')+' วันลานับเฉพาะวันทำงาน ไม่นับวันหยุดบริษัทที่คั่นกลาง'));
   return cards;
 }
 
-function renderYear(){
+function yearPane(){
   const Y=yearV,rows=yearRows(Y);
   const done=rows.filter(r=>r.st==='done'),now=rows.find(r=>r.st==='now');
   const sum=k=>r2(done.reduce((a,r)=>a+r[k],0));
-  const chev=d=>sv('svg',{viewBox:'0 0 24 24'},sv('path',{d:d}));
-  const nav=h('div',{class:'card yrnav'},h('div',{class:'month'},
-    h('button',{type:'button',id:'yr-prev','aria-label':'ปีก่อนหน้า',onclick:()=>{yearV--;renderYear();}},chev('M15 5l-7 7 7 7')),
-    h('div',{class:'mlabel',id:'yr-label',role:'status'},h('span',null,'ปี '+(Y+543)),h('span',{class:'ml2'},'นับตามเดือนที่รับเงิน')),
-    h('button',{type:'button',id:'yr-next','aria-label':'ปีถัดไป',onclick:()=>{yearV++;renderYear();}},chev('M9 5l7 7-7 7'))));
+  const nav=yearNavCard();
 
   const cum=h('div',{class:'card',id:'yr-cum'},h('h2',null,'ยอดสะสมปี '+(Y+543)));
   if(!done.length){
@@ -2081,8 +2092,388 @@ function renderYear(){
   });
 
   const plan=h('div',{class:'card',id:'yr-plan'},h('h2',null,'วางแผนลา: หยุดยาวที่กำลังจะมาถึง'),...planCards());
-  $('v-year').replaceChildren(nav,cum,chartCard,table,plan);
+  return [nav,cum,chartCard,table,plan];
 }
+
+/* ---------- v9: ประวัติค่าแรง ---------- */
+function renderWageHist(){
+  const box=$('wh-list');if(!box)return;
+  const a=state.wageHist,kids=[h('div',{class:'whrow'},h('span',null,(a.length?'ก่อนการปรับครั้งแรก':'ค่าแรงรายวันทุกรอบ')+' · ฿'+money0(S().dailyWage)+' ต่อวัน'))];
+  if(!a.length)kids.push(h('p',{class:'hint'},'ยังไม่มีการปรับค่าแรง ถ้าเงินเดือนขึ้น ใส่ด้านล่าง รอบเก่าจะไม่เปลี่ยน'));
+  a.forEach(x=>{
+    const b=h('button',{type:'button',class:'btn danger','aria-label':'ลบการปรับค่าแรงวันที่ '+thDate(x.from)});
+    arm(b,'ลบ','แตะอีกครั้งเพื่อลบ',()=>{
+      state.wageHist=state.wageHist.filter(y=>y.from!==x.from);
+      persist();renderWageHist();updateReadouts();toast('ลบรายการปรับค่าแรงแล้ว');
+    });
+    kids.push(h('div',{class:'whrow'},h('span',null,'ตั้งแต่ '+thDate(x.from)+' · ฿'+money0(x.wage)+' ต่อวัน'),b));
+  });
+  box.replaceChildren(...kids);
+}
+function buildWageHist(root){
+  const date=h('input',{id:'wh-date',type:'date'});
+  const wage=h('input',{id:'wh-wage',type:'number',inputmode:'decimal',step:'0.5',min:'1',placeholder:'เช่น ค่าแรงรายวันหลังขึ้น'});
+  const add=h('button',{type:'button',class:'btn primary',id:'wh-add'},'เพิ่มการปรับค่าแรง');
+  const msg=h('p',{class:'hint',id:'wh-msg',role:'status'});
+  root.append(h('div',{class:'sgroup',id:'wh-group'},h('h3',null,'ปรับค่าแรง (เงินเดือนขึ้น)'),
+    h('p',{class:'hint'},'ใส่วันที่ค่าแรงใหม่เริ่มมีผล แอปใช้ค่าแรงใหม่ตั้งแต่วันนั้น ส่วนรอบและโอทีก่อนวันนั้นยังคิดด้วยค่าแรงเดิม เงินเดือนของรอบใช้ค่าแรง ณ วันสิ้นรอบ ถ้าบริษัทขึ้นให้ตั้งแต่ต้นรอบ ให้ใส่วันเริ่มรอบ (เช่น วันที่ 21)'),
+    h('div',{id:'wh-list'}),
+    h('div',{class:'field'},h('label',{for:'wh-date'},'ค่าแรงใหม่เริ่มมีผลวันที่'),date),
+    h('div',{class:'field'},h('label',{for:'wh-wage'},'ค่าแรงรายวันใหม่ (บาท)'),wage),
+    add,msg));
+  add.addEventListener('click',()=>{
+    const d=date.value,w=parseFloat(wage.value);
+    if(!isDate(d)){msg.textContent='เลือกวันที่ค่าแรงใหม่เริ่มมีผลก่อน';return;}
+    if(!Number.isFinite(w)||!(w>0)){msg.textContent='ใส่ค่าแรงรายวันใหม่เป็นตัวเลขมากกว่า 0';return;}
+    const a=state.wageHist.filter(x=>x.from!==d);
+    a.push({from:d,wage:w});a.sort((x,y)=>x.from<y.from?-1:1);
+    state.wageHist=a;persist();
+    date.value='';wage.value='';msg.textContent='';
+    renderWageHist();updateReadouts();toast('เพิ่มการปรับค่าแรงแล้ว');
+  });
+  renderWageHist();
+}
+
+/* ---------- v9: แก้ปฏิทินบริษัทเอง ---------- */
+/* วันหยุดธนาคารตามประกาศ ธปท. (bot.or.th) ใช้เป็นจุดเริ่มต้นเท่านั้น ปฏิทินโรงงานอาจไม่ตรง */
+const BANK_HOL={2027:['2027-01-01','2027-02-22','2027-04-06','2027-04-13','2027-04-14','2027-04-15','2027-05-03','2027-05-04','2027-05-20','2027-06-03','2027-07-19','2027-07-28','2027-08-12','2027-10-13','2027-10-25','2027-12-06','2027-12-10','2027-12-31']};
+const CAL_BRUSH=[['pub','นักขัตฤกษ์'],['co','บริษัทหยุด'],['comp','หยุดชดเชย'],['sat','เสาร์หยุด'],['work','วันทำงาน']];
+const CAL_SHORT={pub:'นักขัตฯ',co:'บริษัท',comp:'ชดเชย',sat:'เสาร์'};
+let calEd={y:0,m:0,brush:'pub'};
+function calEdInit(){
+  const d=pdate(todayS);
+  if(d.getMonth()>=9){calEd.y=d.getFullYear()+1;calEd.m=0;}
+  else{calEd.y=d.getFullYear();calEd.m=d.getMonth();}
+}
+const daysIn=(y,m)=>new Date(y,m+1,0).getDate();
+const ymOf=(y,m)=>y+'-'+pad(m+1);
+const kindNoOv=ds=>pdate(ds).getDay()===0?'sun':(userKind(ds)||autoKind(ds));
+function monthWorkDays(y,m){
+  let c=0;
+  for(let d=1;d<=daysIn(y,m);d++)if(isWorkDay(ymOf(y,m)+'-'+pad(d)))c++;
+  return c;
+}
+function ensureUserMonth(ym){
+  if(state.calUser[ym])return state.calUser[ym];
+  const y=Number(ym.slice(0,4)),m=Number(ym.slice(5,7))-1,o={sat:[],pub:[],co:[],comp:[]};
+  for(let d=1;d<=daysIn(y,m);d++){const k=autoKind(ym+'-'+pad(d));if(o[k])o[k].push(d);}
+  state.calUser[ym]=o;
+  return o;
+}
+function paintDay(ds,k){
+  const ym=ds.slice(0,7),mo=ensureUserMonth(ym),day=Number(ds.slice(8,10));
+  ['sat','pub','co','comp'].forEach(x=>{mo[x]=mo[x].filter(d=>d!==day);});
+  if(mo[k]){mo[k].push(day);mo[k].sort((a,b)=>a-b);}
+}
+function fillSat(Y){
+  for(let m=0;m<12;m++){
+    const ym=ymOf(Y,m),mo=ensureUserMonth(ym);
+    for(let d=1;d<=daysIn(Y,m);d++){
+      const ds=ym+'-'+pad(d);
+      if(pdate(ds).getDay()!==6)continue;
+      if(['pub','co','comp'].some(k=>mo[k].indexOf(d)>=0))continue;
+      mo.sat=mo.sat.filter(x=>x!==d);
+      if(satOffOn(ds))mo.sat.push(d);
+    }
+    mo.sat.sort((a,b)=>a-b);
+  }
+}
+function fillBank(Y){
+  (BANK_HOL[Y]||[]).forEach(ds=>{if(pdate(ds).getDay()!==0)paintDay(ds,'pub');});
+}
+function renderCalEd(){
+  const body=$('ce-body');if(!body)return;
+  const Y=calEd.y,M=calEd.m,ym=ymOf(Y,M),chev=d=>sv('svg',{viewBox:'0 0 24 24'},sv('path',{d:d}));
+  const nav=h('div',{class:'month ce-nav'},
+    h('button',{type:'button',id:'ce-prev','aria-label':'ปีก่อนหน้า',onclick:()=>{calEd.y--;renderCalEd();}},chev('M15 5l-7 7 7 7')),
+    h('div',{class:'mlabel',id:'ce-year',role:'status'},h('span',null,'ปี '+(Y+543))),
+    h('button',{type:'button',id:'ce-next','aria-label':'ปีถัดไป',onclick:()=>{calEd.y++;renderCalEd();}},chev('M9 5l7 7-7 7')));
+  let yearTotal=0;
+  const months=h('div',{class:'ce-months'},...MONTHS_S.map((n,i)=>{
+    const w=monthWorkDays(Y,i);yearTotal+=w;
+    return h('button',{type:'button',class:'ce-m','data-m':String(i),'aria-pressed':String(i===M),'aria-label':MONTHS[i]+' ทำงาน '+w+' วัน'+(state.calUser[ymOf(Y,i)]?' แก้ไว้แล้ว':''),
+      onclick:()=>{calEd.m=i;renderCalEd();}},h('b',null,n+(state.calUser[ymOf(Y,i)]?' ✎':'')),h('small',null,w+' วัน'));
+  }));
+  const brush=h('div',{class:'ce-brush',role:'group','aria-label':'ประเภทวันที่จะลงสี'},...CAL_BRUSH.map(b=>h('button',{type:'button',class:'btn','data-brush':b[0],'aria-pressed':String(calEd.brush===b[0]),onclick:()=>{calEd.brush=b[0];renderCalEd();}},b[1])));
+  const kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
+  const first=pdate(ym+'-01').getDay();
+  for(let i=0;i<first;i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
+  for(let d=1;d<=daysIn(Y,M);d++){
+    const ds=ym+'-'+pad(d),k=kindNoOv(ds),wd=pdate(ds).getDay();
+    let cls='';
+    if(k!=='work')cls='off'+(k==='sun'?' offsun':k==='sat'?' offsat':'');
+    if(state.dayOv[ds])cls+=' ovr';
+    kids.push(h('button',{type:'button',class:cls.trim(),'data-ds':ds,'aria-label':thDate(ds)+' · '+KIND_NAME[k],
+      onclick:()=>{
+        if(wd===0){toast('วันอาทิตย์หยุดอยู่แล้ว');return;}
+        if(calEd.brush==='sat'&&wd!==6){toast('เสาร์หยุดใช้กับวันเสาร์เท่านั้น');return;}
+        paintDay(ds,calEd.brush);calChanged();renderCalEd();
+      }},h('span',{class:'n'},String(d)),h('span',{class:'s'},CAL_SHORT[k]||'')));
+  }
+  const grid=h('div',{class:'pcal',id:'ce-grid'},...kids);
+  const satOK=S().satMode===1||(S().satMode===2&&!!S().satRef);
+  const fs=h('button',{type:'button',class:'btn',id:'ce-fillsat',disabled:!satOK},'เติมเสาร์หยุดทั้งปี '+(Y+543));
+  fs.addEventListener('click',()=>{fillSat(Y);calChanged();renderCalEd();toast('เติมเสาร์หยุดตามที่ตั้งไว้แล้ว');});
+  const acts=[fs];
+  if(BANK_HOL[Y]){
+    const bk=h('button',{type:'button',class:'btn',id:'ce-bank'},'เริ่มจากวันหยุดธนาคาร '+(Y+543));
+    bk.addEventListener('click',()=>{fillBank(Y);calChanged();renderCalEd();toast('ใส่วันหยุดธนาคารแล้ว ปรับให้ตรงกับบริษัท');});
+    acts.push(bk);
+  }
+  const rm=h('button',{type:'button',class:'btn danger',id:'ce-reset',disabled:!state.calUser[ym]});
+  arm(rm,'ล้างที่แก้เดือนนี้','แตะอีกครั้งเพื่อล้าง',()=>{delete state.calUser[ym];calChanged();renderCalEd();toast('ล้างปฏิทินที่แก้ไว้ของเดือนนี้แล้ว');});
+  rm.disabled=!state.calUser[ym];
+  acts.push(rm);
+  body.replaceChildren(nav,
+    h('p',{class:'hint'},'แตะเดือนเพื่อดู ตัวเลขใต้ชื่อเดือนคือจำนวนวันทำงาน เทียบกับปฏิทินที่บริษัทแจกได้ (ทำงานทั้งปี '+yearTotal+' วัน)'),
+    months,
+    h('p',{class:'lab',style:'margin-top:4px'},'เลือกประเภท แล้วแตะวันที่ในเดือน '+MONTHS[M]+' '+(Y+543)),
+    brush,grid,
+    h('p',{class:'hint',id:'ce-sum'},'เดือนนี้ทำงาน '+monthWorkDays(Y,M)+' วัน'+(state.calUser[ym]?' (แก้เองแล้ว)':' (ยังไม่ได้แก้ ใช้ปฏิทินเดิม)')+' · วันอาทิตย์หยุดอัตโนมัติ'),
+    h('div',{class:'row ce-acts'},...acts),
+    h('p',{class:'hint'},BANK_HOL[Y]?'วันหยุดธนาคารมาจากประกาศธนาคารแห่งประเทศไทย บริษัทอาจหยุดไม่ตรง (เช่น วันชดเชย) ให้ตรวจกับปฏิทินที่บริษัทแจก แล้วแตะแก้วันที่ต่าง':'เดือนที่ไม่เคยแก้ ใช้ปฏิทินที่ฝังไว้หรือเสาร์หยุดตามโหมดที่ตั้ง เดือนที่แก้แล้วจะใช้ตามที่คุณลงสีทั้งหมด'));
+}
+function buildCalEd(root){
+  root.append(h('div',{class:'sgroup',id:'ce-group'},h('h3',null,'ปฏิทินบริษัท (ใส่วันหยุดทั้งปี)'),
+    h('p',{class:'hint'},'ใส่วันหยุดของปีหน้าได้เองโดยไม่ต้องแก้โค้ด เลือกเดือน เลือกประเภท แล้วแตะวันที่ ข้อมูลอยู่ในเครื่องและรวมอยู่ในไฟล์สำรอง'),
+    h('div',{id:'ce-body'})));
+  renderCalEd();
+}
+
+/* ---------- v9: ภาพรวม (การเงิน / ทั้งปี / ภาษี) ---------- */
+let ovPane='fin';
+function renderYear(){
+  const names=[['fin','การเงิน'],['year','ทั้งปี'],['tax','ภาษี']];
+  const sw=h('div',{class:'pane-sw',role:'group','aria-label':'มุมมองภาพรวม'},...names.map(p=>h('button',{type:'button','data-pane':p[0],'aria-pressed':String(ovPane===p[0]),
+    onclick:()=>{ovPane=p[0];updateMonthBar();renderYear();window.scrollTo(0,0);}},p[1])));
+  const kids=ovPane==='fin'?finPane():ovPane==='tax'?taxPane():yearPane();
+  $('v-year').replaceChildren(sw,...kids);
+}
+function yearNavCard(){
+  const Y=yearV,chev=d=>sv('svg',{viewBox:'0 0 24 24'},sv('path',{d:d}));
+  return h('div',{class:'card yrnav'},h('div',{class:'month'},
+    h('button',{type:'button',id:'yr-prev','aria-label':'ปีก่อนหน้า',onclick:()=>{yearV--;renderYear();}},chev('M15 5l-7 7 7 7')),
+    h('div',{class:'mlabel',id:'yr-label',role:'status'},h('span',null,'ปี '+(Y+543)),h('span',{class:'ml2'},'นับตามเดือนที่รับเงิน')),
+    h('button',{type:'button',id:'yr-next','aria-label':'ปีถัดไป',onclick:()=>{yearV++;renderYear();}},chev('M9 5l7 7-7 7'))));
+}
+const numField=(id,label,key,hint,step)=>h('div',{class:'field'},h('label',{for:id},label),
+  h('div',{class:'unit'},h('input',{id:id,type:'number',inputmode:'decimal',min:'0',step:step||'100',value:S()[key]>0?String(S()[key]):null,placeholder:'0',
+    onchange:e=>{const v=parseFloat(e.target.value);S()[key]=Number.isFinite(v)&&v>0?v:0;persist();renderYear();}}),h('span',null,'บาท')),
+  hint?h('p',{class:'hint'},hint):null);
+
+/* ทุกรอบที่มีในแอป ตั้งแต่ปีแรกที่มีข้อมูลถึงปีหน้า */
+function allRows(){
+  const cy=periodOf(todayS).y;let y0=cy;
+  const upd=ds=>{if(isDate(ds)){const y=pdate(ds).getFullYear();if(y<y0)y0=y;}};
+  Object.keys(state.shifts).forEach(upd);
+  state.ledger.forEach(x=>upd(x.date));
+  Object.keys(state.periods).forEach(k=>upd(k+'-01'));
+  y0=Math.max(y0,cy-9);
+  const out=[];
+  for(let Y=y0;Y<=cy+1;Y++)yearRows(Y).forEach(r=>{r.y=Y;out.push(r);});
+  return out;
+}
+/* เงินคงเหลือ = เงินตั้งต้น + รับสุทธิของรอบที่จบแล้ว + รายรับอื่น − รายจ่าย
+   รอบที่จบแล้วแต่ไม่ได้จดอะไรเลย (หลังรอบแรกที่มีข้อมูล) นับด้วยยอดประมาณจากเงินเดือน */
+function finTotals(){
+  const rows=allRows(),first=rows.findIndex(r=>r.st==='done'||r.st==='now');
+  let net=0,gaps=0,otH=0,nowNet=0,done=0;
+  rows.forEach((r,i)=>{
+    if(rowLive(r))otH+=r.otH;
+    if(r.st==='now')nowNet=r.net;
+    if(first<0||i<first)return;
+    if(r.st==='done'){net+=r.net;done++;}
+    else if(r.st==='none'&&r.range.end<todayS){net+=r.net;gaps++;}
+  });
+  let inc=0,exp=0;
+  state.ledger.forEach(x=>{if(x.kind==='income')inc+=x.amount;else exp+=x.amount;});
+  net=r2(net);inc=r2(inc);exp=r2(exp);
+  return {net:net,inc:inc,exp:exp,otH:r2(otH),gaps:gaps,done:done,nowNet:nowNet,bal:r2(S().openBal+net+inc-exp)};
+}
+function finChart(rows,nets,exps,sel,onPick){
+  const W=336,H=196,L=36,R=4,T=10,B=26,pw=W-L-R,ph=H-T-B,slot=pw/12,bw=9;
+  const max=Math.max(1000,...nets,...exps);
+  const step=[1000,2000,2500,5000,10000,20000,50000].find(x=>max/x<=5)||100000;
+  const top=Math.ceil(max/step)*step,compact=top>=10000;
+  const y=v=>T+ph-v/top*ph;
+  const tl=v=>v===0?'0':compact?(v/1000)+'K':moneyR(v);
+  const svg=sv('svg',{class:'chart',id:'fin-chart',viewBox:'0 0 '+W+' '+H,role:'group','aria-label':'แผนภูมิแท่งเทียบรับสุทธิกับรายจ่ายรายเดือน ตัวเลขทั้งหมดอยู่ในรายการด้านล่าง'});
+  const band=sv('rect',{class:'selband',x:0,y:T-2,width:slot,height:ph+B-2,rx:6,visibility:'hidden'});
+  svg.append(band);
+  for(let v=0;v<=top;v+=step)svg.append(sv('line',{class:v===0?'ax':'g',x1:L,x2:W-R,y1:y(v),y2:y(v)}),sv('text',{x:L-5,y:y(v)+4,'text-anchor':'end'},tl(v)));
+  const hits=[];
+  rows.forEach((r,i)=>{
+    const x0=L+i*slot,cx=x0+slot/2;
+    [[nets[i],'f-sal',cx-bw-1,r.st==='now'?'0.5':null],[exps[i],'f-alw',cx+1,null]].forEach(p=>{
+      const hh=p[0]/top*ph;
+      if(p[0]>0&&hh>=1)svg.append(sv('path',{class:p[1],d:topRound(p[2],y(p[0]),bw,hh,4),opacity:p[3]}));
+    });
+    svg.append(sv('text',{x:cx,y:H-9,'text-anchor':'middle'},MONTHS_S[r.m]));
+    const hit=sv('rect',{class:'hit',x:x0,y:T,width:slot,height:ph+B,tabindex:'0',role:'button','aria-label':'ดูตัวเลขเดือน '+MONTHS[r.m]});
+    const pick=()=>{setSel(i);onPick(i);};
+    hit.addEventListener('click',pick);
+    hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick();}});
+    hits.push(hit);
+  });
+  hits.forEach(hh=>svg.append(hh));
+  function setSel(i){
+    hits.forEach((hh,k)=>hh.setAttribute('aria-pressed',k===i?'true':'false'));
+    if(i==null){band.setAttribute('visibility','hidden');return;}
+    band.setAttribute('x',L+i*slot);band.setAttribute('visibility','visible');
+  }
+  setSel(sel);
+  return svg;
+}
+function finPane(){
+  const Y=view.y,s=S(),rows=yearRows(Y),cur=rows[view.m],c=cur.c;
+  const leds=rows.map((r,m)=>ledgerCalc(Y,m)),L=leds[view.m],T=finTotals();
+  const doneR=rows.filter(r=>r.st==='done');
+  const netY=r2(doneR.reduce((a,r)=>a+r.net,0)),expY=r2(leds.reduce((a,l)=>a+l.exp,0)),incY=r2(leds.reduce((a,l)=>a+l.inc,0));
+  const otY=r2(rows.filter(rowLive).reduce((a,r)=>a+r.otH,0));
+  const cats={};leds.forEach(l=>{for(const k in l.byCat)cats[k]=(cats[k]||0)+l.byCat[k];});
+  const st=(k,v,sub,neg)=>h('div',null,h('div',{class:'k'},k),h('div',{class:'v'+(neg?' neg':'')},v),h('div',{class:'sub'},sub));
+  const sgn=n=>(n<0?'−':'')+'฿'+moneyR(Math.abs(n));
+  const hero=h('div',{class:'hero',id:'fin-hero'},
+    h('p',{class:'hl'},'เงินคงเหลือสะสม'),
+    h('p',{class:'hn'},(T.bal<0?'−':'')+'฿'+money(Math.abs(T.bal))),
+    h('p',{class:'hs'},'เงินตั้งต้น ฿'+moneyR(s.openBal)+' + รับสุทธิ ฿'+moneyR(T.net)+' + รายรับอื่น ฿'+moneyR(T.inc)+' − รายจ่าย ฿'+moneyR(T.exp)));
+  const notes=[];
+  notes.push('นับรับสุทธิของ '+T.done+' รอบที่จบแล้ว'+(T.gaps?' และอีก '+T.gaps+' รอบที่ไม่ได้จดอะไร (ใช้ยอดประมาณจากเงินเดือน)':''));
+  if(T.nowNet>0)notes.push('รอบปัจจุบันประมาณ ฿'+moneyR(T.nowNet)+' ยังไม่รวมจนกว่ารอบจะจบ');
+  const bal=h('div',{class:'card form',id:'fin-open-card'},h('h2',null,'เงินตั้งต้น'),
+    numField('fin-open','เงินที่มีอยู่ก่อนเริ่มจดในแอป (เงินเก็บ เงินในบัญชี)','openBal','ใส่ครั้งเดียวเพื่อให้เงินคงเหลือตรงกับของจริง เว้นว่างถ้าเริ่มนับจาก 0'),
+    h('p',{class:'hint'},notes.join(' · ')));
+  const stA=cur.st==='future'?'ยังไม่ถึงรอบนี้':cur.fromSlip?'ตามสลิป':cur.st==='none'?'ยังไม่มีข้อมูล ประมาณจากเงินเดือน':'ประมาณ';
+  const remain=r2(cur.net+L.inc-L.exp);
+  const per=h('div',{class:'card',id:'fin-period'},h('h2',null,'รอบนี้ · '+rangeText(c.range)+' '+(pdate(c.range.end).getFullYear()+543)),
+    h('div',{class:'stat3'},
+      st('รับสุทธิ','฿'+moneyR(cur.net),stA),
+      st('รายจ่าย','฿'+moneyR(L.exp),'รายรับอื่น ฿'+moneyR(L.inc)),
+      st('คงเหลือรอบนี้',sgn(remain),'รับ + อื่น − จ่าย',remain<0)),
+    h('p',{class:'hint ps-note'},'โอทีรอบนี้ '+hrs(c.otHours)+' ชม. (ปกติ '+hrs(c.groups.normal.hours)+' · วันหยุด '+hrs(c.groups.holiday.hours)+') = ฿'+moneyR(cur.ot)));
+  const yrC=h('div',{class:'card',id:'fin-year'},h('h2',null,'สะสมปี '+(Y+543)),
+    h('div',{class:'stat3'},
+      st('รับสุทธิ','฿'+moneyR(netY),doneR.length+' รอบที่ครบ'),
+      st('รายจ่ายสะสม','฿'+moneyR(expY),'ทั้งหมดที่จด ฿'+moneyR(T.exp)),
+      st('โอทีรวม',hrs(otY)+' ชม.','ทุกปีรวม '+hrs(T.otH)+' ชม.')),
+    h('div',{class:'ps',style:'margin-top:12px'},
+      prow('รับสุทธิจากงาน',netY),
+      prow('รายรับอื่น ๆ',incY,{pos:true}),
+      prow('รายจ่าย',expY,{neg:true}),
+      prow('คงเหลือจากปีนี้',r2(netY+incY-expY),{tot:true,neg:netY+incY-expY<0})),
+    expY>0&&netY+incY>0?h('p',{class:'hint ps-note',id:'fin-ratio'},'ใช้ไปแล้ว '+Math.round(expY/(netY+incY)*100)+'% ของรายรับปีนี้'):null);
+  const nets=rows.map(r=>rowLive(r)?r.net:0),exps=leds.map(l=>l.exp);
+  const chartCard=h('div',{class:'card',id:'fin-chartcard'},h('h2',null,'รับสุทธิเทียบรายจ่าย รายเดือน'));
+  const detail=h('p',{class:'hint',id:'fin-detail',role:'status'});
+  const fdetail=m=>{const r=rows[m];return MONTHS_S[m]+' ('+rangeText(r.range)+'): รับสุทธิ '+(rowLive(r)?money(r.net)+(r.st==='now'?' (ประมาณ รอบยังไม่ครบ)':''):'ยังไม่มีข้อมูล')+' · รายจ่าย '+money(exps[m])+(leds[m].inc>0?' · รายรับอื่น '+money(leds[m].inc):'');};
+  detail.textContent=fdetail(view.m);
+  chartCard.append(finChart(rows,nets,exps,view.m,m=>{detail.textContent=fdetail(m);}),
+    h('div',{class:'legend'},h('span',null,h('i',{class:'i-sal'}),'รับสุทธิ'),h('span',null,h('i',{class:'i-alw'}),'รายจ่าย')),detail);
+  const catKeys=Object.keys(cats).sort((a,b)=>cats[b]-cats[a]),cmax=catKeys.length?cats[catKeys[0]]:1;
+  const catCard=h('div',{class:'card',id:'fin-cats'},h('h2',null,'รายจ่ายปี '+(Y+543)+' ตามหมวด'),
+    catKeys.length?h('div',{class:'bars'},...catKeys.map(k=>h('div',{class:'bar'},
+      h('div',{class:'bt'},h('span',null,k),h('span',null,money(cats[k]))),
+      h('div',{class:'track'},h('div',{class:'fill',style:'width:'+Math.max(3,Math.round(cats[k]/cmax*100))+'%'}))))):
+      h('p',{class:'empty'},'ยังไม่มีรายจ่ายในปีนี้ ไปที่แท็บรับ–จ่ายเพื่อจดรายการ'));
+  const table=h('div',{class:'card',id:'fin-table'},h('h2',null,'รายเดือน'));
+  rows.forEach((r,m)=>{
+    const live=rowLive(r);
+    table.append(h('button',{type:'button',class:'yr'+(live||leds[m].exp>0?'':' none'),onclick:()=>{setView(Y,m);showTab('led');}},
+      h('span',{class:'ym'},h('b',null,MONTHS[m]),h('small',null,rangeText(r.range)+(r.st==='now'?' · รอบปัจจุบัน':''))),
+      h('span',{class:'yn'},live?'฿'+money(r.net):h('small',null,r.st==='future'?'ยังไม่ถึง':'ยังไม่มีข้อมูล'),
+        h('small',null,'จ่าย ฿'+moneyR(leds[m].exp)+(live?' · โอที '+hrs(r.otH)+' ชม.':'')))));
+  });
+  return [hero,bal,per,yrC,chartCard,catCard,table];
+}
+
+/* ---------- v9: ภาษีเงินได้บุคคลธรรมดา (ประมาณการ) ---------- */
+const TAX_BR=[[150000,0],[300000,.05],[500000,.10],[750000,.15],[1000000,.20],[2000000,.25],[5000000,.30],[Infinity,.35]];
+function taxOnNet(net){
+  let t=0,prev=0;const parts=[];
+  for(const b of TAX_BR){
+    if(net>prev){const amt=Math.min(net,b[0])-prev;parts.push({from:prev,to:b[0],rate:b[1],amt:amt,tax:r2(amt*b[1])});t+=amt*b[1];}
+    prev=b[0];
+  }
+  return {tax:r2(t),parts:parts};
+}
+function taxModel(Y){
+  const s=S(),rows=yearRows(Y),thr=s.taxMarried>=1?220000:120000;
+  const done=rows.filter(r=>r.st==='done'),live=rows.filter(rowLive);
+  const known=r2(done.reduce((a,r)=>a+r.gross,0));
+  let base;
+  if(done.length)base=known/done.length;
+  else if(live.length)base=live.reduce((a,r)=>a+r.gross,0)/live.length;
+  else{const p=periodOf(todayS);base=periodCalc(p.y,p.m).gross;}
+  const est=rows.map(r=>r.st==='done'?r.gross:r.st==='now'?Math.max(r.gross,base):base);
+  const total0=r2(est.reduce((a,b)=>a+b,0)),bonus=s.taxBonus;
+  const total=r2(total0+bonus),proj=r2(total0-known);
+  let cum=0,cross=-1;
+  est.forEach((v,i)=>{cum+=v;if(cross<0&&cum>thr)cross=i;});
+  const ssoY=r2(rows.reduce((a,r)=>a+r.sso,0)),pfY=r2(rows.reduce((a,r)=>a+r.pf,0));
+  const dExp=r2(Math.min(total*.5,100000)),dSelf=60000,dSpouse=s.taxMarried>=1?60000:0;
+  const dSso=Math.min(ssoY,9000),dPf=r2(Math.min(pfY,total*.15,500000)),dOther=s.taxOther;
+  const dTotal=r2(dExp+dSelf+dSpouse+dSso+dPf+dOther);
+  const net=Math.max(0,r2(total-dTotal)),tx=taxOnNet(net);
+  const ded0=dSelf+dSpouse+dSso+dOther;
+  const netAt=G=>G-Math.min(G*.5,100000)-ded0-Math.min(pfY,G*.15,500000);
+  let startG=null;
+  if(netAt(5e6)>150000){let lo=0,hi=5e6;for(let i=0;i<60;i++){const mid=(lo+hi)/2;if(netAt(mid)>150000)hi=mid;else lo=mid;}startG=Math.round(hi);}
+  return {Y:Y,rows:rows,thr:thr,doneN:done.length,known:known,proj:proj,bonus:bonus,total:total,cross:cross,
+    ssoY:ssoY,pfY:pfY,dExp:dExp,dSelf:dSelf,dSpouse:dSpouse,dSso:dSso,dPf:dPf,dOther:dOther,dTotal:dTotal,net:net,tax:tx.tax,parts:tx.parts,startG:startG,paid:s.taxPaid};
+}
+function taxPane(){
+  const Y=yearV,m=taxModel(Y),s=S(),thB=m.thr>=220000?'฿220,000 (มีคู่สมรสไม่มีเงินได้)':'฿120,000';
+  const badge=(ok,yes,no)=>h('span',{class:'badge'+(ok?'':' no')},ok?'✓ '+yes:'○ '+no);
+  /* เกณฑ์ยื่นแบบ */
+  const fileOK=m.total>m.thr;let fileMsg;
+  if(m.known>m.thr)fileMsg='รายได้สะสมปีนี้ ฿'+moneyR(m.known)+' ผ่านเกณฑ์แล้ว ปีนี้ต้องยื่นแบบภาษี แม้ภาษีที่ต้องเสียจะเป็น 0 ก็ต้องยื่น';
+  else if(fileOK)fileMsg='ตอนนี้สะสม ฿'+moneyR(m.known)+(m.doneN?' (นับ '+m.doneN+' รอบที่ครบ)':'')+' '+(m.cross>=0?'ประมาณว่าจะผ่านเกณฑ์ในรอบ '+MONTHS_S[m.cross]:'จะผ่านเกณฑ์เมื่อรวมเงินได้อื่นที่คาดไว้')+' ทั้งปีประมาณ ฿'+moneyR(m.total)+' จึงต้องยื่นแบบภาษี';
+  else fileMsg='ทั้งปีประมาณ ฿'+moneyR(m.total)+' ยังไม่เกิน '+thB+' ปีนี้ยังไม่ต้องยื่นแบบ (ถ้ามีเงินได้ทางอื่นด้วย ให้ตรวจกับกรมสรรพากร)';
+  /* เกณฑ์เสียภาษี */
+  const taxOK=m.tax>0;let taxMsg;
+  if(taxOK)taxMsg='เงินได้สุทธิหลังหักลดหย่อน ฿'+moneyR(m.net)+' เกิน ฿150,000 แล้ว ภาษีประมาณ ฿'+money(m.tax)+' (ราว '+(m.total>0?(m.tax/m.total*100).toFixed(1):'0')+'% ของรายได้)';
+  else if(m.startG!=null)taxMsg='เงินได้สุทธิหลังหักลดหย่อน ฿'+moneyR(m.net)+' ยังไม่เกิน ฿150,000 ภาษี 0 บาท รายได้ทั้งปีต้องเกินประมาณ ฿'+moneyR(m.startG)+' ถึงจะเริ่มเสียภาษี (ตอนนี้ประมาณ ฿'+moneyR(m.total)+' เหลืออีก ฿'+moneyR(Math.max(0,m.startG-m.total))+')';
+  else taxMsg='เงินได้สุทธิ ฿'+moneyR(m.net)+' ภาษีประมาณ ฿'+money(m.tax);
+  const status=h('div',{class:'card',id:'tax-status'},h('h2',null,'ถึงเกณฑ์ภาษีปี '+(Y+543)+' หรือยัง'),
+    h('div',{class:'tx-row',id:'tax-file'},h('div',{class:'card-h'},h('b',null,'ยื่นแบบภาษี (เงินได้เกิน '+thB+')'),badge(fileOK,'ถึงเกณฑ์','ยังไม่ถึง')),
+      h('div',{class:'meter',role:'progressbar','aria-valuemin':'0','aria-valuemax':String(m.thr),'aria-valuenow':String(Math.round(Math.min(m.known,m.thr))),'aria-label':'รายได้สะสมเทียบเกณฑ์ยื่นแบบ'},h('i',{style:'width:'+Math.round(clamp(m.known/m.thr,0,1)*100)+'%'})),
+      h('p',{class:'hint'},fileMsg)),
+    h('div',{class:'tx-row',id:'tax-pay'},h('div',{class:'card-h'},h('b',null,'เสียภาษี (เงินได้สุทธิเกิน ฿150,000)'),badge(taxOK,'ถึงเกณฑ์','ยังไม่ถึง')),
+      h('div',{class:'meter',role:'progressbar','aria-valuemin':'0','aria-valuemax':'150000','aria-valuenow':String(Math.round(Math.min(m.net,150000))),'aria-label':'เงินได้สุทธิเทียบเกณฑ์เสียภาษี'},h('i',{style:'width:'+Math.round(clamp(m.net/150000,0,1)*100)+'%'})),
+      h('p',{class:'hint'},taxMsg)));
+  const inputs=h('div',{class:'card form',id:'tax-inputs'},h('h2',null,'ข้อมูลที่ใช้คำนวณ'),
+    h('div',{class:'field'},h('label',{class:'check'},h('input',{type:'checkbox',id:'tax-married',checked:s.taxMarried>=1,onchange:e=>{s.taxMarried=e.target.checked?1:0;persist();renderYear();}}),h('span',null,'มีคู่สมรสที่ไม่มีเงินได้ (ลดหย่อน 60,000 และเกณฑ์ยื่นแบบเป็น 220,000)'))),
+    numField('tax-other','ลดหย่อนอื่น ๆ รวมทั้งปี','taxOther','เช่น เบี้ยประกันชีวิตและสุขภาพ ดอกเบี้ยบ้าน บุตร บิดามารดา กองทุน RMF SSF ใส่ยอดรวมที่ใช้ลดหย่อนได้จริง','1000'),
+    numField('tax-bonus','เงินได้อื่นที่คาดว่าจะได้อีกในปีนี้','taxBonus','เช่น โบนัส ที่ยังไม่ได้ใส่ในรอบเงินเดือน (ถ้าใส่ในแท็บสรุปแล้ว ไม่ต้องใส่ซ้ำ)','1000'),
+    numField('tax-paid','ภาษีที่บริษัทหักไปแล้วทั้งปี (ถ้ามีในสลิป)','taxPaid','ใส่เพื่อดูว่าต้องจ่ายเพิ่มหรือขอคืนได้ เว้นว่างถ้าไม่มี','100'));
+  const calc=h('div',{class:'card',id:'tax-calc'},h('h2',null,'คำนวณภาษีปี '+(Y+543)),
+    h('div',{class:'ps'},
+      prow('เงินได้ที่นับแล้ว (รอบที่ครบ)',m.known,{sub:m.doneN+' รอบ'}),
+      prow('ประมาณรอบที่เหลือ',m.proj,{sub:'ใช้ค่าเฉลี่ยของรอบที่ครบแล้ว'}),
+      m.bonus>0?prow('เงินได้อื่นที่คาดไว้',m.bonus):null,
+      prow('รวมเงินได้ทั้งปี (ประมาณ)',m.total,{tot:true}),
+      prow('หักค่าใช้จ่าย 50% (ไม่เกิน 100,000)',m.dExp,{neg:true}),
+      prow('ลดหย่อนส่วนตัว',m.dSelf,{neg:true}),
+      m.dSpouse>0?prow('ลดหย่อนคู่สมรส',m.dSpouse,{neg:true}):null,
+      prow('ประกันสังคม (ไม่เกิน 9,000)',m.dSso,{neg:true,sub:'จ่ายจริงประมาณ ฿'+moneyR(m.ssoY)}),
+      m.dPf>0?prow('กองทุนสำรองเลี้ยงชีพ',m.dPf,{neg:true,sub:'ไม่เกิน 15% ของเงินได้ และ 500,000'}):null,
+      m.dOther>0?prow('ลดหย่อนอื่น ๆ',m.dOther,{neg:true}):null,
+      prow('เงินได้สุทธิ',m.net,{tot:true}),
+      prow('ภาษีที่ต้องเสีย (ประมาณ)',m.tax,{tot:true}),
+      m.paid>0?prow('ภาษีที่หักไปแล้ว',m.paid,{neg:true}):null,
+      m.paid>0?prow(m.tax-m.paid>=0?'ต้องจ่ายเพิ่ม':'ขอคืนได้',Math.abs(r2(m.tax-m.paid)),{tot:true}):null));
+  const br=h('div',{class:'card',id:'tax-brackets'},h('h2',null,'ภาษีตามขั้นเงินได้สุทธิ'),
+    h('div',{class:'ps'},...(m.parts.length?m.parts.map(p=>prow(
+      p.rate===0?'ถึง 150,000 (ยกเว้น)':'฿'+moneyR(p.from+1)+(p.to===Infinity?' ขึ้นไป':' – '+moneyR(p.to))+' อัตรา '+Math.round(p.rate*100)+'%',
+      p.tax,{sub:'เงินได้สุทธิในช่วงนี้ ฿'+moneyR(p.amt)})):[h('p',{class:'empty'},'เงินได้สุทธิเป็น 0 ไม่มีภาษี')])));
+  const notes=h('div',{class:'card',id:'tax-notes'},h('h2',null,'ข้อสมมติ'),
+    h('p',{class:'hint'},'เป็นค่าประมาณจากรายได้ในแอป (เงินเดือน โอที ค่ารถ ค่าข้าว เบี้ยขยัน เงินได้อื่น) รอบที่ยังไม่ครบหรือไม่มีข้อมูลใช้ค่าเฉลี่ยของรอบที่ครบแล้ว ปีภาษีนับตามปีปฏิทินที่รับเงิน'),
+    h('p',{class:'hint'},'อัตราภาษีแบบขั้นบันได 0–35% หักค่าใช้จ่าย 50% ไม่เกิน 100,000 ลดหย่อนส่วนตัว 60,000 คู่สมรส 60,000 ประกันสังคมไม่เกิน 9,000 กองทุนสำรองเลี้ยงชีพไม่เกิน 15% ของเงินได้และ 500,000'),
+    h('p',{class:'hint'},'ยอดผ่อน กยศ. ไม่นำมาหักในการคำนวณนี้ ถ้าเงินได้เกินเกณฑ์ ต้องยื่นแบบแม้ภาษีเป็น 0'),
+    h('p',{class:'hint'},'ไม่ใช่คำแนะนำด้านภาษี กติกาอาจเปลี่ยน ตรวจกับ ',h('a',{href:'https://www.rd.go.th',target:'_blank',rel:'noopener noreferrer'},'กรมสรรพากร (rd.go.th)'),' ก่อนยื่นจริง'));
+  return [yearNavCard(),status,inputs,calc,br,notes];
+}
+
 
 /* ---------- offline app ---------- */
 function registerSW(){
@@ -2094,6 +2485,7 @@ function registerSW(){
 }
 
 /* ---------- start ---------- */
+calEdInit();
 buildSettings();
 buildLeaveChips();
 bind();

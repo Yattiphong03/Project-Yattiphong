@@ -1,7 +1,7 @@
 /* สมุดโอที: ทำให้เปิดได้ตอนไม่มีเน็ต
    หน้าเว็บ: ลองโหลดใหม่ก่อน (รอไม่เกิน 4 วินาที) ถ้าไม่ได้ใช้ของที่จำไว้ จึงได้ฟีเจอร์ใหม่ทุกครั้งที่ออนไลน์
    ฟอนต์และรูป: ใช้ของที่จำไว้ก่อน แล้วอัปเดตเงียบ ๆ ข้อมูลของผู้ใช้อยู่ใน localStorage ไม่เกี่ยวกับไฟล์นี้ */
-const CACHE = 'otbook-v3';
+const CACHE = 'otbook-v1';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => Promise.all(CORE.map(u => c.add(u).catch(() => {})))).then(() => self.skipWaiting()));
