@@ -422,6 +422,30 @@ body.sheet-open{overflow:hidden}
   .setwrap{padding:12px}
 }
 </style>
+<style>
+/* v11: softer borders, clearer secondary text, and finance tools */
+:root{--ink-2:#6F5544;--line:#E6CFA5;--surface-2:#FFF0CC}
+.card,.acc{border-width:1px;box-shadow:none}
+.card{border-radius:16px}.acc{border-radius:16px}.acc-h{min-height:58px}
+.hint,.empty,.field>label,.lab,.lr>label{color:var(--ink-2)}
+.fin-tools{display:grid;gap:12px}
+.fin-tools details{border:1px solid var(--line);border-radius:16px;background:var(--surface);overflow:hidden}
+.fin-tools summary{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:54px;padding:10px 14px;font-weight:600;cursor:pointer;list-style:none}
+.fin-tools summary::-webkit-details-marker{display:none}
+.fin-tools .fin-body{display:grid;gap:12px;padding:12px 14px 14px;border-top:1px solid var(--line)}
+.fin-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,130px);gap:8px;align-items:center}
+.fin-grid input{min-height:44px}.fin-progress{height:10px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.fin-progress>span{display:block;height:100%;border-radius:inherit;background:var(--accent);width:0}
+.fin-progress.over>span{background:var(--neg)}
+.fin-row{display:grid;gap:5px;padding:10px 0;border-top:1px solid var(--line)}
+.fin-row:first-child{border-top:0;padding-top:0}
+.fin-row-head{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.fin-row-head strong{font-family:var(--mono);font-size:13px}
+.fin-search{display:grid;grid-template-columns:minmax(0,1fr) minmax(110px,.7fr);gap:8px;margin:10px 0}
+.fin-search input,.fin-search select{min-height:44px}.fin-note{font-size:12px;color:var(--ink-2);line-height:1.45}
+@media(max-width:380px){.fin-grid{grid-template-columns:minmax(0,1fr) 104px}.fin-search{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 
@@ -475,6 +499,7 @@ body.sheet-open{overflow:hidden}
     <!-- รายรับ-รายจ่าย -->
     <section id="v-led" class="view" hidden>
       <div class="card stat3" id="ledgerTotals"></div>
+      <div id="financeTools" class="fin-tools"></div>
       <button type="button" class="btn primary big block" id="led-add">+ จดรายรับ–รายจ่าย</button>
       <div class="card" id="ledCard">
         <div class="card-h"><h2>รายการรอบนี้</h2><span class="badge no" id="ledCount" hidden></span></div>
@@ -704,14 +729,14 @@ const DEF_PAT={
 const OLD_HOLIDAY_PAT=JSON.stringify({s:'08:00',e:'20:00',br:[['10:00','10:10'],['15:00','15:10'],['17:10','17:30']]});
 /* p = หน้าต่างที่กลุ่มนี้อยู่ (cal ปฏิทิน / pay รายรับรายจ่าย / ot การคำนวณ OT) open = เปิดหัวข้อไว้ก่อน */
 const SET_GROUPS=[
-  {p:'cal',t:'ปฏิทินที่ใช้',f:[
+  {p:'cal',t:'รูปแบบปฏิทินวันทำงาน',f:[
     {k:'calCustom',b:1,l:'ตั้งปฏิทินบริษัทเอง',hint:'ปิด = ใช้ปฏิทินตัวอย่างที่ฝังไว้ในแอป (ปี 2569 ของบริษัทหนึ่ง) เปิด = วันอาทิตย์หยุดทุกสัปดาห์ วันเสาร์ตามที่ตั้งด้านล่าง วันอื่นนับเป็นวันทำงาน แล้วตั้งวันหยุดอื่นเองได้ทีละวัน (ตั้งวันหยุดทั้งปีได้ในหัวข้อ "ปฏิทินรายเดือน" ด้านล่าง หรือแตะวันที่ในปฏิทินหน้าบันทึกแล้วปรับทีละวัน)'}]},
-  {p:'pay',t:'ค่าแรงและรอบเงินเดือน',open:1,ro:'ro-wage',f:[
-    {k:'cutoffDay',l:'วันที่เริ่มรอบเงินเดือน (ของเดือนก่อน)',u:'วันที่',step:'1',min:1,max:28,hint:'บริษัทตัดรอบวันที่ 20 ให้ใส่ 21 (รอบ 21 ของเดือนก่อน ถึง 20 ของเดือนนี้) ตัดรอบวันที่ 25 ใส่ 26 ถ้าตัดรอบสิ้นเดือนหรือใช้เดือนปฏิทิน ใส่ 1'},
-    {k:'dailyWage',l:'ค่าแรงรายวัน (ใช้คิดค่าแรงต่อชั่วโมงและเงินเดือน)',u:'บาท',step:'0.5',hint:'ถ้าค่าแรงขึ้นทีหลัง อย่าแก้ช่องนี้ ให้เพิ่มในหัวข้อ "ปรับค่าแรง" ด้านล่าง รอบเก่าจะได้ไม่เปลี่ยน'},
-    {k:'daysPerMonth',l:'จำนวนวันที่คิดเป็นเงินเดือนต่อเดือน',u:'วัน',step:'1',min:1,hint:'เงินเดือน = ค่าแรงรายวัน × จำนวนวันนี้ ให้ได้ตรงกับยอด Salary บนสลิป ถ้าเงินเดือนขึ้น ให้เพิ่มการปรับค่าแรงด้านล่าง'},
+  {p:'pay',t:'เงินเดือนและรอบจ่าย',open:1,ro:'ro-wage',f:[
+    {k:'cutoffDay',l:'วันเริ่มต้นรอบเงินเดือน',u:'วันที่',step:'1',min:1,max:28,hint:'บริษัทตัดรอบวันที่ 20 ให้ใส่ 21 (รอบ 21 ของเดือนก่อน ถึง 20 ของเดือนนี้) ตัดรอบวันที่ 25 ใส่ 26 ถ้าตัดรอบสิ้นเดือนหรือใช้เดือนปฏิทิน ใส่ 1'},
+    {k:'dailyWage',l:'ค่าแรงรายวัน (ใช้คำนวณเงินเดือนและ OT)',u:'บาท',step:'0.5',hint:'ถ้าค่าแรงขึ้นทีหลัง อย่าแก้ช่องนี้ ให้เพิ่มในหัวข้อ "ปรับค่าแรง" ด้านล่าง รอบเก่าจะได้ไม่เปลี่ยน'},
+    {k:'daysPerMonth',l:'จำนวนวันฐานที่ใช้คำนวณเงินเดือน',u:'วัน',step:'1',min:1,hint:'เงินเดือน = ค่าแรงรายวัน × จำนวนวันนี้ ให้ได้ตรงกับยอด Salary บนสลิป ถ้าเงินเดือนขึ้น ให้เพิ่มการปรับค่าแรงด้านล่าง'},
     {k:'hoursPerDay',l:'ชั่วโมงทำงานปกติต่อวัน',u:'ชม.',step:'0.5',min:1}]},
-  {p:'ot',t:'อัตราโอที',open:1,ro:'ro-ot',f:[
+  {p:'ot',t:'อัตราค่าล่วงเวลา (OT)',open:1,ro:'ro-ot',f:[
     {k:'mulWeekday',l:'โอทีปกติ (วันทำงาน): เท่าของค่าแรงต่อชั่วโมง',u:'เท่า',step:'0.25',hint:'ดูตัวคูณจากบรรทัด Overtime บนสลิป (วันทำงานปกติมักเป็น 1.5 เท่า)'},
     {k:'holidayNormalHours',l:'โอทีวันหยุด: ชั่วโมงแรกที่นับเป็นเวลาทำงานปกติ',u:'ชม.',step:'0.5',hint:'ชั่วโมงแรกของวันหยุดคิดตามช่องถัดไป ส่วนที่เกินคิดเป็นโอทีเกินเวลา'},
     {k:'mulHolidayNormal',l:'โอทีวันหยุด: ชั่วโมงแรก (เท่า)',u:'เท่า',step:'0.25',hint:'พนักงานรายเดือนมักได้เพิ่ม 1 เท่า (ดูบรรทัด Overtime*1 บนสลิป) วันอาทิตย์ เสาร์หยุดบริษัท และนักขัตฤกษ์ใช้อัตราเดียวกัน'},
@@ -728,7 +753,7 @@ const SET_GROUPS=[
     {k:'deductSick',b:1,l:'ลาป่วย: หักเงินเดือนด้วย'},
     {k:'deductPersonal',b:1,l:'ลากิจ: หักเงินเดือนด้วย'},
     {k:'deductAbsent',b:1,l:'ขาดงาน: หักเงินเดือนด้วย',hint:'หักวันละเท่าค่าแรงรายวัน สลิปบริษัทมีบรรทัดหักขาดงาน ลาป่วย ลากิจ พักร้อนเกิน ติ๊กเฉพาะประเภทที่บริษัทหักจริง ดูจากสลิปรอบที่ลา'}]},
-  {p:'pay',t:'รายการหักประจำรอบ',ro:'ro-ded',f:[
+  {p:'pay',t:'เงินหักจากเงินเดือน',ro:'ro-ded',f:[
     {k:'pfPct',l:'กองทุนสำรองเลี้ยงชีพ (% ของเงินเดือน)',u:'%',step:'0.25',hint:'ดูยอด Prov Fund บนสลิป หารด้วยเงินเดือน ไม่มีกองทุนให้ใส่ 0'},
     {k:'ssoPct',l:'ประกันสังคม (% ของเงินเดือน)',u:'%',step:'0.25',hint:'ประกันสังคมปกติ 5% ของเงินเดือน (ดูยอด Social Security บนสลิป)'},
     {k:'ssoCap',l:'ฐานค่าจ้างสูงสุดของประกันสังคม',u:'บาท',step:'100',hint:'เงินเดือนต่ำกว่าฐานนี้จึงไม่มีผล ปรับตามประกาศล่าสุดของสำนักงานประกันสังคมได้'},
@@ -887,7 +912,12 @@ function normalize(o){
       calUser[ym]=q;
     }
   }
-  return {v:4,settings:s,shifts:shifts,ledger:ledger,periods:periods,dayOv:dayOv,wageHist:wageHist,calUser:calUser,setup:o?(o.setup===0?0:1):0};
+  const fp=o&&o.financePrefs&&typeof o.financePrefs==='object'?o.financePrefs:{};
+  const budgets={};
+  if(fp.budgets&&typeof fp.budgets==='object')for(const k of EXP_CATS){const n=Number(fp.budgets[k]);if(fp.budgets[k]!=null&&Number.isFinite(n)&&n>=0)budgets[k]=r2(n);}
+  const sg=fp.savingsGoal&&typeof fp.savingsGoal==='object'?fp.savingsGoal:{};
+  const goal={name:String(sg.name||'เป้าหมายเงินเก็บ').slice(0,60),target:Number.isFinite(Number(sg.target))&&Number(sg.target)>0?r2(Number(sg.target)):0,saved:Number.isFinite(Number(sg.saved))&&Number(sg.saved)>=0?r2(Number(sg.saved)):0};
+  return {v:4,settings:s,shifts:shifts,ledger:ledger,periods:periods,dayOv:dayOv,wageHist:wageHist,calUser:calUser,financePrefs:{budgets:budgets,savingsGoal:goal},setup:o?(o.setup===0?0:1):0};
 }
 let state;
 (function(){
@@ -1441,23 +1471,40 @@ function renderLedger(){
     h('div',null,h('div',{class:'k'},'รายรับอื่น'),h('div',{class:'v'},'฿'+moneyR(L.inc))),
     h('div',null,h('div',{class:'k'},'รายจ่าย'),h('div',{class:'v'},'฿'+moneyR(L.exp))),
     h('div',null,h('div',{class:'k'},'ต่าง'),h('div',{class:'v'+(diff<0?' neg':'')},(diff<0?'−':'')+'฿'+moneyR(Math.abs(diff)))));
+  renderFinanceTools(L);
   const root=$('ledList'),cnt=$('ledCount');
-  cnt.textContent=L.rows.length+' รายการ';cnt.hidden=!L.rows.length;
-  if(!L.rows.length){root.replaceChildren(h('p',{class:'empty'},'ยังไม่มีรายการในรอบนี้ กดปุ่ม "จดรายรับ–รายจ่าย" ด้านบนเพื่อเพิ่ม'));return;}
-  const shown=ledAll?L.rows:L.rows.slice(0,6);
+  const search=($('led-search')?.value||'').trim().toLocaleLowerCase('th');
+  const kind=$('led-filter-kind')?.value||'all',cat=$('led-filter-cat')?.value||'all';
+  const filtered=L.rows.filter(x=>(kind==='all'||x.kind===kind)&&(cat==='all'||x.cat===cat)&&(!search||[x.cat,x.note,x.amount,String(x.date)].join(' ').toLocaleLowerCase('th').includes(search)));
+  cnt.textContent=filtered.length+' / '+L.rows.length+' รายการ';cnt.hidden=!L.rows.length;
+  if(!filtered.length){root.replaceChildren(h('p',{class:'empty'},L.rows.length?'ไม่พบรายการที่ตรงกับการค้นหา ลองเปลี่ยนคำค้นหาหรือตัวกรอง':'ยังไม่มีรายการในรอบนี้ กดปุ่ม "จดรายรับ–รายจ่าย" ด้านบนเพื่อเพิ่ม'));return;}
+  const shown=ledAll?filtered:filtered.slice(0,6);
   const kids=shown.map(x=>{
-    const d=pdate(x.date);
-    const del=h('button',{type:'button',class:'btn danger','aria-label':'ลบรายการ '+x.cat});
+    const d=pdate(x.date),del=h('button',{type:'button',class:'btn danger','aria-label':'ลบรายการ '+x.cat});
     arm(del,'ลบ','ยืนยัน',()=>{state.ledger=state.ledger.filter(y=>y.id!==x.id);persist();renderLedger();toast('ลบรายการแล้ว');});
-    return h('div',{class:'lrow'},
-      h('span',{class:'d'},String(d.getDate()),h('small',null,DOW[d.getDay()])),
-      h('span',{class:'c'},x.cat,x.note?h('small',null,x.note):null),
-      h('span',{class:'a '+(x.kind==='income'?'inc':'exp')},(x.kind==='income'?'+':'−')+money(x.amount)),
-      del);
+    return h('div',{class:'lrow'},h('span',{class:'d'},String(d.getDate()),h('small',null,DOW[d.getDay()])),h('span',{class:'c'},x.cat,x.note?h('small',null,x.note):null),h('span',{class:'a '+(x.kind==='income'?'inc':'exp')},(x.kind==='income'?'+':'−')+money(x.amount)),del);
   });
-  if(L.rows.length>6)kids.push(h('button',{type:'button',class:'btn block',id:'led-more',style:'margin-top:8px',
-    onclick:()=>{ledAll=!ledAll;renderLedger();}},ledAll?'แสดงน้อยลง':'ดูทั้งหมด '+L.rows.length+' รายการ'));
+  if(filtered.length>6)kids.push(h('button',{type:'button',class:'btn block',id:'led-more',style:'margin-top:8px',onclick:()=>{ledAll=!ledAll;renderLedger();}},ledAll?'แสดงน้อยลง':'ดูทั้งหมด '+filtered.length+' รายการ'));
   root.replaceChildren(...kids);
+}
+function renderFinanceTools(L){
+  const root=$('financeTools');if(!root)return;
+  const fp=state.financePrefs||(state.financePrefs={budgets:{},savingsGoal:{name:'เป้าหมายเงินเก็บ',target:0,saved:0}}),budgets=fp.budgets||(fp.budgets={});
+  const budgetRows=EXP_CATS.map(cat=>{
+    const spent=L.byCat[cat]||0,limit=Number(budgets[cat])||0,pct=limit>0?Math.min(100,spent/limit*100):0,over=limit>0&&spent>limit;
+    return h('div',{class:'fin-row'},h('div',{class:'fin-row-head'},h('span',null,cat),h('strong',null,limit>0?'฿'+moneyR(spent)+' / ฿'+moneyR(limit):'ยังไม่ตั้งงบ')),limit>0?h('div',{class:'fin-progress'+(over?' over':'')},h('span',{style:'width:'+pct+'%'})):h('p',{class:'fin-note'},'กำหนดงบเพื่อดูยอดคงเหลือของหมวดนี้'));
+  });
+  const budgetDetails=h('details',null,h('summary',null,h('span',null,'งบประมาณรายจ่าย'),h('span',{class:'badge no'},'รอบนี้')),h('div',{class:'fin-body'},h('p',{class:'fin-note'},'ตั้งวงเงินแยกตามหมวด ระบบจะเทียบกับรายจ่ายในรอบเงินเดือนที่เลือก'),...budgetRows,...EXP_CATS.map(cat=>h('div',{class:'fin-grid'},h('label',null,cat),h('input',{type:'number',min:'0',step:'1',inputmode:'decimal','data-budget-cat':cat,value:budgets[cat]??'',placeholder:'ไม่จำกัด'}))),h('button',{type:'button',class:'btn primary block',id:'save-budgets'},'บันทึกงบประมาณ')));
+  const g=fp.savingsGoal||(fp.savingsGoal={name:'เป้าหมายเงินเก็บ',target:0,saved:0}),pct=g.target>0?Math.min(100,g.saved/g.target*100):0;
+  const goalDetails=h('details',null,h('summary',null,h('span',null,'เป้าหมายเงินเก็บ'),h('span',{class:'badge no'},g.target>0?Math.round(pct)+'%':'ยังไม่ตั้งเป้า')),h('div',{class:'fin-body'},h('p',{class:'fin-note'},'ยอดนี้ใช้ติดตามความคืบหน้าเท่านั้น ไม่หักออกจากเงินคงเหลืออัตโนมัติ'),h('div',{class:'field'},h('label',{for:'goal-name'},'ชื่อเป้าหมาย'),h('input',{id:'goal-name',type:'text',maxlength:'60',value:g.name||'เป้าหมายเงินเก็บ'})),h('div',{class:'grid2'},h('div',{class:'field'},h('label',{for:'goal-target'},'ยอดเป้าหมาย (บาท)'),h('input',{id:'goal-target',type:'number',min:'1',step:'1',inputmode:'decimal',value:g.target||'',placeholder:'เช่น 30000'})),h('div',{class:'field'},h('label',{for:'goal-saved'},'เก็บแล้ว (บาท)'),h('input',{id:'goal-saved',type:'number',min:'0',step:'1',inputmode:'decimal',value:g.saved||'',placeholder:'เช่น 12000'}))),h('div',{class:'fin-row-head'},h('span',null,'ความคืบหน้า'),h('strong',null,g.target>0?Math.round(pct)+'%':'—')),h('div',{class:'fin-progress'},h('span',{style:'width:'+pct+'%'})),h('p',{class:'fin-note'},g.target>0?'เก็บแล้ว ฿'+moneyR(g.saved)+' จาก ฿'+moneyR(g.target)+' · '+(g.saved>=g.target?'ถึงเป้าหมายแล้ว':'เหลือ ฿'+moneyR(Math.max(0,g.target-g.saved))):'ตั้งยอดเป้าหมายเพื่อเริ่มติดตาม'),h('button',{type:'button',class:'btn primary block',id:'save-goal'},'บันทึกเป้าหมาย')));
+  const oldSearch=$('led-search')?.value||'',oldKind=$('led-filter-kind')?.value||'all',oldCat=$('led-filter-cat')?.value||'all';
+  const search=h('input',{id:'led-search',type:'text',placeholder:'ค้นหาหมวด หมายเหตุ หรือวันที่',value:oldSearch,'aria-label':'ค้นหารายการ'});
+  const kind=h('select',{id:'led-filter-kind','aria-label':'กรองประเภทรายการ'},h('option',{value:'all'},'ทุกประเภท'),h('option',{value:'expense'},'รายจ่าย'),h('option',{value:'income'},'รายรับ'));kind.value=oldKind;
+  const cat=h('select',{id:'led-filter-cat','aria-label':'กรองหมวด'},h('option',{value:'all'},'ทุกหมวด'),...Array.from(new Set([...EXP_CATS,...INC_CATS,...L.rows.map(x=>x.cat)])).map(c=>h('option',{value:c},c)));cat.value=oldCat;
+  root.replaceChildren(budgetDetails,goalDetails);const oldFilter=$('ledCard').querySelector('.fin-search');if(oldFilter)oldFilter.remove();$('ledCard').querySelector('.card-h').after(h('div',{class:'fin-search'},search,kind,cat));
+  $('save-budgets').addEventListener('click',()=>{const next={};let bad=null;document.querySelectorAll('[data-budget-cat]').forEach(el=>{const v=el.value.trim();if(v!==''){const n=Number(v);if(!Number.isFinite(n)||n<0)bad=el;else next[el.dataset.budgetCat]=r2(n);}});if(bad){bad.focus();toast('กรุณาใส่งบเป็นตัวเลขตั้งแต่ 0 ขึ้นไป');return;}fp.budgets=next;persist();renderLedger();toast('บันทึกงบประมาณแล้ว');});
+  $('save-goal').addEventListener('click',()=>{const target=Number($('goal-target').value),saved=Number($('goal-saved').value);if(!(target>0)||!Number.isFinite(target)){toast('ใส่ยอดเป้าหมายมากกว่า 0');$('goal-target').focus();return;}if(!Number.isFinite(saved)||saved<0){toast('ตรวจสอบยอดเงินที่เก็บแล้ว');$('goal-saved').focus();return;}fp.savingsGoal={name:$('goal-name').value.trim().slice(0,60)||'เป้าหมายเงินเก็บ',target:r2(target),saved:r2(saved)};persist();renderLedger();toast('บันทึกเป้าหมายเงินเก็บแล้ว');});
+  [search,kind,cat].forEach(el=>el.addEventListener(el===search?'input':'change',()=>{ledAll=false;const val=search.value, k=kind.value,c=cat.value;renderLedger();const next=$('led-search');if(next){next.value=val;next.focus();try{next.setSelectionRange(val.length,val.length);}catch(e){}}const nk=$('led-filter-kind');if(nk)nk.value=k;const nc=$('led-filter-cat');if(nc)nc.value=c;}));
 }
 
 /* ---------- settings ---------- */
@@ -1595,7 +1642,7 @@ function updateReadouts(){
 
 /* ---------- backup ---------- */
 let downloads=null;
-function exportJSON(){return JSON.stringify({app:'otbook',v:4,exportedAt:new Date().toISOString(),settings:state.settings,shifts:state.shifts,ledger:state.ledger,periods:state.periods,dayOv:state.dayOv,wageHist:state.wageHist,calUser:state.calUser},null,1);}
+function exportJSON(){return JSON.stringify({app:'otbook',v:4,exportedAt:new Date().toISOString(),settings:state.settings,shifts:state.shifts,ledger:state.ledger,periods:state.periods,dayOv:state.dayOv,wageHist:state.wageHist,calUser:state.calUser,financePrefs:state.financePrefs},null,1);}
 function cell(v,text){
   let s=String(v==null?'':v);
   if(text&&/^[=+@\-]/.test(s))s="'"+s;
@@ -1847,7 +1894,8 @@ function markBackup(){const m=readMeta();m.last=new Date().toISOString();delete 
 function renderBackupInfo(){
   const st=$('bkStatus'),pe=$('bkPersist');if(!st||!pe)return;
   const m=readMeta(),d=m.last?daysSince(m.last):null;
-  st.textContent=m.last&&d!==null?'สำรองล่าสุด '+thDate(dstr(new Date(m.last)))+(d>0?' ('+d+' วันที่แล้ว)':' (วันนี้)'):'ยังไม่เคยสำรองข้อมูลจากเครื่องนี้';
+  st.className='hint '+(m.last&&d!==null&&d<30?'sc-res ok':'sc-res bad');
+  st.textContent=m.last&&d!==null?'สำรองล่าสุด '+thDate(dstr(new Date(m.last)))+(d>0?' ('+d+' วันที่แล้ว)':' (วันนี้)')+(d>=30?' · ควรสำรองอีกครั้ง':''):'ยังไม่เคยสำรองข้อมูลจากเครื่องนี้ แนะนำให้สำรองหลังเริ่มบันทึกข้อมูล';
   pe.textContent=persisted===true?'เบราว์เซอร์รับปากเก็บข้อมูลของเว็บนี้ไว้ถาวรแล้ว (ไม่ลบเองเมื่อพื้นที่เต็ม) แต่ถ้าล้างข้อมูลเว็บเองหรือเปลี่ยนเครื่อง ข้อมูลยังหาย จึงควรสำรองไว้'
     :persisted===false?'เบราว์เซอร์ยังไม่รับปากเก็บข้อมูลถาวร ถ้าพื้นที่เครื่องเต็ม ข้อมูลอาจถูกลบได้ สำรองไว้จะปลอดภัยที่สุด':'';
 }
@@ -1861,7 +1909,7 @@ function requestPersist(){
 function renderBanner(){
   const el=$('bkBanner');if(!el)return;
   const m=readMeta(),d=m.last?daysSince(m.last):null;
-  const due=!m.last||(d!==null&&d>=30);
+  const due=!m.last||d===null||d>=30;
   const snoozed=m.snooze&&Date.parse(m.snooze)>Date.now();
   const show=state.setup!==0&&recCount()>=3&&due&&!snoozed;
   el.hidden=!show;
@@ -2841,12 +2889,12 @@ function renderSettings(){
     build:()=>[
       h('div',{class:'ps'},prow('ปีที่ตั้งค่า',0,{txt:String(Y+543)}),prow('วันหยุดที่กำหนด',0,{txt:hn>0?hn+' วัน':'ยังไม่มี'})),
       h('button',{type:'button',class:'btn soft block',id:'set-cal-go',onclick:()=>openSettingsSheet('cal')},'จัดการปฏิทินบริษัท')]});
-  const pay=rowBtn({id:'set-pay',icon:'wallet',title:'ตั้งค่ารายรับและรายจ่าย',
+  const pay=rowBtn({id:'set-pay',icon:'wallet',title:'ตั้งค่าเงินเดือนและรายได้',
     sub:s.dailyWage>0?'ค่าแรง ฿'+money0(s.dailyWage)+' ต่อวัน · ค่ารถ ฿'+money0(s.transport)+' · ค่าข้าว ฿'+money0(s.meal):'ยังไม่ได้ตั้งค่าแรง',
     badge:s.dailyWage>0?null:'ยังไม่ตั้งค่า',badgeCls:'no',onclick:()=>openSettingsSheet('pay')});
   const ot=rowBtn({id:'set-ot',icon:'clock',title:'ตั้งค่าการคำนวณ OT',
     sub:'โอทีปกติ × '+hrs(s.mulWeekday)+' · วันหยุด × '+hrs(s.mulHolidayNormal)+' และ × '+hrs(s.mulHoliday),onclick:()=>openSettingsSheet('ot')});
-  const warn=!m.last||(d!==null&&d>=30);
+  const warn=!m.last||d===null||d>=30;
   const bk=rowBtn({id:'set-bk',icon:'db',title:'สำรองและกู้คืนข้อมูล',
     sub:m.last&&d!==null?'สำรองล่าสุด '+(d>0?d+' วันที่แล้ว':'วันนี้'):'ยังไม่เคยสำรองข้อมูล',
     badge:warn?'ควรสำรอง':null,badgeCls:'warn',onclick:()=>openSettingsSheet('bk')});
