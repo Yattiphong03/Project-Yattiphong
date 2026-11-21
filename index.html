@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#F7F5EF">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230C7B43'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23145A42'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
@@ -580,6 +580,118 @@ input,select,textarea,button{font-family:inherit}
 :root[data-theme=dark] .bkc.warn{background:#5A4519;color:#F6E5BF}
 :root[data-theme=dark] .sim-cal button.simon{color:var(--accent-ink)}
 </style>
+
+<style id="professional-finance-theme">
+/* Professional Green – Warm Finance: final consistency layer */
+:root{
+  --bg:#F7F5EF;
+  --surface:#FFFFFF;
+  --surface-2:#EEEADF;
+  --field:#FFFFFF;
+  --ink:#20364B;
+  --ink-2:#5B6B7A;
+  --line:#E3DED0;
+  --accent:#145A42;
+  --accent-ink:#FFFFFF;
+  --accent-soft:#DCEFE4;
+  --gold:#E8B65A;
+  --holiday:#805719;
+  --holiday-soft:#F6E5BF;
+  --neg:#A9442F;
+  --neg-soft:#F7E3DE;
+  --danger:#8E1B1B;
+  --green:#27834E;
+  --navy:#20364B;
+}
+:root[data-theme="dark"]{
+  --bg:#0F1A24;
+  --surface:#16232F;
+  --surface-2:#1F3040;
+  --field:#122030;
+  --ink:#E8EEF3;
+  --ink-2:#A9B8C5;
+  --line:#2B3E4F;
+  --accent:#3FA37C;
+  --accent-ink:#06241B;
+  --accent-soft:#173A31;
+  --gold:#E8B65A;
+  --holiday:#E8B65A;
+  --holiday-soft:#3A2C12;
+  --neg:#E58068;
+  --neg-soft:#3A1F1B;
+  --danger:#F29A90;
+  --green:#5CC08A;
+  --navy:#E8EEF3;
+  color-scheme:dark;
+}
+/* Cards and fields: subtle borders, no heavy shadow */
+.card,.acc,section.acc,.sim-hrbox,details.calc{border-width:1px;box-shadow:none}
+.card{border-color:var(--line);border-radius:16px}
+input[type=text],input[type=number],input[type=date],input[type=time],textarea,select{
+  border-color:var(--line);border-radius:11px
+}
+.btn{border-radius:12px}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.brand{color:var(--accent)}
+/* Money semantics remain consistent in every screen */
+.c-sal{color:var(--navy)!important}
+.c-ot,.c-inc{color:var(--green)!important}
+.c-exp,.pr.neg .n,.pr .n.c-exp{color:var(--neg)!important}
+.c-bal:not(.neg){color:var(--accent)!important}
+.dt.ot{background:var(--accent-soft);color:var(--green)}
+.dt.inc{background:#E1E8EF;color:#20364B}
+.dt.exp{background:var(--neg-soft);color:var(--neg)}
+/* Calendar and simulation selections */
+.pcal .ot,.sim-cal button.simon{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.pcal .ot .s,.sim-cal button.simon .s,.sim-cal button.simon .n{color:var(--accent)}
+.pcal .hol,.sim-cal button.simon.simh{background:var(--holiday-soft);border-color:var(--holiday);color:var(--holiday)}
+.pcal .hol .s{color:var(--holiday)}
+/* Budget and savings: gold for budget, mint for savings */
+#budgetCard .acc{border-color:var(--gold)}
+.badge.gsoft{background:var(--holiday-soft);color:var(--holiday)}
+.badge.gold{background:var(--gold);color:#20364B}
+.bd .meter i{background:var(--gold)}
+.bd .meter i.warn{background:#C98A1F}
+.bd .meter i.bad{background:var(--neg)}
+.bd-r{color:var(--holiday)}
+.bd-r.near{color:var(--holiday)}
+.bd-r.over{color:var(--neg)}
+#goalsCard .acc{background:var(--accent-soft);border-color:#BFDCCB}
+.badge.mint{background:#FFFFFF;color:var(--accent)}
+#goalsCard .meter{background:#FFFFFF}
+#goalsCard .meter i{background:#4C9E7A}
+#goalsCard .meter i.ok{background:var(--accent)}
+.gl-p{color:var(--accent)}
+.bkc{background:linear-gradient(135deg,#145A42,#2F7D5E);color:#FFFFFF}
+.bkc.warn{background:var(--gold);color:#20364B}
+/* Destructive actions are visually distinct, never confused with primary actions */
+.btn.danger{background:#F3DADA;color:var(--danger)}
+.btn.armed{background:var(--danger);color:#FFFFFF}
+:root[data-theme="dark"] #goalsCard .acc{background:#173A31;border-color:#24503F}
+:root[data-theme="dark"] .badge.mint{background:#0F1A24;color:var(--green)}
+:root[data-theme="dark"] #goalsCard .meter{background:#0F1A24}
+:root[data-theme="dark"] .badge.gsoft{background:#3A2C12;color:#E8B65A}
+:root[data-theme="dark"] .badge.gold{background:#E8B65A;color:#20364B}
+:root[data-theme="dark"] #budgetCard .acc{border-color:#7A5E22}
+:root[data-theme="dark"] .bd-r,:root[data-theme="dark"] .bd-r.near{color:#E8B65A}
+:root[data-theme="dark"] .btn.danger{background:#3A1F1B;color:var(--danger)}
+:root[data-theme="dark"] .btn.armed{background:#B3402F;color:#FFFFFF}
+:root[data-theme="dark"] .bkc{background:linear-gradient(135deg,#1F5A45,#2F7D5E)}
+:root[data-theme="dark"] .bkc.warn{background:#5A4519;color:#F6E5BF}
+:root[data-theme="dark"] .dt.inc{background:#26394B;color:#DCE8F2}
+:root[data-theme="dark"] .pcal .offsat{background:#223447;color:#DCE8F2}
+:root[data-theme="dark"] .pcal .offsun{background:#2E4660;color:#E8EEF3}
+:root[data-theme="dark"] .pcal .dh.sun{color:#C9D6E2}
+:root[data-theme="dark"] .legend .i-sat{background:#223447}
+:root[data-theme="dark"] .legend .i-sun{background:#2E4660}
+@media(max-width:380px){
+  .card{padding:14px;border-radius:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+</style>
+
 </head>
 <body>
 
