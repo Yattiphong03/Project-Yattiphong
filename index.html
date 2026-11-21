@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#FFB52E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230C7B43'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
 :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 body{margin:0}
@@ -22,9 +22,9 @@ img{max-width:100%}
   --accent:#0C7B43; --accent-ink:#FFFFFF; --accent-soft:#D9F6E3;
   --holiday:#AB4500; --holiday-soft:#FFE0B8;
   --neg:#C81B52; --neg-soft:#FFE1EA;
-  --display:'Chakra Petch','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
+  --display:'Mali','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
   --body:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --mono:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark) and (max-width:0px){
   :root:not([data-theme="light"]){
@@ -462,6 +462,33 @@ body.sheet-open{overflow:hidden}
 .bkc small{font-size:11px;opacity:.9}.bkc b{font-size:14px}
 </style>
 <style>.lfil{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px}.lfil input{flex:2 1 11em;min-width:0;min-height:48px;padding:10px 14px;border:1px solid var(--line);border-radius:14px;background:var(--field);color:var(--ink);font:inherit;-webkit-appearance:none;appearance:none}.lfil input::placeholder{color:var(--ink-2);opacity:.8}.lfil select{flex:1 1 8em;min-width:0}</style>
+<style>
+/* v14: ป้ายสถานะชิดขวา กรอบพับเส้นบาง + จำลองโอที */
+section.acc{box-shadow:none;border-width:1px}
+.acc-h .badge{justify-self:end}
+.sim-in{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:8px}
+.sim-f{display:grid;gap:4px;font-size:12px;color:var(--ink-2);min-width:0}
+.sim-f select,.sim-f input{min-width:0;width:100%;min-height:44px}
+.sim-big{display:flex;justify-content:space-between;align-items:baseline;background:var(--accent-soft);color:var(--accent);border-radius:14px;padding:12px 14px}
+.sim-big b{font:700 1.6rem var(--display)}
+.sim-row{display:flex;justify-content:space-between;gap:8px;padding:8px 2px;border-top:1px solid var(--line);font-size:14px}
+.sim-row b{font-variant-numeric:tabular-nums;text-align:right}
+</style>
+<style>
+/* v15: ปุ่มจำลองโอทีข้างปฏิทิน + ป๊อปอัปปฏิทิน */
+.sim-open{min-height:36px;padding:4px 14px;font-size:14px;white-space:nowrap}
+.sim-cal button.simon{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.sim-cal button.simon .s,.sim-cal button.simon .n{color:var(--accent-ink)}
+.sim-cal button[aria-disabled=true]{cursor:default;opacity:.8}
+.sim-hrbox{display:grid;gap:6px}.sim-hrbox label{font-weight:600}
+.sim-hr{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:8px}
+.sim-hr input{text-align:center;font-size:1.2rem;min-height:48px}
+</style>
+<style>/* v16: ฟอนต์กลมน่ารักเข้ากับโทนสี ตัวเลขเรียงตรงหลัก */
+body{font-variant-numeric:tabular-nums}
+input,select,textarea,button{font-family:inherit}
+::placeholder{color:var(--ink-2);opacity:.75}
+</style>
 </head>
 <body>
 
@@ -486,7 +513,7 @@ body.sheet-open{overflow:hidden}
       <div class="card dash" id="glance"></div>
       <div id="quick" class="card quick"></div>
       <div class="card" id="calCard">
-        <h2>ปฏิทินรอบนี้</h2>
+        <div class="card-h"><h2>ปฏิทินรอบนี้</h2><button type="button" class="btn sim-open" id="sim-open">จำลองโอที</button></div>
         <p class="hint" style="margin:-6px 0 10px">แตะวันที่เพื่อบันทึกโอทีหรือลา</p>
         <div class="pcal" id="pcal"></div>
         <p class="hint pre" id="pcal-sum" style="margin-top:10px"></p>
@@ -1492,6 +1519,67 @@ function buildCats(){
     h('input',{type:'radio',name:'l-cat',value:c,checked:c===lform.cat,onchange:()=>{lform.cat=c;}}),h('span',null,c))));
 }
 
+
+/* ---------- จำลองลงโอที: ปฏิทินในหน้าต่างป๊อปอัป (ไม่บันทึกจริง) ---------- */
+let simSel=new Set(),simHrs='2';
+function buildSim(){
+  const r=periodRange(view.y,view.m),cells=[];
+  const kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
+  for(let i=0;i<pdate(r.start).getDay();i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
+  const out=h('div',{class:'sim-out','aria-live':'polite'});
+  const hrIn=h('input',{type:'number',inputmode:'decimal',min:'0',max:'16',step:'0.5',value:simHrs,id:'sim-h','aria-label':'ชั่วโมงโอทีต่อวัน'});
+  const paint=()=>{
+    cells.forEach(c=>{
+      if(c.real)return;
+      const on=simSel.has(c.ds);
+      c.el.className=(c.base+(on?' simon':'')).trim();c.el.setAttribute('aria-pressed',String(on));
+      c.s.textContent=on?(parseFloat(hrIn.value)>0?hrs(parseFloat(hrIn.value)):'OT'):c.sub;
+    });
+    run();
+  };
+  function run(){
+    simHrs=hrIn.value;
+    const H=parseFloat(hrIn.value),days=[...simSel].sort();
+    if(!days.length){out.replaceChildren(h('p',{class:'hint'},'แตะวันที่ในปฏิทินด้านบนที่อยากลองทำโอที'));return;}
+    if(!(H>0)){out.replaceChildren(h('p',{class:'hint'},'ใส่ชั่วโมงโอทีต่อวันด้านบน'));return;}
+    const c0=periodCalc(view.y,view.m),L=ledgerCalc(view.y,view.m),sh=S().defShuttle>=1;
+    days.forEach(ds=>{state.shifts[ds]={date:ds,type:isWorkDay(ds)?'normal':'holiday',hours:H,shuttle:sh,note:''};});
+    let c1;try{c1=periodCalc(view.y,view.m);}finally{days.forEach(ds=>{delete state.shifts[ds];});}
+    const add=r2(c1.net-c0.net),l0=r2(c0.net+L.inc-L.exp),l1=r2(l0+add);
+    out.replaceChildren(
+      h('div',{class:'sim-big'},h('span',null,'เลือก '+days.length+' วัน × '+hrs(H)+' ชม. ได้เพิ่ม'),h('b',null,'+฿'+moneyR(add))),
+      h('div',{class:'sim-row'},h('span',null,'รับสุทธิรอบนี้'),h('b',null,'฿'+moneyR(c0.net)+' → ฿'+moneyR(c1.net))),
+      h('div',{class:'sim-row'},h('span',null,'เหลือเก็บรอบนี้'),h('b',null,'฿'+moneyR(l0)+' → ฿'+moneyR(l1))),
+      h('p',{class:'hint'},'เป็นการจำลองเท่านั้น ยังไม่ได้บันทึกเข้าสมุด'));
+  }
+  eachDay(r.start,r.end,ds=>{
+    const x=state.shifts[ds],d=pdate(ds),k=dayKind(ds);
+    let cls='',sub='',real=false;
+    if(x&&x.type==='leave'){cls='lv';sub='ลา';real=true;}
+    else if(x&&x.hours>0){cls=x.type==='holiday'?'hol':'ot';sub=hrs(x.hours);real=true;}
+    else if(k!=='work'){const wd=d.getDay();cls='off'+(wd===0?' offsun':wd===6?' offsat':'');}
+    if(ds===todayS)cls+=' today';
+    if(!sub&&(d.getDate()===1||ds===r.start))sub=MONTHS_S[d.getMonth()];
+    const s=h('span',{class:'s'},sub);
+    const el=h('button',{type:'button',class:cls.trim(),'aria-label':thDate(ds)+(real?' · มีบันทึกจริงแล้ว':''),'aria-disabled':real?'true':null},h('span',{class:'n'},String(d.getDate())),s);
+    const c={ds:ds,el:el,s:s,base:cls,sub:sub,real:real};
+    if(!real)el.addEventListener('click',()=>{if(simSel.has(ds))simSel.delete(ds);else simSel.add(ds);paint();});
+    cells.push(c);kids.push(el);
+  });
+  const step=dv=>{const v=Math.max(0,Math.min(16,(parseFloat(hrIn.value)||0)+dv));hrIn.value=String(v);paint();};
+  hrIn.addEventListener('input',paint);
+  const clr=h('button',{type:'button',class:'btn',onclick:()=>{simSel.clear();paint();}},'ล้างที่เลือก');
+  const body=[
+    h('p',{class:'hint pre'},'1) แตะวันที่ที่อยากลองทำโอที (แตะซ้ำเพื่อยกเลิก)\n2) ใส่ชั่วโมงโอทีต่อวันด้านล่าง\nตัวเลขนี้ไม่ถูกบันทึกลงสมุดจริง'),
+    h('div',{class:'pcal sim-cal'},...kids),
+    h('div',{class:'sim-hrbox'},h('label',{for:'sim-h'},'ชั่วโมงโอทีต่อวัน'),
+      h('div',{class:'sim-hr'},h('button',{type:'button',class:'btn','aria-label':'ลดครึ่งชั่วโมง',onclick:()=>step(-0.5)},'−'),hrIn,h('button',{type:'button',class:'btn','aria-label':'เพิ่มครึ่งชั่วโมง',onclick:()=>step(0.5)},'+'))),
+    out,clr];
+  paint();
+  return body;
+}
+function openSim(){simSel=new Set();openSheet({id:'sim',title:'จำลองลงโอที',build:buildSim});}
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#sim-open'))openSim();});
 /* ---------- เป้าเงินเก็บ · งบรายหมวด · วิเคราะห์การใช้เงิน ---------- */
 const CAT_COL=['#0C7B43','#F2A100','#E0527A','#3B82C4','#8A5CD6','#E56A00','#2AA8A0','#8A7A6A'];
 const catCol=c=>CAT_COL[Math.max(0,EXP_CATS.indexOf(c))%CAT_COL.length];
