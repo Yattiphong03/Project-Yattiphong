@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#F7F5EF">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%23145A42'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230C7B43'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
 <style>
@@ -580,118 +580,94 @@ input,select,textarea,button{font-family:inherit}
 :root[data-theme=dark] .bkc.warn{background:#5A4519;color:#F6E5BF}
 :root[data-theme=dark] .sim-cal button.simon{color:var(--accent-ink)}
 </style>
+<style>
+/* v20: จำลองลงโอที แบบป๊อปอัป (เลือกวัน สรุปทันที พับตั้งค่าชั่วโมง ปุ่มใหญ่) */
+:root{--sim-hol:#F0A23B;--sim-hol-ink:#2B1B00;--sim-off:#DCE6F0;--sim-off-ink:#20364B;--sim-off-line:#B7C9DB}
+:root[data-theme=dark]{--sim-hol:#E8B65A;--sim-hol-ink:#2B1B00;--sim-off:#223447;--sim-off-ink:#C9D6E2;--sim-off-line:#2E4660}
+.sheet-b:has(.sim-main){padding-top:6px}
 
-<style id="professional-finance-theme">
-/* Professional Green – Warm Finance: final consistency layer */
-:root{
-  --bg:#F7F5EF;
-  --surface:#FFFFFF;
-  --surface-2:#EEEADF;
-  --field:#FFFFFF;
-  --ink:#20364B;
-  --ink-2:#5B6B7A;
-  --line:#E3DED0;
-  --accent:#145A42;
-  --accent-ink:#FFFFFF;
-  --accent-soft:#DCEFE4;
-  --gold:#E8B65A;
-  --holiday:#805719;
-  --holiday-soft:#F6E5BF;
-  --neg:#A9442F;
-  --neg-soft:#F7E3DE;
-  --danger:#8E1B1B;
-  --green:#27834E;
-  --navy:#20364B;
+/* การ์ดหลัก: หัวข้อ เดือน ปฏิทิน คำอธิบายสี */
+.sim-main{position:relative;margin-top:42px;display:grid;gap:10px;background:linear-gradient(180deg,var(--accent-soft) 0,var(--surface) 96px);border:1px solid var(--line);border-top:2px solid var(--accent);border-radius:22px;padding:16px 14px 14px;min-width:0}
+.sim-bear{position:absolute;right:22px;top:-51px;width:86px;height:auto;pointer-events:none}
+.sim-spark{position:absolute;fill:var(--gold);pointer-events:none}
+.sim-spark.s1{width:18px;height:18px;right:118px;top:-38px}
+.sim-spark.s2{width:12px;height:12px;right:10px;top:-26px}
+.sim-intro{display:flex;align-items:center;gap:12px;min-width:0}
+.sim-intro>.ic{width:44px;height:44px;color:var(--accent);stroke-width:1.7}
+.sim-intro b{display:block;font:700 1.2rem/1.25 var(--display)}
+.sim-intro small .nw{white-space:nowrap}
+.sim-intro small{display:block;font-size:13px;line-height:1.4;color:var(--ink-2)}
+
+/* เลื่อนเดือน */
+.sim-nav{display:grid;grid-template-columns:48px minmax(0,1fr) 48px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:99px}
+.sim-nav button{min-height:48px;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-items:center;border-radius:99px}
+.sim-nav .pv .ic{transform:rotate(180deg)}
+.sim-nav .lab{display:grid;gap:0;line-height:1.25;padding:2px 4px}
+.sim-nav .m1{font:700 1.05rem/1.25 var(--display)}
+.sim-nav .m2{font-size:11.5px;color:var(--ink-2)}
+
+/* ปฏิทิน */
+.sim-cal{gap:4px}
+.sim-cal button{min-height:44px;border-radius:11px}
+.sim-cal .off{background:var(--sim-off);color:var(--sim-off-ink);border-color:transparent}
+.sim-cal .off .s{color:var(--sim-off-ink)}
+.sim-cal .offsun{background:var(--sim-off-line)}
+:root .sim-cal button.simon.simon{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+:root .sim-cal button.simon.simon .n,:root .sim-cal button.simon.simon .s{color:var(--accent-ink)}
+:root .sim-cal button.simon.simon .s{font-size:11px;font-weight:700}
+:root .sim-cal button.simon.simon.simh{background:var(--sim-hol);border-color:var(--sim-hol);color:var(--sim-hol-ink)}
+:root .sim-cal button.simon.simon.simh .n,:root .sim-cal button.simon.simon.simh .s{color:var(--sim-hol-ink)}
+.sim-cal button[aria-disabled=true]{cursor:default;opacity:.75}
+.sim-leg{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;font-size:12px;color:var(--ink-2)}
+.sim-leg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:4px;vertical-align:-1px;border:1px solid transparent}
+.sim-leg .g{background:var(--accent)}
+.sim-leg .o{background:var(--sim-hol)}
+.sim-leg .u{background:var(--sim-off);border-color:var(--sim-off-line)}
+.sim-leg .r{background:var(--accent-soft);border-color:var(--accent)}
+.sim-leg .btn{margin-left:auto;min-height:40px;padding:0 14px;font-size:13.5px}
+
+/* แถบสรุป */
+.sim-sum{display:grid;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:12px 14px}
+.sim-sum-r{display:grid;grid-template-columns:1fr 1fr;align-items:center}
+.sim-cell{display:flex;align-items:center;gap:10px;min-width:0}
+.sim-cell+.sim-cell{border-left:1px solid var(--line);padding-left:14px}
+.sim-cell>.ic{width:30px;height:30px;color:var(--accent);flex:none}
+.sim-cell small{display:block;font-size:12.5px;line-height:1.3;color:var(--ink-2)}
+.sim-cell b{display:block;font:700 1.4rem/1.2 var(--display);white-space:nowrap}
+.sim-cell.hrs b{color:var(--green)}
+.sim-gain{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-top:1px dashed var(--line);padding-top:8px;font-size:13.5px;color:var(--ink-2)}
+.sim-gain b{font:700 1.1rem/1.3 var(--display);color:var(--green);white-space:nowrap}
+
+/* พับ: ตั้งค่าจำนวนชั่วโมง */
+details.sim-set{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:5px}
+details.sim-set>summary{display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border-radius:13px;background:var(--surface-2);font-weight:600;cursor:pointer;list-style:none}
+details.sim-set>summary::-webkit-details-marker{display:none}
+details.sim-set>summary .ic{transform:rotate(90deg);transition:transform .15s}
+details.sim-set[open]>summary .ic{transform:rotate(-90deg)}
+.sim-set-b{display:grid;gap:10px;padding:10px 4px 4px}
+.sim-per{font:600 13px var(--display);color:var(--ink);padding-top:6px}
+.sim-out{display:grid;gap:0}
+
+/* ปุ่มล่าง */
+.sim-foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:12px}
+.sim-foot .btn{min-height:54px;font-size:1.05rem;border-radius:14px}
+.sim-foot .btn.ghost{background:var(--surface);border:2px solid var(--accent);color:var(--accent)}
+.sim-foot .btn.primary{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.sim-foot .btn.primary .ic{width:22px;height:22px;stroke-width:2.6}
+.sim-foot .btn:disabled{opacity:.45}
+
+/* แถบแจ้งผลที่มีปุ่มเลิกทำ */
+.toast.act{pointer-events:auto;display:flex;align-items:center;gap:6px;padding:4px 6px 4px 18px}
+.toast-undo{min-height:40px;padding:0 14px;border:0;border-radius:99px;background:rgba(255,255,255,.18);color:inherit;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:380px){
+  .sim-main{padding:14px 10px 12px}
+  .sim-intro small{font-size:12.5px}.sim-intro>.ic{width:38px;height:38px}
+  .sim-cell+.sim-cell{padding-left:10px}.sim-cell{gap:8px}.sim-cell>.ic{width:26px;height:26px}
+  .sim-cell b{font-size:1.25rem}
+  .sim-bear{width:76px;top:-45px}.sim-spark.s1{right:104px}
 }
-:root[data-theme="dark"]{
-  --bg:#0F1A24;
-  --surface:#16232F;
-  --surface-2:#1F3040;
-  --field:#122030;
-  --ink:#E8EEF3;
-  --ink-2:#A9B8C5;
-  --line:#2B3E4F;
-  --accent:#3FA37C;
-  --accent-ink:#06241B;
-  --accent-soft:#173A31;
-  --gold:#E8B65A;
-  --holiday:#E8B65A;
-  --holiday-soft:#3A2C12;
-  --neg:#E58068;
-  --neg-soft:#3A1F1B;
-  --danger:#F29A90;
-  --green:#5CC08A;
-  --navy:#E8EEF3;
-  color-scheme:dark;
-}
-/* Cards and fields: subtle borders, no heavy shadow */
-.card,.acc,section.acc,.sim-hrbox,details.calc{border-width:1px;box-shadow:none}
-.card{border-color:var(--line);border-radius:16px}
-input[type=text],input[type=number],input[type=date],input[type=time],textarea,select{
-  border-color:var(--line);border-radius:11px
-}
-.btn{border-radius:12px}
-.btn.primary{background:var(--accent);color:var(--accent-ink)}
-.brand{color:var(--accent)}
-/* Money semantics remain consistent in every screen */
-.c-sal{color:var(--navy)!important}
-.c-ot,.c-inc{color:var(--green)!important}
-.c-exp,.pr.neg .n,.pr .n.c-exp{color:var(--neg)!important}
-.c-bal:not(.neg){color:var(--accent)!important}
-.dt.ot{background:var(--accent-soft);color:var(--green)}
-.dt.inc{background:#E1E8EF;color:#20364B}
-.dt.exp{background:var(--neg-soft);color:var(--neg)}
-/* Calendar and simulation selections */
-.pcal .ot,.sim-cal button.simon{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.pcal .ot .s,.sim-cal button.simon .s,.sim-cal button.simon .n{color:var(--accent)}
-.pcal .hol,.sim-cal button.simon.simh{background:var(--holiday-soft);border-color:var(--holiday);color:var(--holiday)}
-.pcal .hol .s{color:var(--holiday)}
-/* Budget and savings: gold for budget, mint for savings */
-#budgetCard .acc{border-color:var(--gold)}
-.badge.gsoft{background:var(--holiday-soft);color:var(--holiday)}
-.badge.gold{background:var(--gold);color:#20364B}
-.bd .meter i{background:var(--gold)}
-.bd .meter i.warn{background:#C98A1F}
-.bd .meter i.bad{background:var(--neg)}
-.bd-r{color:var(--holiday)}
-.bd-r.near{color:var(--holiday)}
-.bd-r.over{color:var(--neg)}
-#goalsCard .acc{background:var(--accent-soft);border-color:#BFDCCB}
-.badge.mint{background:#FFFFFF;color:var(--accent)}
-#goalsCard .meter{background:#FFFFFF}
-#goalsCard .meter i{background:#4C9E7A}
-#goalsCard .meter i.ok{background:var(--accent)}
-.gl-p{color:var(--accent)}
-.bkc{background:linear-gradient(135deg,#145A42,#2F7D5E);color:#FFFFFF}
-.bkc.warn{background:var(--gold);color:#20364B}
-/* Destructive actions are visually distinct, never confused with primary actions */
-.btn.danger{background:#F3DADA;color:var(--danger)}
-.btn.armed{background:var(--danger);color:#FFFFFF}
-:root[data-theme="dark"] #goalsCard .acc{background:#173A31;border-color:#24503F}
-:root[data-theme="dark"] .badge.mint{background:#0F1A24;color:var(--green)}
-:root[data-theme="dark"] #goalsCard .meter{background:#0F1A24}
-:root[data-theme="dark"] .badge.gsoft{background:#3A2C12;color:#E8B65A}
-:root[data-theme="dark"] .badge.gold{background:#E8B65A;color:#20364B}
-:root[data-theme="dark"] #budgetCard .acc{border-color:#7A5E22}
-:root[data-theme="dark"] .bd-r,:root[data-theme="dark"] .bd-r.near{color:#E8B65A}
-:root[data-theme="dark"] .btn.danger{background:#3A1F1B;color:var(--danger)}
-:root[data-theme="dark"] .btn.armed{background:#B3402F;color:#FFFFFF}
-:root[data-theme="dark"] .bkc{background:linear-gradient(135deg,#1F5A45,#2F7D5E)}
-:root[data-theme="dark"] .bkc.warn{background:#5A4519;color:#F6E5BF}
-:root[data-theme="dark"] .dt.inc{background:#26394B;color:#DCE8F2}
-:root[data-theme="dark"] .pcal .offsat{background:#223447;color:#DCE8F2}
-:root[data-theme="dark"] .pcal .offsun{background:#2E4660;color:#E8EEF3}
-:root[data-theme="dark"] .pcal .dh.sun{color:#C9D6E2}
-:root[data-theme="dark"] .legend .i-sat{background:#223447}
-:root[data-theme="dark"] .legend .i-sun{background:#2E4660}
-@media(max-width:380px){
-  .card{padding:14px;border-radius:14px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
-}
+@media (prefers-reduced-motion:reduce){details.sim-set>summary .ic{transition:none}}
 </style>
-
 </head>
 <body>
 
@@ -1041,7 +1017,15 @@ function h(tag,props){
   return el;
 }
 let toastT=null;
-function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600);}
+function toast(msg){const t=$('toast');t.classList.remove('act');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600);}
+/* แถบแจ้งผลที่มีปุ่ม "เลิกทำ" ค้างไว้ 7 วินาที */
+function toastUndo(msg,undo){
+  const t=$('toast'),b=h('button',{type:'button',class:'toast-undo'},'เลิกทำ');
+  clearTimeout(toastT);t.replaceChildren(msg+' ',b);t.classList.add('on','act');
+  const off=()=>t.classList.remove('on','act');
+  b.addEventListener('click',()=>{clearTimeout(toastT);off();undo();});
+  toastT=setTimeout(off,7000);
+}
 function arm(btn,idle,armedText,fn){
   let t=null;
   btn.textContent=idle;
@@ -1723,83 +1707,200 @@ function buildCats(){
 }
 
 
-/* ---------- จำลองลงโอที: ปฏิทินในหน้าต่างป๊อปอัป (ไม่บันทึกจริง) ---------- */
-let simSel=new Set(),simHN='2',simHH='8';
+/* ---------- จำลองลงโอที (v11): ป๊อปอัปเลือกวัน สรุปทันที พับตั้งค่าชั่วโมง กดบันทึกได้จริง ---------- */
+let simSel=new Set(),simHN='2.5',simHH='10.5',simP=null;
+const simTyp=ds=>isWorkDay(ds)?'normal':'holiday';
+const simShift=(ds,hv)=>({date:ds,type:simTyp(ds),hours:hv(simTyp(ds)),shuttle:S().defShuttle>=1,note:''});
+function simBear(){
+  const e=sv('svg',{viewBox:'0 0 96 54',class:'sim-bear','aria-hidden':'true',focusable:'false'});
+  e.innerHTML='<path d="M6 54c2-9 9-13 16-9-3 5-8 9-16 9zM90 54c-2-9-9-13-16-9 3 5 8 9 16 9z" fill="#5FAE7B"/>'+
+    '<circle cx="31" cy="17" r="9" fill="#B9835A"/><circle cx="31" cy="17" r="5" fill="#F3C9A4"/>'+
+    '<circle cx="65" cy="17" r="9" fill="#B9835A"/><circle cx="65" cy="17" r="5" fill="#F3C9A4"/>'+
+    '<ellipse cx="48" cy="36" rx="25" ry="21" fill="#CF9A6C"/>'+
+    '<ellipse cx="48" cy="43" rx="10.5" ry="7.5" fill="#F6DCC0"/>'+
+    '<ellipse cx="48" cy="39.5" rx="3.4" ry="2.4" fill="#5A3A25"/>'+
+    '<circle cx="38" cy="32" r="2.5" fill="#3B2616"/><circle cx="58" cy="32" r="2.5" fill="#3B2616"/>'+
+    '<circle cx="33" cy="40" r="3.6" fill="#F2A58E" opacity=".65"/><circle cx="63" cy="40" r="3.6" fill="#F2A58E" opacity=".65"/>'+
+    '<path d="M44.5 44q3.5 3.6 7 0" fill="none" stroke="#5A3A25" stroke-width="1.5" stroke-linecap="round"/>'+
+    '<ellipse cx="33" cy="51" rx="8" ry="4.6" fill="#CF9A6C"/><ellipse cx="63" cy="51" rx="8" ry="4.6" fill="#CF9A6C"/>';
+  return e;
+}
+function simSpark(cls){
+  const e=sv('svg',{viewBox:'0 0 20 20',class:'sim-spark '+cls,'aria-hidden':'true',focusable:'false'});
+  e.innerHTML='<path d="M10 0C11 6 14 9 20 10 14 11 11 14 10 20 9 14 6 11 0 10 6 9 9 6 10 0Z"/>';
+  return e;
+}
 function buildSim(){
-  const r=periodRange(view.y,view.m),cells=[],typ=ds=>isWorkDay(ds)?'normal':'holiday';
-  const kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
-  for(let i=0;i<pdate(r.start).getDay();i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
-  const out=h('div',{class:'sim-out','aria-live':'polite'});
+  if(!ICON.tick)ICON.tick='<path d="M5 12.5l4.5 4.5L19 7"/>';
   const mk=(T,v)=>h('input',{type:'number',inputmode:'decimal',min:'0',max:'16',step:'0.5',value:v,id:'sim-h-'+T,'aria-label':'ชั่วโมงโอที'+(T==='normal'?'วันธรรมดา':'วันหยุด')+'ต่อวัน'});
   const inp={normal:mk('normal',simHN),holiday:mk('holiday',simHH)};
+  const hv=T=>{const n=parseFloat(inp[T].value);return n>0?Math.min(24,n):0;};
   const cnt={normal:h('span',{class:'badge no'}),holiday:h('span',{class:'badge no'})};
-  const hv=T=>parseFloat(inp[T].value);
-  const calc=list=>{
-    list.forEach(ds=>{state.shifts[ds]={date:ds,type:typ(ds),hours:hv(typ(ds)),shuttle:S().defShuttle>=1,note:''};});
-    try{return periodCalc(view.y,view.m).net;}finally{list.forEach(ds=>{delete state.shifts[ds];});}
+  const grid=h('div',{class:'pcal sim-cal',id:'sim-grid'});
+  const navLab=h('button',{type:'button',class:'lab',id:'sim-month','aria-label':'กลับไปเดือนปัจจุบัน'});
+  const dOut=h('b',{id:'sim-days'}),hOut=h('b',{id:'sim-hours'});
+  const gainV=h('b',{id:'sim-gain-v'}),gain=h('div',{class:'sim-gain',id:'sim-gain',hidden:true},h('span',null,'เงินที่ได้เพิ่ม (ประมาณ)'),gainV);
+  const out=h('div',{class:'sim-out'});
+  const legReal=h('span',{class:'lr-real',hidden:true},h('i',{class:'r'}),'บันทึกแล้ว');
+  const selAll=h('button',{type:'button',class:'btn soft',id:'sim-all'},'เลือกทั้งหมด');
+  const save=h('button',{type:'button',class:'btn primary',id:'sim-save',disabled:true},'บันทึกข้อมูล',icon('tick'));
+  let cells=[];
+  const days=()=>[...simSel].filter(ds=>!state.shifts[ds]).sort();
+  const needHrs=ds=>['normal','holiday'].filter(T=>ds.some(d=>simTyp(d)===T)&&!(hv(T)>0));
+
+  /* เงินที่ได้เพิ่ม: ใส่กะจำลองชั่วคราวแล้วคำนวณสลิปใหม่ทุกรอบที่เกี่ยวข้อง เสร็จแล้วถอนออก */
+  const netWith=(list,p)=>{
+    list.forEach(ds=>{state.shifts[ds]=simShift(ds,hv);});
+    try{return periodCalc(p.y,p.m).net;}finally{list.forEach(ds=>{delete state.shifts[ds];});}
   };
-  function run(){
-    simHN=inp.normal.value;simHH=inp.holiday.value;
-    const days=[...simSel].sort();
-    if(!days.length){out.replaceChildren(h('p',{class:'hint'},'แตะวันที่ในปฏิทินด้านบน หรือกดปุ่มเลือกทั้งหมดด้านล่าง'));return;}
-    const need=['normal','holiday'].filter(T=>days.some(d=>typ(d)===T)&&!(hv(T)>0));
-    if(need.length){out.replaceChildren(h('p',{class:'hint'},'ใส่ชั่วโมงโอที'+(need[0]==='normal'?'วันธรรมดา':'วันหยุด')+'ด้านล่างด้วย'));return;}
-    const c0=periodCalc(view.y,view.m),L=ledgerCalc(view.y,view.m);
-    const dN=days.filter(d=>typ(d)==='normal'),dH=days.filter(d=>typ(d)==='holiday');
-    const all=calc(days),addAll=r2(all-c0.net),addN=dN.length?r2(calc(dN)-c0.net):0,addH=r2(addAll-addN);
-    const l0=r2(c0.net+L.inc-L.exp),l1=r2(l0+addAll);
-    out.replaceChildren(
-      h('div',{class:'sim-big'},h('span',null,'เลือก '+days.length+' วัน ได้เพิ่ม'),h('b',null,'+฿'+moneyR(addAll))),
-      dN.length?h('div',{class:'sim-row'},h('span',null,'วันธรรมดา '+dN.length+' วัน × '+hrs(hv('normal'))+' ชม.'),h('b',null,'+฿'+moneyR(addN))):h('span'),
-      dH.length?h('div',{class:'sim-row'},h('span',null,'วันหยุด '+dH.length+' วัน × '+hrs(hv('holiday'))+' ชม.'),h('b',null,'+฿'+moneyR(addH))):h('span'),
-      h('div',{class:'sim-row'},h('span',null,'รับสุทธิรอบนี้'),h('b',null,'฿'+moneyR(c0.net)+' → ฿'+moneyR(all))),
-      h('div',{class:'sim-row'},h('span',null,'เหลือเก็บรอบนี้'),h('b',null,'฿'+moneyR(l0)+' → ฿'+moneyR(l1))),
-      h('p',{class:'hint'},'เป็นการจำลองเท่านั้น ยังไม่ได้บันทึกเข้าสมุด'));
+  function calcMoney(ds){
+    const groups={};
+    ds.forEach(d=>{const p=periodOf(d),k=p.y*12+p.m,g=groups[k]||(groups[k]={k:k,p:p,all:[],n:[]});g.all.push(d);if(simTyp(d)==='normal')g.n.push(d);});
+    let addAll=0,addN=0;const per=[];
+    Object.values(groups).sort((a,b)=>a.k-b.k).forEach(g=>{
+      const c0=periodCalc(g.p.y,g.p.m),L=ledgerCalc(g.p.y,g.p.m);
+      const n1=netWith(g.all,g.p),gA=r2(n1-c0.net),gN=g.n.length?r2(netWith(g.n,g.p)-c0.net):0;
+      addAll=r2(addAll+gA);addN=r2(addN+gN);
+      const l0=r2(c0.net+L.inc-L.exp);
+      per.push({p:g.p,net0:c0.net,net1:n1,l0:l0,l1:r2(l0+gA)});
+    });
+    return {addAll:addAll,addN:addN,addH:r2(addAll-addN),per:per};
   }
-  const paint=()=>{
+
+  function refresh(){
+    simHN=inp.normal.value;simHH=inp.holiday.value;
+    const ds=days(),dN=ds.filter(d=>simTyp(d)==='normal'),dH=ds.filter(d=>simTyp(d)==='holiday');
+    const total=r2(dN.length*hv('normal')+dH.length*hv('holiday'));
+    /* สีและตัวเลขบนปฏิทิน */
     cells.forEach(c=>{
       if(c.real)return;
       const on=simSel.has(c.ds),v=hv(c.type);
-      c.el.className=(c.base+(on?' simon'+(c.type==='holiday'?' simh':''):'')).trim();c.el.setAttribute('aria-pressed',String(on));
+      c.el.className=(c.base+(on?' simon'+(c.type==='holiday'?' simh':''):'')).trim();
+      c.el.setAttribute('aria-pressed',String(on));
       c.s.textContent=on?(v>0?hrs(v):'OT'):c.sub;
     });
-    ['normal','holiday'].forEach(T=>{cnt[T].textContent='เลือก '+[...simSel].filter(d=>typ(d)===T).length+' วัน';});
-    run();
-  };
-  eachDay(r.start,r.end,ds=>{
-    const x=state.shifts[ds],d=pdate(ds),k=dayKind(ds);
-    let cls='',sub='',real=false;
-    if(x&&x.type==='leave'){cls='lv';sub='ลา';real=true;}
-    else if(x&&x.hours>0){cls=x.type==='holiday'?'hol':'ot';sub=hrs(x.hours);real=true;}
-    else if(k!=='work'){const wd=d.getDay();cls='off'+(wd===0?' offsun':wd===6?' offsat':'');}
-    if(ds===todayS)cls+=' today';
-    if(!sub&&(d.getDate()===1||ds===r.start))sub=MONTHS_S[d.getMonth()];
-    const s=h('span',{class:'s'},sub);
-    const el=h('button',{type:'button',class:cls.trim(),'aria-label':thDate(ds)+' · '+(typ(ds)==='normal'?'วันธรรมดา':'วันหยุด')+(real?' · มีบันทึกจริงแล้ว':''),'aria-disabled':real?'true':null},h('span',{class:'n'},String(d.getDate())),s);
-    const c={ds:ds,el:el,s:s,base:cls,sub:sub,real:real,type:typ(ds)};
-    if(!real)el.addEventListener('click',()=>{if(simSel.has(ds))simSel.delete(ds);else simSel.add(ds);paint();});
-    cells.push(c);kids.push(el);
-  });
-  const step=(T,dv)=>{inp[T].value=String(Math.max(0,Math.min(16,(hv(T)||0)+dv)));paint();};
-  const selType=T=>{
-    const pool=cells.filter(c=>!c.real&&c.type===T),fut=pool.filter(c=>c.ds>=todayS),use=fut.length?fut:pool;
+    cnt.normal.textContent='เลือก '+dN.length+' วัน';cnt.holiday.textContent='เลือก '+dH.length+' วัน';
+    /* แถบสรุป */
+    dOut.textContent=ds.length+' วัน';hOut.textContent=hrs(total)+' ชม.';
+    const pool=cells.filter(c=>!c.real),fut=pool.filter(c=>c.ds>=todayS),use=fut.length?fut:pool;
     const allOn=use.length>0&&use.every(c=>simSel.has(c.ds));
-    use.forEach(c=>{if(allOn)simSel.delete(c.ds);else simSel.add(c.ds);});paint();
+    selAll.textContent=allOn?'ล้างที่เลือก':'เลือกทั้งหมด';selAll.disabled=!use.length;
+    const need=needHrs(ds);
+    save.disabled=!ds.length||need.length>0;
+    save.setAttribute('aria-label',ds.length?'บันทึกโอที '+ds.length+' วัน รวม '+hrs(total)+' ชั่วโมง':'บันทึกข้อมูล (ยังไม่ได้เลือกวัน)');
+    /* เงิน (พับเก็บไว้ในส่วนตั้งค่าชั่วโมง) */
+    if(!ds.length){gain.hidden=true;out.replaceChildren(h('p',{class:'hint'},'ยังไม่ได้เลือกวัน แตะวันที่ในปฏิทินด้านบนได้เลย'));return;}
+    if(need.length){gain.hidden=true;out.replaceChildren(h('p',{class:'hint'},'ใส่ชั่วโมงโอที'+(need[0]==='normal'?'วันธรรมดา':'วันหยุด')+'ด้านบนก่อน จึงจะบันทึกและคำนวณเงินได้'));return;}
+    const m=calcMoney(ds);
+    gainV.textContent='+฿'+moneyR(m.addAll);gain.hidden=false;
+    const rows=[];
+    if(dN.length)rows.push(h('div',{class:'sim-row'},h('span',null,'วันธรรมดา '+dN.length+' วัน × '+hrs(hv('normal'))+' ชม.'),h('b',null,'+฿'+moneyR(m.addN))));
+    if(dH.length)rows.push(h('div',{class:'sim-row'},h('span',null,'วันหยุด '+dH.length+' วัน × '+hrs(hv('holiday'))+' ชม.'),h('b',null,'+฿'+moneyR(m.addH))));
+    m.per.forEach(q=>{
+      if(m.per.length>1)rows.push(h('div',{class:'sim-per'},MONTHS[q.p.m]+' '+(q.p.y+543)));
+      rows.push(h('div',{class:'sim-row'},h('span',null,'รับสุทธิรอบนี้'),h('b',null,'฿'+moneyR(q.net0)+' → ฿'+moneyR(q.net1))));
+      rows.push(h('div',{class:'sim-row'},h('span',null,'เหลือเก็บรอบนี้'),h('b',null,'฿'+moneyR(q.l0)+' → ฿'+moneyR(q.l1))));
+    });
+    rows.push(h('p',{class:'hint'},'ตัวเลขเป็นประมาณการ ยังไม่บันทึกลงสมุดจนกว่าจะกด "บันทึกข้อมูล"'));
+    out.replaceChildren(...rows);
+  }
+
+  function drawCal(){
+    const r=periodRange(simP.y,simP.m);
+    cells=[];
+    const kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
+    for(let i=0;i<pdate(r.start).getDay();i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
+    let hasReal=false;
+    eachDay(r.start,r.end,ds=>{
+      const x=state.shifts[ds],d=pdate(ds),k=dayKind(ds);
+      let cls='',sub='',real=false;
+      if(x&&x.type==='leave'){cls='lv';sub='ลา';real=true;}
+      else if(x&&x.hours>0){cls=x.type==='holiday'?'hol':'ot';sub=hrs(x.hours);real=true;}
+      else if(k!=='work'){const wd=d.getDay();cls='off'+(wd===0?' offsun':wd===6?' offsat':'');}
+      if(real)hasReal=true;
+      if(ds===todayS)cls+=' today';
+      if(!sub&&(d.getDate()===1||ds===r.start))sub=MONTHS_S[d.getMonth()];
+      const s=h('span',{class:'s'},sub);
+      const el=h('button',{type:'button',class:cls.trim(),'data-ds':ds,'aria-label':thDate(ds)+' · '+(simTyp(ds)==='normal'?'วันธรรมดา':'วันหยุด')+(real?' · มีบันทึกจริงแล้ว':''),'aria-disabled':real?'true':null},h('span',{class:'n'},String(d.getDate())),s);
+      if(!real)el.addEventListener('click',()=>{if(simSel.has(ds))simSel.delete(ds);else simSel.add(ds);refresh();});
+      cells.push({ds:ds,el:el,s:s,base:cls,sub:sub,real:real,type:simTyp(ds)});
+      kids.push(el);
+    });
+    grid.replaceChildren(...kids);
+    navLab.replaceChildren(h('span',{class:'m1'},MONTHS[simP.m]+' '+(simP.y+543)),h('span',{class:'m2'},rangeText(r)));
+    legReal.hidden=!hasReal;
+    refresh();
+  }
+  const go=d=>{let m=simP.m+d,y=simP.y;if(m<0){m=11;y--;}if(m>11){m=0;y++;}simP={y:y,m:m};drawCal();};
+  /* เลือก/ยกเลิกวันที่เหลือ: ใช้วันตั้งแต่วันนี้เป็นต้นไปก่อน ถ้าไม่มี (เดือนที่ผ่านมาแล้ว) ใช้ทั้งรอบ */
+  const toggleSel=T=>{
+    const pool=cells.filter(c=>!c.real&&(!T||c.type===T)),fut=pool.filter(c=>c.ds>=todayS),use=fut.length?fut:pool;
+    const allOn=use.length>0&&use.every(c=>simSel.has(c.ds));
+    use.forEach(c=>{if(allOn)simSel.delete(c.ds);else simSel.add(c.ds);});
+    refresh();
   };
-  inp.normal.addEventListener('input',paint);inp.holiday.addEventListener('input',paint);
+  const step=(T,dv)=>{inp[T].value=String(Math.max(0,Math.min(16,(parseFloat(inp[T].value)||0)+dv)));refresh();};
+  inp.normal.addEventListener('input',refresh);inp.holiday.addEventListener('input',refresh);
+
+  function doSave(){
+    const ds=days();
+    if(!ds.length||needHrs(ds).length)return;
+    const total=r2(ds.reduce((a,d)=>a+hv(simTyp(d)),0));
+    ds.forEach(d=>{state.shifts[d]=simShift(d,hv);});
+    persist();
+    const p={y:simP.y,m:simP.m},r=periodRange(p.y,p.m);
+    simSel=new Set();
+    closeSheet();
+    view=p;
+    loadForm(form.date&&inRange(form.date,r)?form.date:(inRange(todayS,r)?todayS:r.start));
+    updateMonthBar();renderTab();
+    toastUndo('บันทึกโอที '+ds.length+' วัน รวม '+hrs(total)+' ชม. แล้ว',()=>{
+      ds.forEach(d=>{delete state.shifts[d];});
+      persist();
+      loadForm(form.date);updateMonthBar();renderTab();
+      toast('ยกเลิกการบันทึกแล้ว');
+    });
+  }
+
   const box=T=>h('div',{class:'sim-hrbox'+(T==='holiday'?' hol':'')},
     h('div',{class:'sim-hh'},h('label',{for:'sim-h-'+T},T==='normal'?'วันธรรมดา · ชั่วโมงโอทีต่อวัน':'วันหยุด · ชั่วโมงโอทีต่อวัน'),cnt[T]),
     h('div',{class:'sim-hr'},h('button',{type:'button',class:'btn','aria-label':'ลดครึ่งชั่วโมง',onclick:()=>step(T,-0.5)},'−'),inp[T],h('button',{type:'button',class:'btn','aria-label':'เพิ่มครึ่งชั่วโมง',onclick:()=>step(T,0.5)},'+')),
-    h('button',{type:'button',class:'btn block',onclick:()=>selType(T)},T==='normal'?'เลือก/ยกเลิก วันธรรมดาที่เหลือทั้งหมด':'เลือก/ยกเลิก วันหยุดที่เหลือทั้งหมด'));
-  const body=[
-    h('p',{class:'hint pre'},'แตะวันที่ที่อยากลองทำโอที (แตะซ้ำเพื่อยกเลิก)\nสีเขียว = วันธรรมดา · สีส้ม = วันหยุด ตัวเลขนี้ไม่ถูกบันทึกลงสมุดจริง'),
-    h('div',{class:'pcal sim-cal'},...kids),
-    box('normal'),box('holiday'),out,
-    h('button',{type:'button',class:'btn block',onclick:()=>{simSel.clear();paint();}},'ล้างที่เลือก')];
-  paint();
-  return body;
+    h('button',{type:'button',class:'btn block',id:'sim-all-'+T,onclick:()=>toggleSel(T)},T==='normal'?'เลือก/ยกเลิก วันธรรมดาที่เหลือทั้งหมด':'เลือก/ยกเลิก วันหยุดที่เหลือทั้งหมด'));
+
+  const nav=h('div',{class:'sim-nav'},
+    h('button',{type:'button',class:'pv',id:'sim-prev','aria-label':'เดือนก่อนหน้า',onclick:()=>go(-1)},icon('chev')),
+    navLab,
+    h('button',{type:'button',class:'nx',id:'sim-next','aria-label':'เดือนถัดไป',onclick:()=>go(1)},icon('chev')));
+  navLab.addEventListener('click',()=>{simP=periodOf(todayS);drawCal();});
+  selAll.addEventListener('click',()=>toggleSel(null));
+  save.addEventListener('click',doSave);
+
+  const main=h('section',{class:'sim-main','aria-label':'เลือกวันที่ลงโอที'},
+    simBear(),simSpark('s1'),simSpark('s2'),
+    h('div',{class:'sim-intro'},icon('cal'),h('div',null,h('b',null,'เลือกวันที่ลงโอที'),h('small',null,'แตะวันที่เพื่อเลือก หรือกด ',h('span',{class:'nw'},'"เลือกทั้งหมด"')))),
+    nav,grid,
+    h('div',{class:'sim-leg'},
+      h('span',null,h('i',{class:'g'}),'วันธรรมดา'),h('span',null,h('i',{class:'o'}),'วันหยุด'),h('span',null,h('i',{class:'u'}),'ยังไม่ได้เลือก'),legReal,selAll));
+  const sum=h('section',{class:'sim-sum','aria-live':'polite','aria-label':'สรุปที่เลือก'},
+    h('div',{class:'sim-sum-r'},
+      h('div',{class:'sim-cell'},icon('cal'),h('div',null,h('small',null,'เลือกแล้ว'),dOut)),
+      h('div',{class:'sim-cell hrs'},icon('clock'),h('div',null,h('small',null,'รวมชั่วโมง OT'),hOut))),
+    gain);
+  const set=h('details',{class:'sim-set',id:'sim-set'},
+    h('summary',null,icon('chev','sc'),'ตั้งค่าจำนวนชั่วโมง'),
+    h('div',{class:'sim-set-b'},box('normal'),box('holiday'),out));
+  const foot=h('div',{class:'actions sticky sim-foot'},
+    h('button',{type:'button',class:'btn ghost',id:'sim-cancel',onclick:closeSheet},'ยกเลิก'),save);
+  drawCal();
+  return [main,sum,set,foot];
 }
-function openSim(){simSel=new Set();openSheet({id:'sim',title:'จำลองลงโอที',build:buildSim});}
+function openSim(){
+  simSel=new Set();
+  const hN=defHours('normal'),hH=defHours('holiday');
+  simHN=hrs(hN>0?hN:2);simHH=hrs(hH>0?hH:10.5);
+  simP={y:view.y,m:view.m};
+  openSheet({id:'sim',title:'จำลองลงโอที',build:buildSim});
+}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#sim-open'))openSim();});
 /* ---------- เป้าเงินเก็บ · งบรายหมวด · วิเคราะห์การใช้เงิน ---------- */
 const CAT_COL=['#145A42','#E8B65A','#A93F3C','#3F6F95','#7FA895','#C98A3D','#20364B','#8F9486'];
