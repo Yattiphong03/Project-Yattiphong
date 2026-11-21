@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="th">
 <head>
+<script>try{var m=localStorage.getItem('otbook.theme')||'light',d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';}catch(e){}</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#FFB52E">
+<meta name="theme-color" content="#F7F5EF">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230C7B43'/%3E%3Ccircle cx='12' cy='12' r='6.5' fill='none' stroke='white' stroke-width='1.8'/%3E%3Cpath d='M12 8.5V12l2.4 1.4' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>สมุดโอที</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mali:wght@500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
@@ -17,31 +18,23 @@ img{max-width:100%}
 /* Layout: one narrow column built for a phone after a shift. Sticky month bar on top, four tabs at the bottom.
    The pay-slip row (label ......... amount) is the one recurring motif, used for the daily preview and the monthly summary. */
 :root{
-  --bg:#FFF4DC; --surface:#FFFFFF; --surface-2:#FFE9B8; --field:#FFFAEE;
-  --ink:#3D2B1F; --ink-2:#7C5F4A; --line:#EBCF98;
-  --accent:#0C7B43; --accent-ink:#FFFFFF; --accent-soft:#D9F6E3;
-  --holiday:#AB4500; --holiday-soft:#FFE0B8;
-  --neg:#C81B52; --neg-soft:#FFE1EA;
+  --bg:#F7F5EF; --surface:#FFFFFF; --surface-2:#EEEADF; --field:#FFFFFF;
+  --ink:#20364B; --ink-2:#5B6B7A; --line:#E3DED0;
+  --accent:#145A42; --accent-ink:#FFFFFF; --accent-soft:#DCEFE4;
+  --gold:#E8B65A;
+  --holiday:#8A5A00; --holiday-soft:#FAEACB;
+  --neg:#A9442F; --neg-soft:#F7E3DE; --danger:#8E1B1B; --green:#27834E; --navy:#20364B;
   --display:'Mali','IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,sans-serif;
   --body:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
   --mono:'IBM Plex Sans Thai','Noto Sans Thai','Leelawadee UI',Tahoma,system-ui,sans-serif;
 }
-@media (prefers-color-scheme: dark) and (max-width:0px){
-  :root:not([data-theme="light"]){
-    --bg:#0D1513; --surface:#16211E; --surface-2:#1E2D29; --field:#101A17;
-    --ink:#E6F0ED; --ink-2:#9BB1AA; --line:#2B3C37;
-    --accent:#48C9A6; --accent-ink:#06231C; --accent-soft:#173A31;
-    --holiday:#F2A64B; --holiday-soft:#3A2A12;
-    --neg:#F28B82; --neg-soft:#3B1C19;
-    color-scheme:dark;
-  }
-}
+
 :root[data-theme="dark"]{
-  --bg:#0D1513; --surface:#16211E; --surface-2:#1E2D29; --field:#101A17;
-  --ink:#E6F0ED; --ink-2:#9BB1AA; --line:#2B3C37;
-  --accent:#48C9A6; --accent-ink:#06231C; --accent-soft:#173A31;
-  --holiday:#F2A64B; --holiday-soft:#3A2A12;
-  --neg:#F28B82; --neg-soft:#3B1C19;
+  --bg:#0F1A24; --surface:#16232F; --surface-2:#1F3040; --field:#122030;
+  --ink:#E8EEF3; --ink-2:#9FB0BF; --line:#2B3E4F;
+  --accent:#3FA37C; --accent-ink:#04201A; --accent-soft:#173A31;
+  --gold:#E8B65A; --holiday:#E8B65A; --holiday-soft:#3A2C12;
+  --neg:#E58068; --neg-soft:#3A1F1B; --danger:#F29A90; --green:#5CC08A; --navy:#E8EEF3;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -173,17 +166,17 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 /* period calendar */
 .pcal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
 .pcal .dh{font-size:11.5px;font-weight:600;color:var(--ink-2);text-align:center;padding-bottom:2px}
-.pcal .dh.sun{color:#6B34C9}
-.pcal .dh.sat{color:#1F6FB5}
+.pcal .dh.sun{color:#14283A}
+.pcal .dh.sat{color:#4F6F8F}
 .pcal .blank{min-height:46px}
 .pcal button{min-height:46px;border:1px solid var(--line);background:var(--field);border-radius:9px;padding:2px 0;display:grid;align-content:center;justify-items:center;line-height:1.15;cursor:pointer;color:var(--ink);font-variant-numeric:tabular-nums;min-width:0}
 .pcal .n{font-weight:600;font-size:14px}
 .pcal .s{font-size:10px;line-height:1.2;min-height:12px;font-family:var(--mono);color:var(--ink-2);max-width:100%;overflow:hidden;white-space:nowrap}
 .pcal .off{background:var(--surface-2);color:var(--ink-2);border-color:transparent}
-.pcal .offsat{background:#D4EBFF;color:#1F4E79}
-.pcal .offsat .s{color:#1F4E79}
-.pcal .offsun{background:#C9A6F5;color:#3A1B6B}
-.pcal .offsun .s{color:#3A1B6B}
+.pcal .offsat{background:#DCE6F0;color:#20364B}
+.pcal .offsat .s{color:#20364B}
+.pcal .offsun{background:#B7C9DB;color:#14283A}
+.pcal .offsun .s{color:#14283A}
 .pcal .ot{background:var(--accent-soft);border-color:var(--accent)}
 .pcal .ot .s{color:var(--accent);font-weight:600}
 .pcal .hol{background:var(--holiday-soft);border-color:var(--holiday)}
@@ -198,8 +191,8 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink-2);margin-top:10px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:4px;vertical-align:-1px;margin-right:5px;border:1px solid var(--line)}
 .legend .i-off{background:var(--surface-2)}
-.legend .i-sat{background:#D4EBFF}
-.legend .i-sun{background:#C9A6F5}
+.legend .i-sat{background:#DCE6F0}
+.legend .i-sun{background:#B7C9DB}
 .legend .i-ot{background:var(--accent-soft);border-color:var(--accent)}
 .legend .i-hol{background:var(--holiday-soft);border-color:var(--holiday)}
 .legend .i-lv{background:var(--neg-soft);border-color:var(--neg)}
@@ -271,16 +264,16 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-.card{border-width:2px;border-radius:20px;box-shadow:0 3px 0 var(--line)}
+.card{border-width:1px;border-radius:18px;box-shadow:none}
 .brand{color:var(--accent)}
 </style>
 <style>
 /* v8: five tabs, backup banner, one-tap card, goal meter, year chart, slip check */
-:root{--c-sal:#1F6FB5;--c-alw:#C2410C;--c-ot:#0C7B43}
+:root{--c-sal:#20364B;--c-alw:#E8B65A;--c-ot:#145A42}
 :root[data-theme="dark"]{--c-sal:#3987e5;--c-alw:#d95926;--c-ot:#199e70}
 .tabs-in{grid-template-columns:repeat(5,minmax(0,1fr));gap:2px}
 .tab{font-size:11.5px;min-width:0;padding:0 1px;white-space:nowrap}
-.banner{background:var(--surface-2);border:2px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;gap:8px}
+.banner{background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:12px 14px;display:grid;gap:8px}
 .banner p{margin:0;font-size:14px}
 .banner p.hint{font-size:13px}
 .banner .actions .btn{flex:1 1 140px}
@@ -351,7 +344,7 @@ details.calc[open]{padding-bottom:12px;display:grid;gap:10px}
    หน้าหลักแสดงเฉพาะข้อมูลสำคัญ หัวข้อย่อยกดขยาย งานละเอียดเปิดหน้าต่างเต็มจอ คำอธิบายยาวพับเก็บไว้ */
 .ic{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .ic.s{width:18px;height:18px}
-.acc{background:var(--surface);border:2px solid var(--line);border-radius:20px;box-shadow:0 3px 0 var(--line);min-width:0}
+.acc{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:none;min-width:0}
 .acc-h{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;column-gap:12px;width:100%;min-height:60px;padding:10px 16px;background:none;border:0;border-radius:18px;text-align:left;cursor:pointer;color:var(--ink)}
 .acc-h>.ic:first-child{color:var(--accent)}
 .acc-t{flex:1;min-width:0;display:grid;gap:1px}
@@ -448,7 +441,7 @@ body.sheet-open{overflow:hidden}
 .gl-p{font-weight:700;color:var(--accent)}
 .gl-a,.gl-new{display:flex;gap:6px;margin-top:6px}.gl-new{flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px}
 .gl-a input{flex:1;min-width:0}.gl-new input[type=text]{flex:2 1 9em;min-width:0}.gl-new input[type=number]{flex:1 1 6em;min-width:0}
-.meter i.warn{background:#F2A100}.meter i.bad{background:var(--neg)}
+.meter i.warn{background:var(--gold)}.meter i.bad{background:var(--neg)}
 .bd-r{font-weight:600;color:var(--accent)}.bd-r.near{color:var(--holiday)}.bd-r.over{color:var(--neg)}
 .dn{position:relative;width:200px;max-width:70%;margin:6px auto}.dn svg{width:100%;display:block}
 .dn-c{position:absolute;inset:0;display:grid;place-content:center;text-align:center}
@@ -456,8 +449,8 @@ body.sheet-open{overflow:hidden}
 .cmp{font-size:13px;margin:4px 0 8px;text-align:center}.cmp.up{color:var(--neg)}.cmp.down{color:var(--accent)}
 .lg{display:flex;align-items:center;gap:10px}.lg i{width:12px;height:12px;border-radius:4px;flex:none}
 .lg span{flex:1;min-width:0;display:grid}.lg small{color:var(--ink-2);font-size:12px}
-.bkc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;border-radius:16px;margin-bottom:10px;background:linear-gradient(135deg,#0C7B43,#2AA86B);color:#fff}
-.bkc.warn{background:linear-gradient(135deg,#C24E00,#F2A100)}
+.bkc{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;border-radius:16px;margin-bottom:10px;background:linear-gradient(135deg,#145A42,#2F7D5E);color:#fff}
+.bkc.warn{background:var(--gold);color:#20364B}
 .bkc>div{background:rgba(255,255,255,.18);border-radius:12px;padding:8px 10px;display:grid;gap:2px}
 .bkc small{font-size:11px;opacity:.9}.bkc b{font-size:14px}
 </style>
@@ -479,6 +472,10 @@ section.acc{box-shadow:none;border-width:1px}
 .sim-open{min-height:36px;padding:4px 14px;font-size:14px;white-space:nowrap}
 .sim-cal button.simon{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .sim-cal button.simon .s,.sim-cal button.simon .n{color:var(--accent-ink)}
+.sim-cal button.simon.simh{background:var(--holiday);border-color:var(--holiday)}
+.sim-hrbox{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px}
+.sim-hrbox.hol{border-color:var(--holiday)}
+.sim-hh{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .sim-cal button[aria-disabled=true]{cursor:default;opacity:.8}
 .sim-hrbox{display:grid;gap:6px}.sim-hrbox label{font-weight:600}
 .sim-hr{display:grid;grid-template-columns:52px minmax(0,1fr) 52px;gap:8px}
@@ -488,6 +485,100 @@ section.acc{box-shadow:none;border-width:1px}
 body{font-variant-numeric:tabular-nums}
 input,select,textarea,button{font-family:inherit}
 ::placeholder{color:var(--ink-2);opacity:.75}
+</style>
+<style>
+/* v17: Professional Green – Warm Finance */
+.dt.ot{background:var(--holiday-soft);color:var(--holiday)}
+.bd-r.near{color:var(--holiday)}
+.dsh{background:var(--accent)}
+</style>
+<style>
+/* v18: สีตามหน้าที่ของแต่ละส่วน */
+/* เมนูล่าง: กรมท่า / เขียวเข้ม */
+.tabs{background:#20364B;border-top:0}
+.tab{color:#B9C7D4}
+.tab[aria-selected=true]{background:#145A42;color:#fff}
+/* ตัวเลข */
+.c-sal{color:var(--navy)!important}
+.c-ot,.c-inc{color:var(--green)!important}
+.c-exp{color:var(--neg)!important}
+.c-bal:not(.neg){color:var(--accent)!important}
+.pr.neg .n,.pr .n.c-exp{color:var(--neg)}
+.dt.ot{background:var(--accent-soft);color:var(--green)}
+.dt.inc{background:#E1E8EF;color:var(--navy)}
+.dt.exp{background:var(--neg-soft);color:var(--neg)}
+/* ลบข้อมูล: แดงเข้ม */
+.btn.danger{background:#F3DADA;color:var(--danger)}
+.btn.armed{background:var(--danger);color:#fff}
+/* งบประมาณ: ทองอ่อน */
+#budgetCard .acc{border-color:var(--gold)}
+.badge.gsoft{background:#F6E5BF;color:#7A5206}
+.badge.gold{background:var(--gold);color:#20364B}
+.bd .meter i{background:var(--gold)}
+.bd .meter i.warn{background:#C98A1F}
+.bd .meter i.bad{background:var(--neg)}
+.bd-r{color:#7A5206}.bd-r.near{color:#8A5A00}.bd-r.over{color:var(--neg)}
+/* เป้าหมายเงินเก็บ: เขียวมิ้นต์ */
+#goalsCard .acc{background:#DCEFE4;border-color:#BFDCCB}
+.badge.mint{background:#fff;color:var(--accent)}
+#goalsCard .meter{background:#fff}
+#goalsCard .meter i{background:#4C9E7A}
+#goalsCard .meter i.ok{background:var(--accent)}
+.gl-p{color:var(--accent)}
+</style>
+<style>
+/* v19: กรอบบาง ลดเขียว ตัวเลขเด่น เมนูล่างบนจอเล็ก ธีมมืด */
+.brand{color:var(--ink)}
+.badge{background:var(--surface-2);color:var(--ink-2)}
+.tip>summary{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.btn.soft{background:var(--surface-2);color:var(--ink)}
+.meter i{background:var(--navy)}
+.gl-p{color:var(--ink)}
+.setwrap>h2{color:var(--ink)}
+.pane-sw button[aria-pressed=true]{color:var(--ink)}
+.theme-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.theme-row>span{font-weight:600}.theme-row .pane-sw{flex:1;max-width:260px}
+/* การ์ดสำคัญ: เส้นบาง พื้นอ่อน */
+.dash,#quick{background:#F1F7F3;border-color:#D3E4DA}
+/* ตัวเลขเงินเด่นกว่าข้อความ */
+.dsh .v{font-size:clamp(2.2rem,12vw,3rem);font-weight:700}
+.dt .v{font-size:clamp(1.05rem,5.6vw,1.45rem);font-weight:700}
+.dt .k,.stat3 .k{font-size:11.5px;font-weight:500}
+.dt .sub,.stat3 .sub{font-size:11px}
+.stat3 .v{font-size:clamp(1.1rem,5.6vw,1.5rem);font-weight:700}
+.hint{font-size:12.5px}
+.lrow .a{font-size:1rem}
+.dt.ot{background:#E8F4ED}
+/* เมนูล่าง 5 ปุ่ม: ไม่เบียดบนจอเล็ก */
+.tab{min-width:0;white-space:nowrap;padding:0 2px}
+@media (max-width:380px){.tab{font-size:10.5px;gap:2px}.tab svg{width:20px;height:20px}.tabs-in{gap:2px}}
+/* ธีมมืด: ปรับสีที่กำหนดตายตัว */
+:root[data-theme=dark] .tabs{background:#16232F;border-top:1px solid var(--line)}
+:root[data-theme=dark] .tab{color:#9FB0BF}
+:root[data-theme=dark] .tab[aria-selected=true]{background:#1F5A45;color:#fff}
+:root[data-theme=dark] .dash,:root[data-theme=dark] #quick{background:#16232F;border-color:var(--line)}
+:root[data-theme=dark] .dt.ot{background:#173A31;color:var(--green)}
+:root[data-theme=dark] .dt.inc{background:#1F3040;color:var(--ink)}
+:root[data-theme=dark] .pcal .offsat{background:#223447;color:#C9D6E2}
+:root[data-theme=dark] .pcal .offsat .s{color:#C9D6E2}
+:root[data-theme=dark] .pcal .offsun{background:#2E4660;color:#E4ECF3}
+:root[data-theme=dark] .pcal .offsun .s{color:#E4ECF3}
+:root[data-theme=dark] .pcal .dh.sat{color:#8FB2D3}:root[data-theme=dark] .pcal .dh.sun{color:#C9D6E2}
+:root[data-theme=dark] .legend .i-sat{background:#223447}:root[data-theme=dark] .legend .i-sun{background:#2E4660}
+:root[data-theme=dark] #goalsCard .acc{background:#173A31;border-color:#24503F}
+:root[data-theme=dark] .badge.mint{background:#0F1A24;color:var(--green)}
+:root[data-theme=dark] #goalsCard .meter{background:#0F1A24}
+:root[data-theme=dark] .badge.gsoft{background:#3A2C12;color:#E8B65A}
+:root[data-theme=dark] .badge.gold{background:#E8B65A;color:#20364B}
+:root[data-theme=dark] #budgetCard .acc{border-color:#7A5E22}
+:root[data-theme=dark] .bd-r,:root[data-theme=dark] .bd-r.near{color:#E8B65A}
+:root[data-theme=dark] .btn.danger{background:#3A1F1B;color:var(--danger)}
+:root[data-theme=dark] .btn.armed{background:#B3402F;color:#fff}
+:root[data-theme=dark] .badge.warn{background:var(--neg-soft);color:var(--neg)}
+:root[data-theme=dark]{--c-sal:#8FB2D3;--c-alw:#E8B65A;--c-ot:#4FB083}
+:root[data-theme=dark] .bkc{background:linear-gradient(135deg,#1F5A45,#2F7D5E)}
+:root[data-theme=dark] .bkc.warn{background:#5A4519;color:#F6E5BF}
+:root[data-theme=dark] .sim-cal button.simon{color:var(--accent-ink)}
 </style>
 </head>
 <body>
@@ -559,7 +650,7 @@ input,select,textarea,button{font-family:inherit}
 
     <!-- ตั้งค่า -->
     <section id="v-set" class="view" hidden>
-      <div class="card setwrap"><h2>ตั้งค่า</h2><div id="setList" class="setlist"></div></div>
+      <div class="card setwrap"><h2>ตั้งค่า</h2><div class="theme-row" role="group" aria-label="ธีมสี"><span>ธีมสี</span><div class="pane-sw" id="themeSw"><button type="button" data-th="light" aria-pressed="true">สว่าง</button><button type="button" data-th="dark" aria-pressed="false">มืด</button><button type="button" data-th="auto" aria-pressed="false">ตามเครื่อง</button></div></div><div id="setList" class="setlist"></div></div>
     </section>
   </main>
 </div>
@@ -1521,37 +1612,48 @@ function buildCats(){
 
 
 /* ---------- จำลองลงโอที: ปฏิทินในหน้าต่างป๊อปอัป (ไม่บันทึกจริง) ---------- */
-let simSel=new Set(),simHrs='2';
+let simSel=new Set(),simHN='2',simHH='8';
 function buildSim(){
-  const r=periodRange(view.y,view.m),cells=[];
+  const r=periodRange(view.y,view.m),cells=[],typ=ds=>isWorkDay(ds)?'normal':'holiday';
   const kids=DOW.map((d,i)=>h('div',{class:'dh'+(i===0?' sun':i===6?' sat':'')},d));
   for(let i=0;i<pdate(r.start).getDay();i++)kids.push(h('div',{class:'blank','aria-hidden':'true'}));
   const out=h('div',{class:'sim-out','aria-live':'polite'});
-  const hrIn=h('input',{type:'number',inputmode:'decimal',min:'0',max:'16',step:'0.5',value:simHrs,id:'sim-h','aria-label':'ชั่วโมงโอทีต่อวัน'});
-  const paint=()=>{
-    cells.forEach(c=>{
-      if(c.real)return;
-      const on=simSel.has(c.ds);
-      c.el.className=(c.base+(on?' simon':'')).trim();c.el.setAttribute('aria-pressed',String(on));
-      c.s.textContent=on?(parseFloat(hrIn.value)>0?hrs(parseFloat(hrIn.value)):'OT'):c.sub;
-    });
-    run();
+  const mk=(T,v)=>h('input',{type:'number',inputmode:'decimal',min:'0',max:'16',step:'0.5',value:v,id:'sim-h-'+T,'aria-label':'ชั่วโมงโอที'+(T==='normal'?'วันธรรมดา':'วันหยุด')+'ต่อวัน'});
+  const inp={normal:mk('normal',simHN),holiday:mk('holiday',simHH)};
+  const cnt={normal:h('span',{class:'badge no'}),holiday:h('span',{class:'badge no'})};
+  const hv=T=>parseFloat(inp[T].value);
+  const calc=list=>{
+    list.forEach(ds=>{state.shifts[ds]={date:ds,type:typ(ds),hours:hv(typ(ds)),shuttle:S().defShuttle>=1,note:''};});
+    try{return periodCalc(view.y,view.m).net;}finally{list.forEach(ds=>{delete state.shifts[ds];});}
   };
   function run(){
-    simHrs=hrIn.value;
-    const H=parseFloat(hrIn.value),days=[...simSel].sort();
-    if(!days.length){out.replaceChildren(h('p',{class:'hint'},'แตะวันที่ในปฏิทินด้านบนที่อยากลองทำโอที'));return;}
-    if(!(H>0)){out.replaceChildren(h('p',{class:'hint'},'ใส่ชั่วโมงโอทีต่อวันด้านบน'));return;}
-    const c0=periodCalc(view.y,view.m),L=ledgerCalc(view.y,view.m),sh=S().defShuttle>=1;
-    days.forEach(ds=>{state.shifts[ds]={date:ds,type:isWorkDay(ds)?'normal':'holiday',hours:H,shuttle:sh,note:''};});
-    let c1;try{c1=periodCalc(view.y,view.m);}finally{days.forEach(ds=>{delete state.shifts[ds];});}
-    const add=r2(c1.net-c0.net),l0=r2(c0.net+L.inc-L.exp),l1=r2(l0+add);
+    simHN=inp.normal.value;simHH=inp.holiday.value;
+    const days=[...simSel].sort();
+    if(!days.length){out.replaceChildren(h('p',{class:'hint'},'แตะวันที่ในปฏิทินด้านบน หรือกดปุ่มเลือกทั้งหมดด้านล่าง'));return;}
+    const need=['normal','holiday'].filter(T=>days.some(d=>typ(d)===T)&&!(hv(T)>0));
+    if(need.length){out.replaceChildren(h('p',{class:'hint'},'ใส่ชั่วโมงโอที'+(need[0]==='normal'?'วันธรรมดา':'วันหยุด')+'ด้านล่างด้วย'));return;}
+    const c0=periodCalc(view.y,view.m),L=ledgerCalc(view.y,view.m);
+    const dN=days.filter(d=>typ(d)==='normal'),dH=days.filter(d=>typ(d)==='holiday');
+    const all=calc(days),addAll=r2(all-c0.net),addN=dN.length?r2(calc(dN)-c0.net):0,addH=r2(addAll-addN);
+    const l0=r2(c0.net+L.inc-L.exp),l1=r2(l0+addAll);
     out.replaceChildren(
-      h('div',{class:'sim-big'},h('span',null,'เลือก '+days.length+' วัน × '+hrs(H)+' ชม. ได้เพิ่ม'),h('b',null,'+฿'+moneyR(add))),
-      h('div',{class:'sim-row'},h('span',null,'รับสุทธิรอบนี้'),h('b',null,'฿'+moneyR(c0.net)+' → ฿'+moneyR(c1.net))),
+      h('div',{class:'sim-big'},h('span',null,'เลือก '+days.length+' วัน ได้เพิ่ม'),h('b',null,'+฿'+moneyR(addAll))),
+      dN.length?h('div',{class:'sim-row'},h('span',null,'วันธรรมดา '+dN.length+' วัน × '+hrs(hv('normal'))+' ชม.'),h('b',null,'+฿'+moneyR(addN))):h('span'),
+      dH.length?h('div',{class:'sim-row'},h('span',null,'วันหยุด '+dH.length+' วัน × '+hrs(hv('holiday'))+' ชม.'),h('b',null,'+฿'+moneyR(addH))):h('span'),
+      h('div',{class:'sim-row'},h('span',null,'รับสุทธิรอบนี้'),h('b',null,'฿'+moneyR(c0.net)+' → ฿'+moneyR(all))),
       h('div',{class:'sim-row'},h('span',null,'เหลือเก็บรอบนี้'),h('b',null,'฿'+moneyR(l0)+' → ฿'+moneyR(l1))),
       h('p',{class:'hint'},'เป็นการจำลองเท่านั้น ยังไม่ได้บันทึกเข้าสมุด'));
   }
+  const paint=()=>{
+    cells.forEach(c=>{
+      if(c.real)return;
+      const on=simSel.has(c.ds),v=hv(c.type);
+      c.el.className=(c.base+(on?' simon'+(c.type==='holiday'?' simh':''):'')).trim();c.el.setAttribute('aria-pressed',String(on));
+      c.s.textContent=on?(v>0?hrs(v):'OT'):c.sub;
+    });
+    ['normal','holiday'].forEach(T=>{cnt[T].textContent='เลือก '+[...simSel].filter(d=>typ(d)===T).length+' วัน';});
+    run();
+  };
   eachDay(r.start,r.end,ds=>{
     const x=state.shifts[ds],d=pdate(ds),k=dayKind(ds);
     let cls='',sub='',real=false;
@@ -1561,27 +1663,34 @@ function buildSim(){
     if(ds===todayS)cls+=' today';
     if(!sub&&(d.getDate()===1||ds===r.start))sub=MONTHS_S[d.getMonth()];
     const s=h('span',{class:'s'},sub);
-    const el=h('button',{type:'button',class:cls.trim(),'aria-label':thDate(ds)+(real?' · มีบันทึกจริงแล้ว':''),'aria-disabled':real?'true':null},h('span',{class:'n'},String(d.getDate())),s);
-    const c={ds:ds,el:el,s:s,base:cls,sub:sub,real:real};
+    const el=h('button',{type:'button',class:cls.trim(),'aria-label':thDate(ds)+' · '+(typ(ds)==='normal'?'วันธรรมดา':'วันหยุด')+(real?' · มีบันทึกจริงแล้ว':''),'aria-disabled':real?'true':null},h('span',{class:'n'},String(d.getDate())),s);
+    const c={ds:ds,el:el,s:s,base:cls,sub:sub,real:real,type:typ(ds)};
     if(!real)el.addEventListener('click',()=>{if(simSel.has(ds))simSel.delete(ds);else simSel.add(ds);paint();});
     cells.push(c);kids.push(el);
   });
-  const step=dv=>{const v=Math.max(0,Math.min(16,(parseFloat(hrIn.value)||0)+dv));hrIn.value=String(v);paint();};
-  hrIn.addEventListener('input',paint);
-  const clr=h('button',{type:'button',class:'btn',onclick:()=>{simSel.clear();paint();}},'ล้างที่เลือก');
+  const step=(T,dv)=>{inp[T].value=String(Math.max(0,Math.min(16,(hv(T)||0)+dv)));paint();};
+  const selType=T=>{
+    const pool=cells.filter(c=>!c.real&&c.type===T),fut=pool.filter(c=>c.ds>=todayS),use=fut.length?fut:pool;
+    const allOn=use.length>0&&use.every(c=>simSel.has(c.ds));
+    use.forEach(c=>{if(allOn)simSel.delete(c.ds);else simSel.add(c.ds);});paint();
+  };
+  inp.normal.addEventListener('input',paint);inp.holiday.addEventListener('input',paint);
+  const box=T=>h('div',{class:'sim-hrbox'+(T==='holiday'?' hol':'')},
+    h('div',{class:'sim-hh'},h('label',{for:'sim-h-'+T},T==='normal'?'วันธรรมดา · ชั่วโมงโอทีต่อวัน':'วันหยุด · ชั่วโมงโอทีต่อวัน'),cnt[T]),
+    h('div',{class:'sim-hr'},h('button',{type:'button',class:'btn','aria-label':'ลดครึ่งชั่วโมง',onclick:()=>step(T,-0.5)},'−'),inp[T],h('button',{type:'button',class:'btn','aria-label':'เพิ่มครึ่งชั่วโมง',onclick:()=>step(T,0.5)},'+')),
+    h('button',{type:'button',class:'btn block',onclick:()=>selType(T)},T==='normal'?'เลือก/ยกเลิก วันธรรมดาที่เหลือทั้งหมด':'เลือก/ยกเลิก วันหยุดที่เหลือทั้งหมด'));
   const body=[
-    h('p',{class:'hint pre'},'1) แตะวันที่ที่อยากลองทำโอที (แตะซ้ำเพื่อยกเลิก)\n2) ใส่ชั่วโมงโอทีต่อวันด้านล่าง\nตัวเลขนี้ไม่ถูกบันทึกลงสมุดจริง'),
+    h('p',{class:'hint pre'},'แตะวันที่ที่อยากลองทำโอที (แตะซ้ำเพื่อยกเลิก)\nสีเขียว = วันธรรมดา · สีส้ม = วันหยุด ตัวเลขนี้ไม่ถูกบันทึกลงสมุดจริง'),
     h('div',{class:'pcal sim-cal'},...kids),
-    h('div',{class:'sim-hrbox'},h('label',{for:'sim-h'},'ชั่วโมงโอทีต่อวัน'),
-      h('div',{class:'sim-hr'},h('button',{type:'button',class:'btn','aria-label':'ลดครึ่งชั่วโมง',onclick:()=>step(-0.5)},'−'),hrIn,h('button',{type:'button',class:'btn','aria-label':'เพิ่มครึ่งชั่วโมง',onclick:()=>step(0.5)},'+'))),
-    out,clr];
+    box('normal'),box('holiday'),out,
+    h('button',{type:'button',class:'btn block',onclick:()=>{simSel.clear();paint();}},'ล้างที่เลือก')];
   paint();
   return body;
 }
 function openSim(){simSel=new Set();openSheet({id:'sim',title:'จำลองลงโอที',build:buildSim});}
 document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#sim-open'))openSim();});
 /* ---------- เป้าเงินเก็บ · งบรายหมวด · วิเคราะห์การใช้เงิน ---------- */
-const CAT_COL=['#0C7B43','#F2A100','#E0527A','#3B82C4','#8A5CD6','#E56A00','#2AA8A0','#8A7A6A'];
+const CAT_COL=['#145A42','#E8B65A','#A93F3C','#3F6F95','#7FA895','#C98A3D','#20364B','#8F9486'];
 const catCol=c=>CAT_COL[Math.max(0,EXP_CATS.indexOf(c))%CAT_COL.length];
 const pctOf=(a,b)=>b>0?Math.round(a/b*100):0;
 const mbar=(p,cls)=>h('div',{class:'meter'},h('i',{class:cls||'',style:'width:'+Math.min(100,p)+'%'}));
@@ -1607,7 +1716,7 @@ function renderGoals(){
     const v=parseFloat(tg.value);if(!(v>0)){toast('ใส่จำนวนเงินเป้าหมายก่อน');return;}
     state.goals.push({id:uid(),name:(nm.value.trim()||'เป้าหมาย').slice(0,40),target:v,saved:0});persist();renderGoals();}},'+ เพิ่มเป้า')));
   const G=state.goals,ts=G.reduce((a,g)=>a+g.target,0),sv=G.reduce((a,g)=>a+Math.min(g.saved,g.target),0);
-  el.replaceChildren(acc({id:'led-goals',title:'เป้าหมายเงินเก็บ',badge:!G.length?'ยังไม่ตั้งเป้า':(G.every(g=>g.saved>=g.target)?'ครบแล้ว':pctOf(sv,ts)+'%'),badgeCls:G.length?'':'no',build:()=>kids}));
+  el.replaceChildren(acc({id:'led-goals',title:'เป้าหมายเงินเก็บ',badge:!G.length?'ยังไม่ตั้งเป้า':(G.every(g=>g.saved>=g.target)?'ครบแล้ว':pctOf(sv,ts)+'%'),badgeCls:'mint',build:()=>kids}));
 }
 function renderBudgets(L){
   const el=$('budgetCard');if(!el)return;
@@ -1625,7 +1734,7 @@ function renderBudgets(L){
       b>0?mbar(p,over?'bad':near?'warn':''):null));
   });
   const bc=EXP_CATS.filter(c=>B[c]>0),ov=bc.filter(c=>(L.byCat[c]||0)>B[c]).length,nr=bc.filter(c=>{const u=L.byCat[c]||0;return u<=B[c]&&u/B[c]>=.8;}).length;
-  el.replaceChildren(acc({id:'led-budget',title:'งบประมาณรายจ่าย',badge:!bc.length?'ยังไม่ตั้งงบ':ov?'เกินงบ '+ov+' หมวด':nr?'ใกล้เกินงบ':'ปกติ',badgeCls:!bc.length?'no':(ov||nr)?'warn':'',build:()=>kids}));
+  el.replaceChildren(acc({id:'led-budget',title:'งบประมาณรายจ่าย',badge:!bc.length?'ยังไม่ตั้งงบ':ov?'เกินงบ '+ov+' หมวด':nr?'ใกล้เกินงบ':'ปกติ',badgeCls:!bc.length?'gsoft':ov?'warn':nr?'gold':'gsoft',build:()=>kids}));
 }
 function renderAnalysis(L){
   const el=$('anaCard');if(!el)return;
@@ -1658,7 +1767,7 @@ function renderLedger(keep){
   $('ledgerTotals').replaceChildren(
     h('div',null,h('div',{class:'k'},'รายรับอื่น'),h('div',{class:'v'},'฿'+moneyR(L.inc))),
     h('div',null,h('div',{class:'k'},'รายจ่าย'),h('div',{class:'v'},'฿'+moneyR(L.exp))),
-    h('div',null,h('div',{class:'k'},'ต่าง'),h('div',{class:'v'+(diff<0?' neg':'')},(diff<0?'−':'')+'฿'+moneyR(Math.abs(diff)))));
+    h('div',null,h('div',{class:'k'},'คงเหลือ'),h('div',{class:'v'+(diff<0?' neg':'')},(diff<0?'−':'')+'฿'+moneyR(Math.abs(diff)))));
   const root=$('ledList'),cnt=$('ledCount');
   cnt.textContent=(R.length===L.rows.length?'':R.length+' จาก ')+L.rows.length+' รายการ';cnt.hidden=!L.rows.length;
   if(!L.rows.length){root.replaceChildren(h('p',{class:'empty'},'ยังไม่มีรายการในรอบนี้ กดปุ่ม "จดรายรับ–รายจ่าย" ด้านบนเพื่อเพิ่ม'));return;}
@@ -3111,6 +3220,42 @@ $('bk-share').hidden=!navigator.share;
   }catch(e){downloads=null;}
   $('dlBox').hidden=false;
 })();
+})();
+
+/* ---------- สีตามหน้าที่: เงินเดือน=กรมท่า OT/รายรับ=เขียว รายจ่าย=แดงอิฐ คงเหลือ=เขียวเข้ม ---------- */
+(function(){
+  const cls=lab=>{
+    lab=(lab||'').trim();
+    if(/^โอที/.test(lab))return 'c-ot';
+    if(lab==='รับสุทธิ'||lab==='รับสุทธิจากงาน'||/^เงินเดือน/.test(lab))return 'c-sal';
+    if(/^รายรับอื่น/.test(lab))return 'c-inc';
+    if(/^รายจ่าย|^ใช้ไป/.test(lab))return 'c-exp';
+    if(/^คงเหลือ|^เหลือเก็บ/.test(lab))return 'c-bal';
+    return '';
+  };
+  let q=0;
+  const tint=()=>{q=0;
+    document.querySelectorAll('.stat3>div').forEach(d=>{const k=d.querySelector('.k'),v=d.querySelector('.v');if(!k||!v)return;const c=cls(k.textContent);['c-ot','c-sal','c-inc','c-exp','c-bal'].forEach(x=>v.classList.toggle(x,x===c));});
+    document.querySelectorAll('.pr').forEach(r=>{const l=r.querySelector('.l'),n=r.querySelector('.n');if(!l||!n)return;const c=cls((l.firstChild&&l.firstChild.textContent)||l.textContent);['c-ot','c-sal','c-inc','c-exp','c-bal'].forEach(x=>n.classList.toggle(x,x===c));});
+  };
+  new MutationObserver(()=>{if(!q)q=requestAnimationFrame(tint);}).observe(document.body,{childList:true,subtree:true});
+  tint();
+})();
+
+/* ---------- ธีมสี: สว่าง (ค่าเริ่มต้น) / มืด / ตามเครื่อง เก็บแยกจากข้อมูลสำรอง ---------- */
+(function(){
+  const KEYT='otbook.theme',mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+  const get=()=>{try{return localStorage.getItem(KEYT)||'light';}catch(e){return 'light';}};
+  const apply=()=>{
+    const m=get(),dark=m==='dark'||(m==='auto'&&mq&&mq.matches);
+    document.documentElement.dataset.theme=dark?'dark':'light';
+    const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.setAttribute('content',dark?'#0F1A24':'#F7F5EF');
+    document.querySelectorAll('#themeSw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.th===m)));
+  };
+  document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('#themeSw button');if(!b)return;
+    try{localStorage.setItem(KEYT,b.dataset.th);}catch(x){}apply();});
+  if(mq&&mq.addEventListener)mq.addEventListener('change',()=>{if(get()==='auto')apply();});
+  apply();
 })();
 </script>
 
