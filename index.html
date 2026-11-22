@@ -668,6 +668,27 @@ details.sim-set[open]>summary .ic{transform:rotate(-90deg)}
 }
 @media (prefers-reduced-motion:reduce){details.sim-set>summary .ic{transition:none}}
 </style>
+<style>
+/* v12: ปฏิทินรอบนี้ สีเข้มขึ้น กรอบชัดขึ้น และปุ่มจำลองโอทีเด่นขึ้น */
+:root{--cal-frame:#BDB6A0;--cal-line:#A39C86;--cal-ot:#A6DBBF;--cal-ot-ink:#0B3D2C;--cal-hol:#F5C464;--cal-hol-ink:#4A2F00;--cal-lv:#F2B5AA;--cal-lv-ink:#6B1F10}
+:root[data-theme=dark]{--cal-frame:#3E566B;--cal-line:#4A6479;--cal-ot:#23684F;--cal-ot-ink:#E6F6EE;--cal-hol:#7A5A14;--cal-hol-ink:#FFF1CF;--cal-lv:#7A3328;--cal-lv-ink:#FFE3DD}
+#calCard{border:1.5px solid var(--cal-frame)}
+#pcal button{border-width:1.5px;border-color:var(--cal-line)}
+#pcal .off{border-color:transparent}
+#pcal .xw{border-color:var(--accent)}
+#pcal .ovr{border-color:var(--ink-2)}
+#pcal .ot{background:var(--cal-ot);color:var(--cal-ot-ink);border-color:var(--accent)}
+#pcal .ot .s{color:var(--cal-ot-ink)}
+#pcal .hol{background:var(--cal-hol);color:var(--cal-hol-ink);border-color:var(--holiday)}
+#pcal .hol .s{color:var(--cal-hol-ink)}
+#pcal .lv{background:var(--cal-lv);color:var(--cal-lv-ink);border-color:var(--neg)}
+#pcal .lv .s{color:var(--cal-lv-ink)}
+#pcal-tip .legend .i-ot{background:var(--cal-ot);border-color:var(--accent)}
+#pcal-tip .legend .i-hol{background:var(--cal-hol);border-color:var(--holiday)}
+#pcal-tip .legend .i-lv{background:var(--cal-lv);border-color:var(--neg)}
+#sim-open{background:var(--accent);color:var(--accent-ink);border:1.5px solid var(--accent);font-weight:700;min-height:40px;padding:4px 16px;box-shadow:0 2px 0 rgba(0,0,0,.12)}
+#sim-open:active{filter:brightness(.9);transform:translateY(1px);box-shadow:none}
+</style>
 </head>
 <body>
 
